@@ -8,6 +8,7 @@
   var clamp = function(v,a,b){return Math.max(a,Math.min(b,v))};
   var pageOf = function(url){var p = url.pathname.split('/').pop();return p || 'index.html'};
   var here = pageOf(location);
+  var parent = document.body.dataset.parent || '';
 
   /* ---------- scroll suave ---------- */
   var lenis = null;
@@ -33,6 +34,7 @@
     // estado activo en el menú
     if(!samePage || raw.charAt(0)==='#'){}
     else if(a.closest('.nav-links>li')===a.parentElement || a.classList.contains('big')){a.setAttribute('aria-current','page')}
+    if(parent && pageOf(url)===parent && raw===parent && (a.closest('.nav-links>li')===a.parentElement || a.classList.contains('big'))){a.setAttribute('aria-current','page')}
 
     a.addEventListener('click',function(e){
       if(e.metaKey || e.ctrlKey || e.shiftKey || e.button===1){return}
