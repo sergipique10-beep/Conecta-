@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Planeta conecta+</title>
+<!-- Escena 3D del planeta, retirada del hero de index.html para usarla en otra página. -->
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.186.0/build/three.module.js",
+    "three/webgpu": "https://unpkg.com/three@0.186.0/build/three.webgpu.js",
+    "three/tsl": "https://unpkg.com/three@0.186.0/build/three.tsl.js",
+    "three/addons/": "https://unpkg.com/three@0.186.0/examples/jsm/"
+  }
+}
+</script>
+<style>
+body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#101F16}
+.planet-visual{position:relative;display:flex;align-items:center;justify-content:center;width:100%;min-height:400px;overflow:hidden}
+.planet-visual canvas{width:min(78%,420px);aspect-ratio:1;border-radius:28px;border:1px solid rgba(255,255,255,.1);box-shadow:0 14px 32px rgba(0,0,0,.35)}
+</style>
+</head>
+<body>
+<div class="planet-visual">
+  <canvas id="planetScene" aria-label="Escena 3D en miniatura: planeta Tierra orbitado por satélites de fundación conecta+"></canvas>
+</div>
+<script type="module" src="js/planet-loader.js"></script>
+</body>
+</html>
