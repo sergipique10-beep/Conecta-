@@ -719,7 +719,7 @@ main{position:relative;z-index:2;background:var(--bg);border-radius:0 0 var(--fo
 footer{position:relative;z-index:1;display:flex;flex-direction:column;isolation:isolate;color:#fff;background:#05100A;
   min-height:calc(100vh + var(--foot-r));min-height:calc(100svh + var(--foot-r));
   margin-top:calc(-1 * var(--foot-r));padding-top:var(--foot-r);overflow:hidden}
-.fc-bg{position:absolute;inset:-8% 0 0;z-index:-2;background:url('../img/footer-aurora.jpg') center 30%/cover no-repeat;will-change:transform}
+.fc-bg{position:absolute;inset:-8% 0 0;z-index:-2;background:url('../img/footer-colinas.jpg') center 60%/cover no-repeat;will-change:transform}
 footer::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
   background:linear-gradient(180deg,rgba(5,16,10,.55) 0%,rgba(5,16,10,.15) 30%,rgba(5,16,10,.35) 55%,rgba(5,16,10,.85) 80%,#05100A 100%)}
 .foot-inner{flex:1;display:flex;flex-direction:column;will-change:transform}
@@ -878,3 +878,4 @@ footer::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:no
 button.btn-ghost{background:transparent}
 .fc-top.wrap{max-width:none;padding-inline:calc(clamp(12px,2vw,24px) + clamp(20px,2.6vw,36px))}
 @media(max-width:699px){.fc-panel{grid-template-columns:1fr 1fr}.fc-brand,.fc-news{grid-column:1/-1}.fc-center{padding-block:48px 32px}}
+footer::before{background:radial-gradient(55% 40% at 50% 32%,rgba(5,16,10,.45),transparent 75%),linear-gradient(180deg,rgba(5,16,10,.55) 0%,rgba(5,16,10,.15) 30%,rgba(5,16,10,.35) 55%,rgba(5,16,10,.85) 80%,#05100A 100%)}
