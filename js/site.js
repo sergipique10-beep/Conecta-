@@ -174,12 +174,20 @@
       if(en.isIntersecting){
         var t = en.target;
         t.classList.add('in');io.unobserve(t);
-        // tras la entrada de las letras, el logotipo reacciona al instante al pasar el ratón
-        if(t.classList.contains('wordmark')){setTimeout(function(){t.classList.add('done')},1800)}
       }
     });
   },{rootMargin:'0px 0px -12% 0px'});
-  document.querySelectorAll('[data-reveal],[data-lines],[data-clip],.wordmark').forEach(function(el){io.observe(el)});
+  document.querySelectorAll('[data-reveal],[data-lines],[data-clip]').forEach(function(el){io.observe(el)});
+  // el logotipo del footer está pegado al final de la página: se activa en cuanto asoma
+  var wmIO = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(!en.isIntersecting){return}
+      var t = en.target;
+      t.classList.add('in');wmIO.unobserve(t);
+      setTimeout(function(){t.classList.add('done')},1800);
+    });
+  },{threshold:.15});
+  document.querySelectorAll('.wordmark').forEach(function(el){wmIO.observe(el)});
 
   /* ---------- contadores ---------- */
   var cio = new IntersectionObserver(function(entries){
@@ -461,6 +469,13 @@
 
   /* ---------- footer: año y foco sobre el logotipo ---------- */
   document.querySelectorAll('[data-year]').forEach(function(el){el.textContent = new Date().getFullYear()});
+  // reloj en vivo de la sede (hora peninsular)
+  var clocks = document.querySelectorAll('[data-clock]');
+  if(clocks.length){
+    var fmtClock = new Intl.DateTimeFormat('es-ES',{hour:'2-digit',minute:'2-digit',second:'2-digit',timeZone:'Europe/Madrid'});
+    var tickClock = function(){var s = fmtClock.format(new Date());clocks.forEach(function(c){c.textContent = s})};
+    tickClock(); setInterval(tickClock,1000);
+  }
   var wm = document.querySelector('.wordmark');
   if(wm && fine){
     wm.addEventListener('mousemove',function(e){
