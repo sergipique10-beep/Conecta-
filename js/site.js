@@ -305,6 +305,96 @@
     });
   }
 
+  /* ---------- transformación digital: red de nodos ---------- */
+  var net = $('txNet');
+  if(net){
+    var ctx = net.getContext('2d');
+    var dpr = Math.min(window.devicePixelRatio||1,2);
+    var W=0,H=0,nodes=[],netOn=true,nmx=-9999,nmy=-9999;
+    var sizeNet = function(){
+      var r = net.getBoundingClientRect();
+      W = r.width; H = r.height;
+      net.width = W*dpr; net.height = H*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
+      var count = Math.round(clamp(W*H/16000,30,110));
+      nodes = [];
+      for(var i=0;i<count;i++){
+        nodes.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.35,vy:(Math.random()-.5)*.35,
+          c:Math.random()<.14?'206,11,165':'196,242,29',r:Math.random()*1.6+.8});
+      }
+    };
+    var drawNet = function(){
+      ctx.clearRect(0,0,W,H);
+      var link = Math.min(150,W/7);
+      for(var i=0;i<nodes.length;i++){
+        var a = nodes[i];
+        if(!reduce){
+          a.x += a.vx; a.y += a.vy;
+          if(a.x<0||a.x>W){a.vx*=-1} if(a.y<0||a.y>H){a.vy*=-1}
+          var dx = nmx-a.x, dy = nmy-a.y, dm = Math.sqrt(dx*dx+dy*dy);
+          if(dm<180){a.x -= dx/dm*.6; a.y -= dy/dm*.6}
+        }
+        for(var j=i+1;j<nodes.length;j++){
+          var b = nodes[j], ex = a.x-b.x, ey = a.y-b.y, d = Math.sqrt(ex*ex+ey*ey);
+          if(d<link){ctx.strokeStyle='rgba(196,242,29,'+(.16*(1-d/link))+')';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke()}
+        }
+        ctx.fillStyle='rgba('+a.c+',.85)';ctx.beginPath();ctx.arc(a.x,a.y,a.r,0,Math.PI*2);ctx.fill();
+      }
+    };
+    var loopNet = function(){ if(netOn){drawNet()} if(!reduce){requestAnimationFrame(loopNet)} };
+    sizeNet(); loopNet();
+    window.addEventListener('resize',function(){sizeNet(); if(reduce){drawNet()}});
+    new IntersectionObserver(function(e){netOn = e[0].isIntersecting}).observe(net);
+    net.parentElement.addEventListener('mousemove',function(e){var r = net.getBoundingClientRect();nmx=e.clientX-r.left;nmy=e.clientY-r.top});
+    net.parentElement.addEventListener('mouseleave',function(){nmx=nmy=-9999});
+  }
+
+  /* ---------- texto que se escribe solo ---------- */
+  document.querySelectorAll('[data-type]').forEach(function(el){
+    var txt = el.dataset.type;
+    if(reduce){el.textContent = txt;return}
+    var i = 0;
+    setTimeout(function type(){
+      el.textContent = txt.slice(0,++i);
+      if(i<txt.length){setTimeout(type,38+Math.random()*50)}
+    },1400);
+  });
+
+  /* ---------- terminal de DigitalizaciONG ---------- */
+  var term = $('txTerm');
+  if(term){
+    var tlines = JSON.parse(term.dataset.lines);
+    var esc = function(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;')};
+    var fmt = function(s){
+      s = esc(s);
+      if(s.charAt(0)==='$'){return '<span class="cmd">'+s+'</span>'}
+      if(s.charAt(0)==='✓'){return '<span class="ok">'+s+'</span>'}
+      return s.replace(/ ok$/,' <span class="ok">ok</span>').replace(/(\[[█░]+\])/,'<span class="ok">$1</span>');
+    };
+    var runTerm = function(){
+      if(reduce){term.innerHTML = tlines.map(fmt).join('\n');return}
+      var li = 0, ci = 0, done = [];
+      (function step(){
+        var line = tlines[li];
+        var isCmd = line.charAt(0)==='$';
+        ci = isCmd ? ci+1 : line.length;
+        term.innerHTML = done.concat(fmt(line.slice(0,ci))).join('\n');
+        if(ci<line.length){setTimeout(step,28);return}
+        done.push(fmt(line)); li++; ci = 0;
+        if(li<tlines.length){setTimeout(step,isCmd?420:260+Math.random()*260)}
+      })();
+    };
+    new IntersectionObserver(function(e,o){if(e[0].isIntersecting){o.disconnect();runTerm()}},{threshold:.4}).observe(term);
+  }
+
+  /* ---------- foco que sigue al cursor en tarjetas ---------- */
+  document.querySelectorAll('.tx-card').forEach(function(card){
+    card.addEventListener('mousemove',function(e){
+      var r = card.getBoundingClientRect();
+      card.style.setProperty('--mx',(e.clientX-r.left)+'px');
+      card.style.setProperty('--my',(e.clientY-r.top)+'px');
+    });
+  });
+
   /* ---------- formularios (sin backend todavía) ---------- */
   document.querySelectorAll('form[data-msg]').forEach(function(form){
     var note = form.parentElement.querySelector('.form-note');

@@ -563,7 +563,6 @@ footer{background:var(--forest);color:var(--ink);padding-top:clamp(72px,9vw,120p
 /* =========================================================
    equipo y patronato
    ========================================================= */
-.crumbs>span{display:contents}
 .people-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(32px,4vw,56px) clamp(14px,2vw,28px)}
 @media(min-width:900px){.people-grid{grid-template-columns:repeat(3,1fr)}.people-grid.four{grid-template-columns:repeat(4,1fr)}}
 .person{display:flex;flex-direction:column}
@@ -580,3 +579,102 @@ footer{background:var(--forest);color:var(--ink);padding-top:clamp(72px,9vw,120p
 @media(max-width:560px){.person p{font-size:13.5px}}
 .people-grid:not(.four) .person .ph{aspect-ratio:1/1}
 @media(max-width:899px){.people-grid:not(.four) .person .ph{aspect-ratio:4/5}}
+
+/* =========================================================
+   transformación digital (página tecnológica)
+   ========================================================= */
+:root{--mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.tx-mono{font-family:var(--mono);font-size:12px;letter-spacing:.02em;color:var(--tec)}
+.tx-grid-bg{background-image:linear-gradient(rgba(241,245,238,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(241,245,238,.035) 1px,transparent 1px);background-size:64px 64px;background-position:center top}
+
+/* cabecera con red de nodos */
+.tx-hero{background:radial-gradient(90% 70% at 70% 30%,rgba(196,242,29,.08),transparent 60%),radial-gradient(70% 60% at 10% 90%,rgba(206,11,165,.1),transparent 60%),var(--bg)}
+.tx-hero::after{background:linear-gradient(180deg,transparent 55%,var(--bg) 100%)}
+.tx-hero::before{content:"";position:absolute;inset:0;z-index:-2;pointer-events:none;
+  background-image:linear-gradient(rgba(241,245,238,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(241,245,238,.05) 1px,transparent 1px);background-size:64px 64px;
+  -webkit-mask-image:radial-gradient(80% 70% at 60% 40%,#000 30%,transparent 80%);mask-image:radial-gradient(80% 70% at 60% 40%,#000 30%,transparent 80%)}
+.tx-net{position:absolute;inset:0;z-index:-1;width:100%;height:100%;pointer-events:none}
+.tx-status{display:inline-flex;align-items:center;gap:10px;margin-top:22px;padding:8px 14px;border-radius:100px;border:1px solid var(--line);background:rgba(11,21,16,.5);font-family:var(--mono);font-size:12px;color:var(--ink-soft)}
+.tx-status i{width:8px;height:8px;border-radius:50%;background:var(--tec);box-shadow:0 0 0 0 rgba(196,242,29,.6);animation:txPulse 2s infinite}
+@keyframes txPulse{70%{box-shadow:0 0 0 10px rgba(196,242,29,0)}100%{box-shadow:0 0 0 0 rgba(196,242,29,0)}}
+.tx-hero h1{margin-top:clamp(18px,3vh,32px)}
+.tx-prompt{margin-top:clamp(18px,3vh,28px);font-family:var(--mono);font-size:clamp(14px,1.4vw,19px);color:var(--ink-soft)}
+.tx-prompt>span:first-child{color:var(--tec)}
+.tx-prompt b{font-weight:400;color:var(--tec);animation:txBlink 1s steps(1) infinite}
+@keyframes txBlink{50%{opacity:0}}
+
+/* tarjetas de servicio con foco que sigue al cursor */
+.tx-cards{display:grid;gap:16px}
+@media(min-width:1000px){.tx-cards{grid-template-columns:repeat(3,1fr)}}
+.tx-card{--mx:50%;--my:0%;position:relative;display:flex;flex-direction:column;gap:18px;padding:clamp(26px,2.6vw,36px);border-radius:24px;border:1px solid var(--line);
+  background:radial-gradient(420px circle at var(--mx) var(--my),rgba(196,242,29,.1),transparent 45%),rgba(19,37,25,.6);overflow:hidden;isolation:isolate;transition:border-color .5s,transform .8s var(--ease)}
+.tx-card::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;padding:1px;
+  background:radial-gradient(300px circle at var(--mx) var(--my),rgba(196,242,29,.7),transparent 50%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .4s}
+.tx-card:hover{transform:translateY(-6px)}
+.tx-card:hover::before{opacity:1}
+.tx-card-top{display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:12px;color:var(--ink-dim)}
+.tx-card-top i{width:36px;height:1px;background:var(--line);position:relative;overflow:hidden}
+.tx-card-top i::after{content:"";position:absolute;inset:0;background:var(--tec);transform:translateX(-100%);transition:transform .8s var(--ease)}
+.tx-card:hover .tx-card-top i::after{transform:none}
+.tx-icon{width:56px;height:56px;margin-top:10px;fill:none;stroke:var(--tec);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.tx-icon *{stroke-dasharray:200;stroke-dashoffset:200;transition:stroke-dashoffset 1.8s var(--ease)}
+.tx-card.in .tx-icon *{stroke-dashoffset:0}
+.tx-card h3{font-size:clamp(26px,2.3vw,34px);font-weight:300;font-stretch:80%;letter-spacing:-.03em;line-height:1.05}
+.tx-card p{color:var(--ink-soft);font-size:15.5px}
+.tx-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:8px}
+.tx-tags span{font-family:var(--mono);font-size:11.5px;padding:5px 10px;border-radius:8px;background:rgba(196,242,29,.08);color:var(--tec)}
+
+/* DigComp */
+.tx-dc{display:grid;gap:48px}
+@media(min-width:1000px){.tx-dc{grid-template-columns:1fr 1.3fr;align-items:start;gap:clamp(56px,7vw,120px)}}
+.tx-dc-list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.tx-dc-list li{position:relative;display:grid;grid-template-columns:40px 1fr;gap:4px 16px;padding:22px 0 26px;border-bottom:1px solid var(--line)}
+.tx-dc-list b{font-size:clamp(19px,1.7vw,24px);font-weight:400;font-stretch:88%;letter-spacing:-.01em}
+.tx-dc-list li>span:not(.tx-mono){grid-column:2;color:var(--ink-soft);font-size:14.5px}
+.tx-dc-list .tx-mono{padding-top:5px}
+.tx-dc-list i{position:absolute;left:56px;bottom:-1px;height:2px;width:var(--w);background:linear-gradient(90deg,var(--tec),rgba(196,242,29,.1));transform:scaleX(0);transform-origin:left;transition:transform 1.6s var(--ease) .2s}
+.tx-dc-list li.in i{transform:scaleX(1)}
+
+/* DigitalizaciONG: pasos y terminal */
+.tx-steps{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:10px}
+.tx-steps li{display:flex;align-items:center;gap:16px;padding:14px 18px;border-radius:14px;border:1px solid var(--line);background:rgba(11,21,16,.4);font-size:15.5px}
+.tx-term{border-radius:20px;border:1px solid var(--line);background:#07100B;box-shadow:0 40px 90px -40px rgba(0,0,0,.8),0 0 0 1px rgba(196,242,29,.05);overflow:hidden}
+.tx-term-bar{display:flex;align-items:center;gap:7px;padding:14px 16px;border-bottom:1px solid var(--line);background:rgba(241,245,238,.03)}
+.tx-term-bar i{width:11px;height:11px;border-radius:50%;background:rgba(241,245,238,.14)}
+.tx-term-bar i:first-child{background:var(--mag)}
+.tx-term-bar i:nth-child(3){background:var(--tec)}
+.tx-term-bar span{margin-left:10px;font-family:var(--mono);font-size:12px;color:var(--ink-dim)}
+.tx-term-body{margin:0;padding:22px 22px 8px;min-height:300px;font-family:var(--mono);font-size:clamp(11.5px,1.05vw,14px);line-height:1.9;color:var(--ink-soft);white-space:pre-wrap;word-break:break-word}
+.tx-term-body .ok{color:var(--tec)}
+.tx-term-body .cmd{color:var(--ink)}
+.tx-term-note{padding:0 22px 16px;font-family:var(--mono);font-size:11px;color:var(--ink-dim)}
+
+/* qué desarrollamos */
+.tx-words{display:flex;flex-wrap:wrap;gap:0 .3em;margin-bottom:clamp(56px,7vw,110px);font-size:clamp(44px,8.4vw,150px);font-weight:300;font-stretch:66%;letter-spacing:-.05em;line-height:.95}
+.tx-words span{color:transparent;-webkit-text-stroke:1px rgba(241,245,238,.35)}
+.tx-words em{color:var(--tec);-webkit-text-stroke:0}
+.tx-dev{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:24px;overflow:hidden;list-style:none;margin:0;padding:0}
+@media(min-width:700px){.tx-dev{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1100px){.tx-dev{grid-template-columns:repeat(5,1fr)}}
+.tx-dev li{display:flex;flex-direction:column;justify-content:space-between;gap:36px;min-height:170px;padding:22px;background:var(--bg);font-size:17px;line-height:1.3;transition:background .5s,color .5s}
+.tx-dev li:hover{background:var(--surface)}
+.tx-dev .tx-dev-cta{padding:0;background:var(--tec);color:var(--forest)}
+.tx-dev .tx-dev-cta a{display:flex;flex-direction:column;justify-content:space-between;gap:36px;height:100%;padding:22px;font-weight:600}
+.tx-dev .tx-dev-cta .tx-mono{color:var(--forest)}
+.tx-dev .tx-dev-cta b{font-size:28px;transition:transform .6s var(--ease)}
+.tx-dev .tx-dev-cta:hover{background:var(--ink)}
+.tx-dev .tx-dev-cta:hover b{transform:translateX(8px)}
+
+/* por qué nosotros */
+.tx-quote{margin-top:24px;font-size:clamp(44px,7.6vw,128px);font-weight:300;font-stretch:68%;letter-spacing:-.045em;line-height:.92}
+.tx-quote em{color:var(--tec)}
+#por-que .tile .n{font-family:var(--mono);letter-spacing:0;color:var(--tec)}
+
+/* llamada final en versión oscura */
+.tx-cta{border-top:1px solid var(--line);background:radial-gradient(60% 80% at 100% 0%,rgba(196,242,29,.1),transparent 60%),radial-gradient(50% 70% at 0% 100%,rgba(206,11,165,.12),transparent 60%),var(--bg)}
+.tx-cta h2{margin-top:28px;font-size:clamp(52px,9.6vw,172px);font-weight:300;font-stretch:66%;line-height:.88;letter-spacing:-.05em}
+.tx-cta h2 em{color:var(--tec)}
+.tx-cta .cta-grid{border-top-color:var(--line)}
+.tx-cta .cta-grid>p{color:var(--ink-soft)}
+.crumbs{flex-wrap:wrap;row-gap:4px}
