@@ -245,6 +245,7 @@
   var heroMedia = document.querySelector('.hero-media');
   var footer = document.getElementById('footer');
   var footInner = footer ? footer.querySelector('.foot-inner') : null;
+  var footBg = footer ? footer.querySelector('.fc-bg') : null;
   var y = window.scrollY, vel = 0, prevY = y;
   var frame = function(){
     y = lenis ? lenis.scroll : window.scrollY;
@@ -279,6 +280,7 @@
       if(fr.top < vh){
         var fp = clamp((vh - fr.top)/Math.min(fr.height,vh),0,1);
         footInner.style.transform = 'translate3d(0,'+((1-fp)*-140)+'px,0)';
+        if(footBg){footBg.style.transform = 'translate3d(0,'+((1-fp)*-80)+'px,0)'}
       }
     }
 
