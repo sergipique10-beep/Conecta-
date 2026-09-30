@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proyectos · fundación conecta+</title>
+<meta name="description" content="Proyectos nacionales e internacionales de la fundación conecta+.">
+<meta name="theme-color" content="#0B1510">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..800&family=Fredoka:wght@500..700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add('js')</script>
+<link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="sym" viewBox="0 0 64 64">
+    <circle cx="21" cy="15" r="8" fill="var(--tec)"/>
+    <rect x="8" y="26" width="26" height="30" rx="13" fill="var(--tec)"/>
+    <g transform="rotate(180 32 32)">
+      <circle cx="21" cy="15" r="8" fill="var(--mag-solid)"/>
+      <rect x="8" y="26" width="26" height="30" rx="13" fill="var(--mag-solid)"/>
+    </g>
+  </symbol>
+</svg>
+
+<div class="grain" aria-hidden="true"></div>
+<div class="cursor" aria-hidden="true"><span>Ver</span></div>
+<div class="cursor-dot" aria-hidden="true"></div>
+<div class="curtain" id="curtain" aria-hidden="true"><svg><use href="#sym"/></svg></div>
+
+<!-- ============ NAV ============ -->
+<header class="nav" id="nav">
+  <div class="nav-bar">
+    <a class="logo" href="index.html" aria-label="fundación conecta+, inicio">
+      <svg aria-hidden="true"><use href="#sym"/></svg>
+      <span><b>conecta</b><i>+</i></span>
+    </a>
+    <ul class="nav-links">
+      <li class="has-drop">
+        <a href="nosotros.html" aria-haspopup="true">Nosotros</a>
+        <div class="drop"><div class="drop-panel"><ul>
+          <li><a href="nosotros.html#quienes-somos">Quiénes somos</a></li>
+          <li><a href="nosotros.html#historia">Historia</a></li>
+          <li><a href="nosotros.html#equipos">Equipos</a></li>
+          <li><a href="nosotros.html#colaboraciones">Colaboraciones</a></li>
+        </ul></div></div>
+      </li>
+      <li class="has-drop">
+        <a href="mision.html" aria-haspopup="true">Misión</a>
+        <div class="drop"><div class="drop-panel"><ul>
+          <li><a href="mision.html#tercer-sector">Tercer sector</a></li>
+          <li><a href="mision.html#transformacion-digital">Transformación digital e innovación</a></li>
+          <li><a href="mision.html#voluntariado">Voluntariado</a></li>
+          <li><a href="mision.html#justicia-educativa">Justicia educativa</a></li>
+          <li><a href="mision.html#inclusion-digital">Inclusión digital</a></li>
+          <li><a href="mision.html#formacion-tic">Formación TIC e inserción laboral</a></li>
+          <li><a href="mision.html#liderazgo-juvenil">Participación y liderazgo juvenil</a></li>
+        </ul></div></div>
+      </li>
+      <li class="has-drop">
+        <a href="proyectos.html" aria-haspopup="true">Proyectos</a>
+        <div class="drop"><div class="drop-panel wide">
+          <ul>
+            <li><a href="proyectos.html#nacionales">Proyectos nacionales</a></li>
+            <li><a href="proyectos.html#internacionales">Proyectos internacionales</a></li>
+          </ul>
+          <a class="drop-feature" href="proyectos.html">
+            <img src="img/vinculo%20manos.avif" alt="" loading="lazy">
+            <span><b>Proyectos que dejan huella</b><small>Iniciativas en España y en el resto del mundo</small></span>
+          </a>
+        </div></div>
+      </li>
+      <li class="has-drop">
+        <a href="recursos.html" aria-haspopup="true">Recursos</a>
+        <div class="drop"><div class="drop-panel"><ul>
+          <li><a href="recursos.html#blog">Blog y noticias</a></li>
+          <li><a href="recursos.html#publicaciones">Publicaciones</a></li>
+          <li><a href="recursos.html#transparencia">Transparencia</a></li>
+          <li><a href="recursos.html#campus">Campus Virtual</a></li>
+        </ul></div></div>
+      </li>
+      <li><a href="contacto.html">Contacto</a></li>
+    </ul>
+    <a class="btn btn-tec nav-cta magnetic" href="contacto.html#participa">Únete a la red <span class="arr">→</span></a>
+    <button class="burger" id="burger" aria-expanded="false" aria-controls="mmenu" aria-label="Abrir menú"><div><span></span><span></span></div></button>
+  </div>
+</header>
+
+<div class="mmenu" id="mmenu">
+  <a class="big" href="nosotros.html">Nosotros</a>
+  <div class="subs"><a href="nosotros.html#quienes-somos">Quiénes somos</a><a href="nosotros.html#historia">Historia</a><a href="nosotros.html#equipos">Equipos</a><a href="nosotros.html#colaboraciones">Colaboraciones</a></div>
+  <a class="big" href="mision.html"><em>Misión</em></a>
+  <div class="subs"><a href="mision.html#tercer-sector">Tercer sector</a><a href="mision.html#transformacion-digital">Transformación digital</a><a href="mision.html#voluntariado">Voluntariado</a><a href="mision.html#justicia-educativa">Justicia educativa</a><a href="mision.html#inclusion-digital">Inclusión digital</a><a href="mision.html#formacion-tic">Formación TIC</a><a href="mision.html#liderazgo-juvenil">Liderazgo juvenil</a></div>
+  <a class="big" href="proyectos.html">Proyectos</a>
+  <div class="subs"><a href="proyectos.html#nacionales">Nacionales</a><a href="proyectos.html#internacionales">Internacionales</a></div>
+  <a class="big" href="recursos.html">Recursos</a>
+  <div class="subs"><a href="recursos.html#blog">Blog</a><a href="recursos.html#publicaciones">Publicaciones</a><a href="recursos.html#transparencia">Transparencia</a><a href="recursos.html#campus">Campus Virtual</a></div>
+  <a class="big" href="contacto.html">Contacto</a>
+  <a class="btn btn-tec" href="contacto.html#participa">Únete a la red <span class="arr">→</span></a>
+</div>
+
+<main id="top">
+  <section class="page-hero" aria-labelledby="page-h">
+    <div class="hero-media"><img src="img/tech.jpg" alt="" fetchpriority="high" style="object-position:center 30%"></div>
+    <div class="wrap">
+      <nav class="crumbs fade-up" aria-label="Ruta"><a href="index.html">Inicio</a><span aria-hidden="true">/</span><span>Proyectos</span></nav>
+      <h1 id="page-h"><span class="line"><span>Proyectos que</span></span><span class="line"><span>dejan <em>huella.</em></span></span></h1>
+      <div class="page-hero-foot fade-up">
+        <p>Iniciativas en España y en el resto del mundo para que la tecnología abra puertas en lugar de cerrarlas.</p>
+        <div class="anchors"><a href="#nacionales">Nacionales</a><a href="#internacionales">Internacionales</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pad" id="nacionales" aria-labelledby="nac-h">
+    <div class="wrap">
+      <div class="head">
+        <div>
+          <span class="kicker">Proyectos nacionales</span>
+          <h2 class="h2" id="nac-h" data-lines style="margin-top:22px"><span class="line"><span>En nuestras</span></span><span class="line"><span><em>cuatro sedes.</em></span></span></h2>
+        </div>
+        <p data-reveal>Andalucía, Madrid, Cataluña y Galicia: proyectos cercanos, diseñados con cada comunidad.</p>
+      </div>
+      <div class="filters" data-filter-group="#pgridNac" role="group" aria-label="Filtrar proyectos">
+        <button type="button" data-filter="all" aria-pressed="true">Todos</button>
+        <button type="button" data-filter="tercer" aria-pressed="false">Tercer sector</button>
+        <button type="button" data-filter="formacion" aria-pressed="false">Formación</button>
+        <button type="button" data-filter="infancia" aria-pressed="false">Infancia y juventud</button>
+        <button type="button" data-filter="comunidad" aria-pressed="false">Comunidad</button>
+      </div>
+      <div class="pgrid" id="pgridNac">
+        <article class="card" data-cat="tercer" data-reveal><div class="card-img"><img src="img/news-tercer-sector.jpg" alt="Dos personas revisando código en un portátil" loading="lazy"><span class="card-tag">Tercer sector</span></div><h3>SAAD: asesoría digital gratuita para entidades sociales</h3><p>Acompañamiento para que las entidades sociales den el salto digital sin coste.</p></article>
+        <article class="card" data-cat="formacion" data-reveal style="--d:.08s"><div class="card-img"><img src="img/news-formacion.jpg" alt="Grupo de personas aprendiendo con portátiles" loading="lazy"><span class="card-tag">Formación</span></div><h3>Curso de TRIC aplicadas a la educación no formal</h3><p>Formación en Madrid para educadores que quieren incorporar la tecnología a su trabajo.</p></article>
+        <article class="card" data-cat="infancia" data-reveal style="--d:.16s"><div class="card-img"><img src="img/news-campamentos.jpg" alt="Niñas y niños en un aula durante una actividad" loading="lazy"><span class="card-tag">Infancia y juventud</span></div><h3>Campamentos tecnológicos de verano</h3><p>Programación, robótica y creatividad en Madrid y Galicia durante el verano.</p></article>
+        <article class="card" data-cat="comunidad" data-reveal><div class="card-img"><img src="img/news-voluntariado.jpg" alt="Persona voluntaria con camiseta de voluntariado" loading="lazy"><span class="card-tag">Comunidad</span></div><h3>Red de personas voluntarias</h3><p>Una nueva red que acompaña a las personas que más lo necesitan en su día a día digital.</p></article>
+        <article class="card" data-cat="tercer" data-reveal style="--d:.08s"><div class="card-img"><img src="img/news-ens.jpg" alt="Placa de circuito iluminada" loading="lazy"><span class="card-tag">Calidad</span></div><h3>Certificación en el Esquema Nacional de Seguridad</h3><p>Garantizamos la seguridad de la información de las personas y entidades con las que trabajamos.</p></article>
+        <article class="card" data-cat="formacion" data-reveal style="--d:.16s"><div class="card-img"><img src="img/tech.jpg" alt="Manos en un teclado con datos luminosos" loading="lazy"><span class="card-tag">Formación</span></div><h3>Itinerarios de competencias digitales</h3><p>Formación orientada a la inserción laboral, presencial y en nuestro Campus Virtual.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="people" aria-hidden="true" style="padding-block:0 clamp(40px,6vw,80px)">
+    <div class="ticker" data-speed="-0.35"></div>
+  </section>
+
+  <section class="pad intl" id="internacionales" aria-labelledby="int-h" style="background:var(--bg-2)">
+    <div class="wrap">
+      <div class="intl-sticky">
+        <span class="kicker">Proyectos internacionales</span>
+        <h2 class="h2" id="int-h" data-lines><span class="line"><span>Una red que</span></span><span class="line"><span><em>cruza fronteras.</em></span></span></h2>
+        <div class="intl-media" data-clip><img src="img/conecta.jpg" alt="Figuras de personas conectadas por hilos de colores" loading="lazy"></div>
+      </div>
+      <ol class="intl-list" style="list-style:none;margin:0;padding:0">
+        <li data-reveal><span class="n">01 — Europa</span><h3>ALL DIGITAL</h3><p>Red europea que impulsa la inclusión y las competencias digitales para todas las personas.</p></li>
+        <li data-reveal><span class="n">02 — Erasmus+</span><h3>Inclusión digital en Europa</h3><p>Nuevo proyecto Erasmus+ para compartir metodologías de inclusión digital con entidades europeas.</p></li>
+        <li data-reveal><span class="n">03 — Iberoamérica</span><h3>La Liga Iberoamericana</h3><p>Cooperación con entidades de América Latina en educación y acción social.</p></li>
+        <li data-reveal><span class="n">04 — Juventud</span><h3>Movilidad juvenil</h3><p>Intercambios que permiten a jóvenes vivir experiencias de participación en otros países.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <a class="next" href="recursos.html">
+    <div class="wrap">
+      <span class="kicker">Siguiente</span>
+      <strong>Explorar <em>recursos</em> <i aria-hidden="true">→</i></strong>
+    </div>
+  </a>
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <a class="logo" href="index.html" aria-label="fundación conecta+, inicio"><svg aria-hidden="true"><use href="#sym"/></svg><span><b>conecta</b><i>+</i></span></a>
+        <p>Entidad sin ánimo de lucro dedicada a la educación, la inclusión digital y la acción social desde 1995.</p>
+        <div class="tag">Participar · Aprender · Transformar</div>
+        <div class="social">
+          <a href="#" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.6"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor"/></svg></a>
+          <a href="#" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.6"/><line x1="7.5" y1="10" x2="7.5" y2="17" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="7.5" cy="7" r="1" fill="currentColor"/><path d="M11.5 17v-4.2c0-1.3 1-2.3 2.3-2.3s2.2 1 2.2 2.3V17" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></a>
+          <a href="#" aria-label="X / Twitter"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 4l16 16M20 4L4 20" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></a>
+        </div>
+      </div>
+      <div class="foot-col" role="navigation" aria-label="Organización">
+        <h4>Organización</h4>
+        <ul><li><a href="nosotros.html">Quiénes somos</a></li><li><a href="nosotros.html#equipos">Equipo y patronato</a></li><li><a href="recursos.html#transparencia">Transparencia</a></li><li><a href="recursos.html#publicaciones">Memoria anual</a></li></ul>
+      </div>
+      <div class="foot-col" role="navigation" aria-label="Explora">
+        <h4>Explora</h4>
+        <ul><li><a href="mision.html">Misión</a></li><li><a href="proyectos.html">Proyectos</a></li><li><a href="recursos.html#blog">Blog</a></li><li><a href="recursos.html#campus">Campus Virtual</a></li></ul>
+      </div>
+      <div class="foot-col">
+        <h4>Contacto</h4>
+        <address>C/ Riu Anoia, 42-54<br>08820 El Prat de Llobregat<br><a href="tel:+34934745546">934 745 546</a><br><a href="mailto:info@conectamas.org">info@conectamas.org</a></address>
+      </div>
+    </div>
+    <div class="wordmark" aria-hidden="true">conecta<i>+</i></div>
+    <div class="foot-bottom">
+      <span>© 2026 Fundación Conecta+ · conectamas.org</span>
+      <nav aria-label="Legal"><a href="#">Aviso legal</a><a href="#">Privacidad</a><a href="#">Cookies</a><a href="#">Canal ético</a></nav>
+    </div>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="js/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nosotros · fundación conecta+</title>
+<meta name="description" content="Quiénes somos, historia, valores, equipos y colaboraciones de la fundación conecta+.">
+<meta name="theme-color" content="#0B1510">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..800&family=Fredoka:wght@500..700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add('js')</script>
+<link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="sym" viewBox="0 0 64 64">
+    <circle cx="21" cy="15" r="8" fill="var(--tec)"/>
+    <rect x="8" y="26" width="26" height="30" rx="13" fill="var(--tec)"/>
+    <g transform="rotate(180 32 32)">
+      <circle cx="21" cy="15" r="8" fill="var(--mag-solid)"/>
+      <rect x="8" y="26" width="26" height="30" rx="13" fill="var(--mag-solid)"/>
+    </g>
+  </symbol>
+</svg>
+
+<div class="grain" aria-hidden="true"></div>
+<div class="cursor" aria-hidden="true"><span>Ver</span></div>
+<div class="cursor-dot" aria-hidden="true"></div>
+<div class="curtain" id="curtain" aria-hidden="true"><svg><use href="#sym"/></svg></div>
+
+<!-- ============ NAV ============ -->
+<header class="nav" id="nav">
+  <div class="nav-bar">
+    <a class="logo" href="index.html" aria-label="fundación conecta+, inicio">
+      <svg aria-hidden="true"><use href="#sym"/></svg>
+      <span><b>conecta</b><i>+</i></span>
+    </a>
+    <ul class="nav-links">
+      <li class="has-drop">
+        <a href="nosotros.html" aria-haspopup="true">Nosotros</a>
+        <div class="drop"><div class="drop-panel"><ul>
+          <li><a href="nosotros.html#quienes-somos">Quiénes somos</a></li>
+          <li><a href="nosotros.html#historia">Historia</a></li>
+          <li><a href="nosotros.html#equipos">Equipos</a></li>
+          <li><a href="nosotros.html#colaboraciones">Colaboraciones</a></li>
+        </ul></div></div>
+      </li>
+      <li class="has-drop">
+        <a href="mision.html" aria-haspopup="true">Misión</a>
+        <div class="drop"><div class="drop-panel"><ul>
+          <li><a href="mision.html#tercer-sector">Tercer sector</a></li>
+          <li><a href="mision.html#transformacion-digital">Transformación digital e innovación</a></li>
+          <li><a href="mision.html#voluntariado">Voluntariado</a></li>
+          <li><a href="mision.html#justicia-educativa">Justicia educativa</a></li>
+          <li><a href="mision.html#inclusion-digital">Inclusión digital</a></li>
+          <li><a href="mision.html#formacion-tic">Formación TIC e inserción laboral</a></li>
+          <li><a href="mision.html#liderazgo-juvenil">Participación y liderazgo juvenil</a></li>
+        </ul></div></div>
+      </li>
+      <li class="has-drop">
+        <a href="proyectos.html" aria-haspopup="true">Proyectos</a>
+        <div class="drop"><div class="drop-panel wide">
+          <ul>
+            <li><a href="proyectos.html#nacionales">Proyectos nacionales</a></li>
+            <li><a href="proyectos.html#internacionales">Proyectos internacionales</a></li>
+          </ul>
+          <a class="drop-feature" href="proyectos.html">
+            <img src="img/vinculo%20manos.avif" alt="" loading="lazy">
+            <span><b>Proyectos que dejan huella</b><small>Iniciativas en España y en el resto del mundo</small></span>
+          </a>
+        </div></div>
+      </li>
+      <li class="has-drop">
+        <a href="recursos.html" aria-haspopup="true">Recursos</a>
+        <div class="drop"><div class="drop-panel"><ul>
+          <li><a href="recursos.html#blog">Blog y noticias</a></li>
+          <li><a href="recursos.html#publicaciones">Publicaciones</a></li>
+          <li><a href="recursos.html#transparencia">Transparencia</a></li>
+          <li><a href="recursos.html#campus">Campus Virtual</a></li>
+        </ul></div></div>
+      </li>
+      <li><a href="contacto.html">Contacto</a></li>
+    </ul>
+    <a class="btn btn-tec nav-cta magnetic" href="contacto.html#participa">Únete a la red <span class="arr">→</span></a>
+    <button class="burger" id="burger" aria-expanded="false" aria-controls="mmenu" aria-label="Abrir menú"><div><span></span><span></span></div></button>
+  </div>
+</header>
+
+<div class="mmenu" id="mmenu">
+  <a class="big" href="nosotros.html">Nosotros</a>
+  <div class="subs"><a href="nosotros.html#quienes-somos">Quiénes somos</a><a href="nosotros.html#historia">Historia</a><a href="nosotros.html#equipos">Equipos</a><a href="nosotros.html#colaboraciones">Colaboraciones</a></div>
+  <a class="big" href="mision.html"><em>Misión</em></a>
+  <div class="subs"><a href="mision.html#tercer-sector">Tercer sector</a><a href="mision.html#transformacion-digital">Transformación digital</a><a href="mision.html#voluntariado">Voluntariado</a><a href="mision.html#justicia-educativa">Justicia educativa</a><a href="mision.html#inclusion-digital">Inclusión digital</a><a href="mision.html#formacion-tic">Formación TIC</a><a href="mision.html#liderazgo-juvenil">Liderazgo juvenil</a></div>
+  <a class="big" href="proyectos.html">Proyectos</a>
+  <div class="subs"><a href="proyectos.html#nacionales">Nacionales</a><a href="proyectos.html#internacionales">Internacionales</a></div>
+  <a class="big" href="recursos.html">Recursos</a>
+  <div class="subs"><a href="recursos.html#blog">Blog</a><a href="recursos.html#publicaciones">Publicaciones</a><a href="recursos.html#transparencia">Transparencia</a><a href="recursos.html#campus">Campus Virtual</a></div>
+  <a class="big" href="contacto.html">Contacto</a>
+  <a class="btn btn-tec" href="contacto.html#participa">Únete a la red <span class="arr">→</span></a>
+</div>
+
+<main id="top">
+  <section class="page-hero" aria-labelledby="page-h">
+    <div class="hero-media"><img src="img/news-internacional.jpg" alt="" fetchpriority="high" style="object-position:center 40%"></div>
+    <div class="wrap">
+      <nav class="crumbs fade-up" aria-label="Ruta"><a href="index.html">Inicio</a><span aria-hidden="true">/</span><span>Nosotros</span></nav>
+      <h1 id="page-h"><span class="line"><span>Somos</span></span><span class="line"><span><em>conecta+.</em></span></span></h1>
+      <div class="page-hero-foot fade-up">
+        <p>Una fundación que lleva desde 1995 tendiendo puentes entre la tecnología y las personas que más lo necesitan.</p>
+        <div class="anchors"><a href="#quienes-somos">Quiénes somos</a><a href="#historia">Historia</a><a href="#valores">Valores</a><a href="#equipos">Equipos</a><a href="#colaboraciones">Colaboraciones</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pad" id="quienes-somos" aria-labelledby="qs-h">
+    <div class="wrap split">
+      <div class="prose">
+        <span class="kicker">Quiénes somos</span>
+        <h2 class="h2" id="qs-h" data-lines><span class="line"><span>Tecnología con</span></span><span class="line"><span><em>propósito social.</em></span></span></h2>
+        <p class="big" data-reveal>Somos una entidad sin ánimo de lucro dedicada a la educación, la inclusión digital y la acción social.</p>
+        <p data-reveal>Trabajamos para que la tecnología sea una vía real de participación, aprendizaje y derechos — no una barrera más. Lo hacemos desde la proximidad: escuchando a las comunidades, diseñando con ellas y acompañándolas en el tiempo.</p>
+        <p data-reveal>Nuestro trabajo se sostiene sobre tres verbos: participar, aprender y transformar.</p>
+      </div>
+      <div class="split-media" data-clip><img src="img/vinculo%20manos.avif" alt="Dos manos digitales a punto de tocarse" loading="lazy"></div>
+    </div>
+  </section>
+
+  <section aria-label="Cifras">
+    <div class="stats">
+      <div class="stat" data-reveal><b><span data-count="1995">0</span></b><span>año de nacimiento de la fundación</span></div>
+      <div class="stat" data-reveal style="--d:.08s"><b><span data-count="4">0</span></b><span>sedes: Andalucía, Madrid, Cataluña y Galicia</span></div>
+      <div class="stat" data-reveal style="--d:.16s"><b><span data-count="7">0</span></b><span>líneas de trabajo</span></div>
+      <div class="stat" data-reveal style="--d:.24s"><b><span data-count="8">0</span></b><span>colectivos con los que trabajamos</span></div>
+    </div>
+  </section>
+
+  <section class="pad" id="historia" aria-labelledby="hist-h">
+    <div class="wrap">
+      <div class="head">
+        <div>
+          <span class="kicker">Historia</span>
+          <h2 class="h2" id="hist-h" data-lines style="margin-top:22px"><span class="line"><span>Tres décadas</span></span><span class="line"><span><em>conectando.</em></span></span></h2>
+        </div>
+        <p data-reveal>De una pequeña iniciativa a una red con presencia en cuatro comunidades autónomas y en proyectos europeos e iberoamericanos.</p>
+      </div>
+      <div class="timeline">
+        <div class="tl" data-reveal><b>1995</b><h3>Nace conecta+</h3><p>La fundación arranca con una idea sencilla: que el acceso a la tecnología no dependa del lugar donde naces ni de tus recursos.</p></div>
+        <div class="tl" data-reveal><b>Red</b><h3>Presencia en cuatro territorios</h3><p>Abrimos sedes en Andalucía, Madrid, Cataluña y Galicia para trabajar cerca de cada comunidad.</p></div>
+        <div class="tl" data-reveal><b>Europa</b><h3>Una red que cruza fronteras</h3><p>Nos sumamos a ALL DIGITAL, a La Liga Iberoamericana y a proyectos Erasmus+ para ampliar nuestro impacto.</p></div>
+        <div class="tl" data-reveal><b>Calidad</b><h3>Certificados en lo que importa</h3><p>Contamos con las normas ISO 9001, ISO 14001 e ISO 27001 y con el Esquema Nacional de Seguridad (ENS).</p></div>
+        <div class="tl" data-reveal><b>Hoy</b><h3>Siete líneas, un propósito</h3><p>Seguimos trabajando para que nadie quede fuera del mundo digital.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pad" id="valores" aria-labelledby="val-h" style="background:var(--bg-2)">
+    <div class="wrap">
+      <div class="head">
+        <div>
+          <span class="kicker">Valores</span>
+          <h2 class="h2" id="val-h" data-lines style="margin-top:22px"><span class="line"><span>Lo que nos</span></span><span class="line"><span><em>mueve.</em></span></span></h2>
+        </div>
+      </div>
+      <div class="tiles c3">
+        <div class="tile" data-reveal><span class="n">01</span><svg class="sym" aria-hidden="true"><use href="#sym"/></svg><h3>Participar</h3><p>Impulsamos el liderazgo juvenil y el voluntariado como motor de comunidades activas.</p></div>
+        <div class="tile" data-reveal style="--d:.08s"><span class="n">02</span><svg class="sym" aria-hidden="true"><use href="#sym"/></svg><h3>Aprender</h3><p>Formación TIC y digital al alcance de todas las edades y colectivos.</p></div>
+        <div class="tile" data-reveal style="--d:.16s"><span class="n">03</span><svg class="sym" aria-hidden="true"><use href="#sym"/></svg><h3>Transformar</h3><p>Convertimos el conocimiento en oportunidades reales de inclusión y justicia educativa.</p></div>
+        <div class="tile" data-reveal><span class="n">04</span><svg class="sym" aria-hidden="true"><use href="#sym"/></svg><h3>Proximidad</h3><p>Diseñamos cada programa desde la escucha a las personas con las que trabajamos.</p></div>
+        <div class="tile" data-reveal style="--d:.08s"><span class="n">05</span><svg class="sym" aria-hidden="true"><use href="#sym"/></svg><h3>Transparencia</h3><p>Rendimos cuentas de lo que hacemos y de cómo lo hacemos.</p></div>
+        <div class="tile" data-reveal style="--d:.16s"><span class="n">06</span><svg class="sym" aria-hidden="true"><use href="#sym"/></svg><h3>Calidad</h3><p>Procesos certificados y seguros para cuidar a las personas y sus datos.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pad" id="equipos" aria-labelledby="eq-h">
+    <div class="wrap">
+      <div class="head">
+        <div>
+          <span class="kicker">Equipos</span>
+          <h2 class="h2" id="eq-h" data-lines style="margin-top:22px"><span class="line"><span>Las personas</span></span><span class="line"><span>detrás de <em>la red.</em></span></span></h2>
+        </div>
+        <p data-reveal>Un equipo multidisciplinar que combina educación, tecnología y acción social.</p>
+      </div>
+      <div class="tiles c4">
+        <div class="tile" data-reveal><span class="n">Gobierno</span><h3>Patronato</h3><p>Define la estrategia de la fundación y vela por el cumplimiento de sus fines.</p></div>
+        <div class="tile" data-reveal style="--d:.08s"><span class="n">Gestión</span><h3>Dirección</h3><p>Coordina las sedes, los programas y las alianzas de la entidad.</p></div>
+        <div class="tile" data-reveal style="--d:.16s"><span class="n">Territorio</span><h3>Equipos técnicos</h3><p>Educadores, formadores y técnicos que acompañan cada proyecto sobre el terreno.</p></div>
+        <div class="tile" data-reveal style="--d:.24s"><span class="n">Comunidad</span><h3>Voluntariado</h3><p>Personas que multiplican nuestro impacto en cada comunidad.</p><a class="more" href="contacto.html#participa">Hazte voluntario <span>→</span></a></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pad" id="colaboraciones" aria-labelledby="col-h" style="padding-top:0">
+    <div class="wrap split rev">
+      <div class="prose">
+        <span class="kicker">Colaboraciones</span>
+        <h2 class="h2" id="col-h" data-lines><span class="line"><span>Mejor</span></span><span class="line"><span><em>en red.</em></span></span></h2>
+        <p data-reveal>Nada de lo que hacemos sería posible sin las entidades, administraciones y empresas que caminan con nosotros.</p>
+        <ul class="ticks" data-reveal>
+          <li>ALL DIGITAL — red europea de inclusión y competencias digitales</li>
+          <li>La Liga Iberoamericana — cooperación con América Latina</li>
+          <li>Programas Erasmus+ y fondos europeos</li>
+          <li>Entidades del tercer sector y administraciones públicas</li>
+          <li>Empresas comprometidas con la inclusión digital</li>
+        </ul>
+        <div><a class="btn btn-ghost magnetic" href="contacto.html#participa">Colabora con nosotros <span class="arr">→</span></a></div>
+      </div>
+      <div class="split-media wide" data-clip><img src="img/conecta.jpg" alt="Figuras de personas conectadas por hilos de colores" loading="lazy"></div>
+    </div>
+  </section>
+
+  <a class="next" href="mision.html">
+    <div class="wrap">
+      <span class="kicker">Siguiente</span>
+      <strong>Nuestra <em>misión</em> <i aria-hidden="true">→</i></strong>
+    </div>
+  </a>
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <a class="logo" href="index.html" aria-label="fundación conecta+, inicio"><svg aria-hidden="true"><use href="#sym"/></svg><span><b>conecta</b><i>+</i></span></a>
+        <p>Entidad sin ánimo de lucro dedicada a la educación, la inclusión digital y la acción social desde 1995.</p>
+        <div class="tag">Participar · Aprender · Transformar</div>
+        <div class="social">
+          <a href="#" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.6"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor"/></svg></a>
+          <a href="#" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.6"/><line x1="7.5" y1="10" x2="7.5" y2="17" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="7.5" cy="7" r="1" fill="currentColor"/><path d="M11.5 17v-4.2c0-1.3 1-2.3 2.3-2.3s2.2 1 2.2 2.3V17" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></a>
+          <a href="#" aria-label="X / Twitter"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 4l16 16M20 4L4 20" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></a>
+        </div>
+      </div>
+      <div class="foot-col" role="navigation" aria-label="Organización">
+        <h4>Organización</h4>
+        <ul><li><a href="nosotros.html">Quiénes somos</a></li><li><a href="nosotros.html#equipos">Equipo y patronato</a></li><li><a href="recursos.html#transparencia">Transparencia</a></li><li><a href="recursos.html#publicaciones">Memoria anual</a></li></ul>
+      </div>
+      <div class="foot-col" role="navigation" aria-label="Explora">
+        <h4>Explora</h4>
+        <ul><li><a href="mision.html">Misión</a></li><li><a href="proyectos.html">Proyectos</a></li><li><a href="recursos.html#blog">Blog</a></li><li><a href="recursos.html#campus">Campus Virtual</a></li></ul>
+      </div>
+      <div class="foot-col">
+        <h4>Contacto</h4>
+        <address>C/ Riu Anoia, 42-54<br>08820 El Prat de Llobregat<br><a href="tel:+34934745546">934 745 546</a><br><a href="mailto:info@conectamas.org">info@conectamas.org</a></address>
+      </div>
+    </div>
+    <div class="wordmark" aria-hidden="true">conecta<i>+</i></div>
+    <div class="foot-bottom">
+      <span>© 2026 Fundación Conecta+ · conectamas.org</span>
+      <nav aria-label="Legal"><a href="#">Aviso legal</a><a href="#">Privacidad</a><a href="#">Cookies</a><a href="#">Canal ético</a></nav>
+    </div>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="js/site.js"></script>
+</body>
+</html>
