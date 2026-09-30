@@ -17,10 +17,58 @@
     var raf = function(t){lenis.raf(t);requestAnimationFrame(raf)};
     requestAnimationFrame(raf);
   }
-  var scrollToTarget = function(el){
-    if(lenis){lenis.scrollTo(el,{offset:-90,duration:1.6})}
-    else{var y = el===0?0:el.getBoundingClientRect().top+window.scrollY-90;window.scrollTo({top:y,behavior:reduce?'auto':'smooth'})}
+  // Al saltar a una sección, alineamos su etiqueta/título (no el borde de la sección,
+  // que tiene mucho padding) justo debajo del menú. offsetTop ignora las transformaciones
+  // de las animaciones de entrada, así que la posición es la final.
+  var ANCHOR_GAP = 110;
+  var docTop = function(node){
+    var y = 0;
+    while(node){y += node.offsetTop; node = node.offsetParent}
+    return y;
   };
+  // inicio real del contenido: el primer elemento visible dentro del .wrap de la sección
+  // (título, foto o lo que quede más arriba), sin contar el padding de la sección
+  var anchorY = function(el){
+    var box = el.querySelector(':scope > .wrap') || el;
+    var top = Infinity;
+    Array.prototype.forEach.call(box.children, function(k){
+      if(k.offsetParent===null || k.classList.contains('sr-only')){return}
+      top = Math.min(top, docTop(k));
+    });
+    if(!isFinite(top)){top = docTop(el)}
+    return Math.max(0, top - ANCHOR_GAP);
+  };
+  var scrollToTarget = function(el){
+    var y = el===0 ? 0 : anchorY(el);
+    if(lenis){lenis.scrollTo(y,{duration:1.6})}
+    else{window.scrollTo({top:y,behavior:reduce?'auto':'smooth'})}
+  };
+
+  // Llegada desde otra página con #ancla: corregimos el salto nativo del navegador
+  // y lo repetimos cuando terminan de cargar las fuentes y las imágenes.
+  var hashEl = null;
+  try{hashEl = location.hash.length>1 ? document.querySelector(decodeURIComponent(location.hash)) : null}catch(err){}
+  if(hashEl){
+    // sin el # en la URL el navegador no vuelve a aplicar su propio salto al terminar la carga
+    var hash = location.hash;
+    if('scrollRestoration' in history){history.scrollRestoration = 'manual'}
+    history.replaceState(null,'',location.pathname+location.search);
+    var userMoved = false;
+    ['wheel','touchstart','keydown'].forEach(function(ev){window.addEventListener(ev,function(){userMoved=true},{once:true,passive:true})});
+    var jumpToHash = function(){
+      if(userMoved){return}
+      var y = anchorY(hashEl);
+      if(lenis){lenis.scrollTo(y,{immediate:true,force:true})}
+      else{window.scrollTo(0,y)}
+    };
+    jumpToHash();
+    requestAnimationFrame(jumpToHash);
+    if(document.fonts && document.fonts.ready){document.fonts.ready.then(jumpToHash)}
+    window.addEventListener('load',function(){
+      jumpToHash();
+      setTimeout(function(){jumpToHash();history.replaceState(null,'',location.pathname+location.search+hash)},150);
+    });
+  }
 
   /* ---------- navegación entre páginas ---------- */
   var curtain = $('curtain');
