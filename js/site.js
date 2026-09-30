@@ -174,7 +174,7 @@
       if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target)}
     });
   },{rootMargin:'0px 0px -12% 0px'});
-  document.querySelectorAll('[data-reveal],[data-lines],[data-clip]').forEach(function(el){io.observe(el)});
+  document.querySelectorAll('[data-reveal],[data-lines],[data-clip],.wordmark').forEach(function(el){io.observe(el)});
 
   /* ---------- contadores ---------- */
   var cio = new IntersectionObserver(function(entries){
@@ -230,6 +230,8 @@
 
   /* ---------- bucle de animación ---------- */
   var heroMedia = document.querySelector('.hero-media');
+  var footer = document.getElementById('footer');
+  var footInner = footer ? footer.querySelector('.foot-inner') : null;
   var y = window.scrollY, vel = 0, prevY = y;
   var frame = function(){
     y = lenis ? lenis.scroll : window.scrollY;
@@ -256,6 +258,15 @@
         if(tk._x > 0){tk._x -= w}
         tk.style.transform = 'translate3d('+tk._x+'px,0,0)';
       });
+    }
+
+    // el footer asoma desde debajo del contenido
+    if(footInner && !reduce){
+      var fr = footer.getBoundingClientRect();
+      if(fr.top < vh){
+        var fp = clamp((vh - fr.top)/Math.min(fr.height,vh),0,1);
+        footInner.style.transform = 'translate3d(0,'+((1-fp)*-140)+'px,0)';
+      }
     }
 
     onScrollNav(y);
@@ -442,6 +453,17 @@
       card.style.setProperty('--my',(e.clientY-r.top)+'px');
     });
   });
+
+  /* ---------- footer: año y foco sobre el logotipo ---------- */
+  document.querySelectorAll('[data-year]').forEach(function(el){el.textContent = new Date().getFullYear()});
+  var wm = document.querySelector('.wordmark');
+  if(wm && fine){
+    wm.addEventListener('mousemove',function(e){
+      var r = wm.getBoundingClientRect();
+      wm.style.setProperty('--mx',(e.clientX-r.left)+'px');
+      wm.style.setProperty('--my',(e.clientY-r.top)+'px');
+    });
+  }
 
   /* ---------- formularios (sin backend todavía) ---------- */
   document.querySelectorAll('form[data-msg]').forEach(function(form){
