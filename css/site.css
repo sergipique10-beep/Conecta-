@@ -836,3 +836,58 @@ footer{position:relative;z-index:1;display:flex;flex-direction:column;
 @media(max-width:700px){.foot-trust i{display:none}.wordmark{font-size:21vw}}
 .rl{white-space:nowrap}
 @media(max-width:480px){.roll{font-size:14px;gap:8px}.foot-nav{gap:28px 16px}}
+
+/* =========================================================
+   footer: mejoras de UX (formularios, cookies, acceso rápido)
+   ========================================================= */
+/* etiquetas de confianza enlazadas */
+.foot-trust a{padding:5px 11px;border-radius:100px;border:1px solid var(--line);font-size:11.5px;font-weight:500;color:var(--ink-dim);transition:border-color .4s,color .4s,background .4s}
+.foot-trust a:hover{border-color:var(--tec);color:var(--tec);background:rgba(196,242,29,.06)}
+.link-btn{background:none;border:none;padding:0;font:inherit;color:inherit;cursor:pointer;transition:color .3s}
+.link-btn:hover{color:var(--ink)}
+.foot-privacy{margin-top:10px;font-size:12px;color:var(--ink-dim)}
+.foot-privacy a{color:var(--ink-soft);text-decoration:underline;text-underline-offset:3px}
+.foot-privacy a:hover{color:var(--tec)}
+
+/* estados de formulario */
+.form-note.err{color:#FF8FB8!important}
+[aria-invalid="true"]{border-color:#FF8FB8!important}
+.foot-form-row:has([aria-invalid="true"]){border-color:#FF8FB8}
+.form:has([aria-invalid="true"]){border-color:#D0527F}
+.cta .form-note.err{color:#B0165F!important}
+.check:has([aria-invalid="true"]){color:#FF8FB8}
+.is-loading{position:relative;color:transparent!important;pointer-events:none}
+.is-loading>*{visibility:hidden}
+.is-loading::after{content:"";position:absolute;left:50%;top:50%;width:18px;height:18px;margin:-9px 0 0 -9px;border-radius:50%;
+  border:2px solid rgba(22,40,28,.25);border-top-color:var(--forest);animation:spin .7s linear infinite}
+.foot-form button.is-loading::after,.btn-mag.is-loading::after{border-color:rgba(241,245,238,.25);border-top-color:var(--ink)}
+
+/* barra de acceso rápido (solo móvil) */
+.quickbar{display:none}
+@media(max-width:760px){
+  .quickbar{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:85;display:grid;grid-template-columns:repeat(3,1fr);gap:4px;padding:6px;border-radius:20px;
+    background:rgba(15,30,22,.82);border:1px solid var(--line);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);
+    box-shadow:0 20px 40px -12px rgba(0,0,0,.6);transform:translateY(calc(100% + 30px));transition:transform .6s var(--ease)}
+  .quickbar.on{transform:none}
+  .quickbar a{display:flex;flex-direction:column;align-items:center;gap:4px;padding:9px 4px;border-radius:14px;font-size:12px;font-weight:500;color:var(--ink-soft);transition:background .3s,color .3s}
+  .quickbar a:active,.quickbar a:hover{background:rgba(196,242,29,.1);color:var(--tec)}
+  .quickbar svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+  .quickbar a:first-child{color:var(--tec)}
+}
+
+/* panel de cookies */
+.cookies{position:fixed;left:clamp(12px,2vw,24px);bottom:clamp(12px,2vw,24px);z-index:95;width:min(420px,calc(100vw - 24px));padding:24px;border-radius:24px;
+  background:rgba(15,30,22,.94);border:1px solid var(--line);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:0 30px 70px -20px rgba(0,0,0,.7);
+  opacity:0;transform:translateY(20px);transition:opacity .5s var(--ease),transform .6s var(--ease)}
+.cookies.on{opacity:1;transform:none}
+.cookies-title{font-family:var(--serif);font-style:italic;font-size:28px;line-height:1;color:var(--ink)}
+.cookies>p:not(.cookies-title){margin-top:10px;font-size:14px;color:var(--ink-soft)}
+.cookies-opts{display:grid;gap:8px;margin-top:16px}
+.cookie-opt{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;border:1px solid var(--line);cursor:pointer}
+.cookie-opt input{accent-color:var(--tec);width:18px;height:18px;flex:none}
+.cookie-opt span{display:flex;flex-direction:column;font-size:12.5px;color:var(--ink-dim)}
+.cookie-opt b{font-size:14px;font-weight:600;color:var(--ink)}
+.cookies-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.cookies-actions .btn{height:42px;padding:0 16px;font-size:13.5px;flex:1 1 auto}
+button.btn-ghost{background:transparent}
+.foot-cta .form-note{padding-left:0}

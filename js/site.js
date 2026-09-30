@@ -485,13 +485,103 @@
     });
   }
 
-  /* ---------- formularios (sin backend todavía) ---------- */
+  /* ---------- formularios (sin backend todavía) ----------
+     Validación con mensajes claros, estado de envío y confirmación.
+     Para conectarlo a un servicio real, sustituir el setTimeout por la petición. */
+  var errorFor = function(field){
+    var v = field.validity;
+    if(field.type==='checkbox'){return 'Acepta la política de privacidad para continuar.'}
+    if(v.valueMissing){return field.type==='email' ? 'Escribe tu correo electrónico.' : 'Este campo es obligatorio.'}
+    if(v.typeMismatch){return 'Revisa el formato del correo (ej.: nombre@dominio.com).'}
+    return 'Revisa este campo.';
+  };
   document.querySelectorAll('form[data-msg]').forEach(function(form){
     var note = form.parentElement.querySelector('.form-note');
+    var btn = form.querySelector('[type="submit"]');
+    var say = function(msg,kind){
+      if(!note){return}
+      note.textContent = msg;
+      note.classList.toggle('ok',kind==='ok');
+      note.classList.toggle('err',kind==='err');
+      note.setAttribute('role',kind==='err'?'alert':'status');
+    };
+    // al corregir un campo, se limpia su error
+    form.addEventListener('input',function(e){
+      if(e.target.getAttribute('aria-invalid')==='true' && e.target.checkValidity()){
+        e.target.removeAttribute('aria-invalid');
+        if(!form.querySelector('[aria-invalid="true"]')){say('','')}
+      }
+    });
+    form.addEventListener('change',function(e){if(e.target.type==='checkbox' && e.target.checked){e.target.removeAttribute('aria-invalid')}});
     form.addEventListener('submit',function(e){
       e.preventDefault();
-      if(note){note.textContent = form.dataset.msg;note.classList.add('ok')}
-      form.reset();
+      var fields = Array.prototype.slice.call(form.elements).filter(function(f){return f.willValidate});
+      var bad = null;
+      fields.forEach(function(f){
+        var ok = f.checkValidity();
+        if(ok){f.removeAttribute('aria-invalid')}
+        else{f.setAttribute('aria-invalid','true'); if(!bad){bad = f}}
+      });
+      if(bad){say(errorFor(bad),'err');bad.focus();return}
+      if(btn){btn.classList.add('is-loading');btn.disabled = true;btn.setAttribute('aria-busy','true')}
+      say('','');
+      setTimeout(function(){
+        if(btn){btn.classList.remove('is-loading');btn.disabled = false;btn.removeAttribute('aria-busy')}
+        say(form.dataset.msg,'ok');
+        form.reset();
+      },900);
     });
   });
+
+  /* ---------- panel de cookies ----------
+     La web aún no usa analítica, así que el panel no se abre solo.
+     Cuando se instale, poner COOKIE_AUTO = true para pedir consentimiento en la primera visita
+     y leer localStorage 'cm-cookies' ('all' | 'necessary' | 'custom:analytics') antes de cargarla. */
+  var COOKIE_AUTO = false;
+  var ck = $('cookies');
+  if(ck){
+    var ckAnalytics = $('ckAnalytics');
+    var readCk = function(){try{return localStorage.getItem('cm-cookies')}catch(err){return null}};
+    var saveCk = function(v){try{localStorage.setItem('cm-cookies',v)}catch(err){}};
+    var lastFocus = null;
+    var openCk = function(){
+      var cur = readCk();
+      ckAnalytics.checked = cur==='all' || cur==='custom:analytics';
+      lastFocus = document.activeElement;
+      ck.hidden = false;
+      requestAnimationFrame(function(){ck.classList.add('on')});
+      ck.querySelector('[data-cookie="all"]').focus({preventScroll:true});
+    };
+    var closeCk = function(){
+      ck.classList.remove('on');
+      setTimeout(function(){ck.hidden = true},450);
+      if(lastFocus && lastFocus.focus){lastFocus.focus({preventScroll:true})}
+    };
+    ck.querySelectorAll('[data-cookie]').forEach(function(b){
+      b.addEventListener('click',function(){
+        var k = b.dataset.cookie;
+        saveCk(k==='all' ? 'all' : k==='necessary' ? 'necessary' : (ckAnalytics.checked ? 'custom:analytics' : 'necessary'));
+        closeCk();
+      });
+    });
+    document.querySelectorAll('[data-cookie-open]').forEach(function(b){b.addEventListener('click',openCk)});
+    document.addEventListener('keydown',function(e){if(e.key==='Escape' && !ck.hidden){closeCk()}});
+    if(COOKIE_AUTO && !readCk()){setTimeout(openCk,2500)}
+  }
+
+  /* ---------- acceso rápido en móvil ----------
+     Aparece tras la primera pantalla y se retira cuando el footer (que ya tiene
+     estos datos) está a la vista o el menú está abierto. */
+  var qb = $('quickbar');
+  if(qb){
+    var footVisible = false;
+    if(footer){new IntersectionObserver(function(en){footVisible = en[0].isIntersecting;updQb()}).observe(footer)}
+    var updQb = function(){
+      var y2 = lenis ? lenis.scroll : window.scrollY;
+      qb.classList.toggle('on', y2 > window.innerHeight*.6 && !footVisible && !mmenu.classList.contains('open'));
+    };
+    window.addEventListener('scroll',updQb,{passive:true});
+    burger.addEventListener('click',updQb);
+    updQb();
+  }
 })();
