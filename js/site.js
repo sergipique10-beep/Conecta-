@@ -40,7 +40,7 @@
   };
   var scrollToTarget = function(el){
     var y = el===0 ? 0 : anchorY(el);
-    if(lenis){lenis.scrollTo(y,{duration:1.6})}
+    if(lenis){lenis.scrollTo(y,{duration: el===0 ? 1.1 : 1.6})}
     else{window.scrollTo({top:y,behavior:reduce?'auto':'smooth'})}
   };
 
@@ -171,7 +171,12 @@
   /* ---------- revelados ---------- */
   var io = new IntersectionObserver(function(entries){
     entries.forEach(function(en){
-      if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target)}
+      if(en.isIntersecting){
+        var t = en.target;
+        t.classList.add('in');io.unobserve(t);
+        // tras la entrada de las letras, el logotipo reacciona al instante al pasar el ratón
+        if(t.classList.contains('wordmark')){setTimeout(function(){t.classList.add('done')},1800)}
+      }
     });
   },{rootMargin:'0px 0px -12% 0px'});
   document.querySelectorAll('[data-reveal],[data-lines],[data-clip],.wordmark').forEach(function(el){io.observe(el)});
