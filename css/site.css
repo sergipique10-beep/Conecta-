@@ -879,3 +879,4 @@ button.btn-ghost{background:transparent}
 .fc-top.wrap{max-width:none;padding-inline:calc(clamp(12px,2vw,24px) + clamp(20px,2.6vw,36px))}
 @media(max-width:699px){.fc-panel{grid-template-columns:1fr 1fr}.fc-brand,.fc-news{grid-column:1/-1}.fc-center{padding-block:48px 32px}}
 footer::before{background:radial-gradient(55% 40% at 50% 32%,rgba(5,16,10,.45),transparent 75%),linear-gradient(180deg,rgba(5,16,10,.55) 0%,rgba(5,16,10,.15) 30%,rgba(5,16,10,.35) 55%,rgba(5,16,10,.85) 80%,#05100A 100%)}
+.news-rail{-webkit-user-select:none;user-select:none}

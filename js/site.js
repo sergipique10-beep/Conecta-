@@ -302,11 +302,57 @@
       railBar.style.transform = 'translateX('+(p*400)+'%)';
     };
     rail.addEventListener('scroll',updRail,{passive:true});updRail();
+    // arrastre con ratón (en táctil ya lo hace el scroll nativo)
     if(fine){
-      var down=false,sx=0,sl=0;
-      rail.addEventListener('pointerdown',function(e){if(e.pointerType!=='mouse'){return}down=true;sx=e.clientX;sl=rail.scrollLeft});
-      window.addEventListener('pointermove',function(e){if(!down){return}var dx=e.clientX-sx;if(Math.abs(dx)>4){rail.classList.add('drag')}rail.scrollLeft=sl-dx});
-      window.addEventListener('pointerup',function(){if(!down){return}down=false;rail.classList.remove('drag')});
+      var down=false,moved=false,sx=0,sl=0,lastX=0,lastT=0,vel=0,settleT=null;
+      // sin arrastre nativo de imágenes ni selección de texto
+      rail.querySelectorAll('img').forEach(function(im){im.draggable = false});
+      rail.addEventListener('dragstart',function(e){e.preventDefault()});
+      // posiciones de encaje de cada tarjeta
+      var snaps = function(){
+        var first = rail.firstElementChild.offsetLeft;
+        var max = rail.scrollWidth - rail.clientWidth;
+        return Array.prototype.map.call(rail.children,function(c){return Math.min(c.offsetLeft - first, max)});
+      };
+      rail.addEventListener('pointerdown',function(e){
+        if(e.pointerType!=='mouse' || e.button!==0){return}
+        e.preventDefault();
+        clearTimeout(settleT);
+        down=true;moved=false;sx=lastX=e.clientX;sl=rail.scrollLeft;lastT=performance.now();vel=0;
+        rail.classList.add('drag');
+      });
+      window.addEventListener('pointermove',function(e){
+        if(!down){return}
+        var dx = e.clientX-sx, now = performance.now();
+        if(Math.abs(dx)>4){moved=true}
+        rail.scrollLeft = sl-dx;
+        var dt = now-lastT;
+        if(dt>0){vel = lerp(vel,(lastX-e.clientX)/dt,.4)}   // px/ms en sentido del scroll
+        lastX = e.clientX; lastT = now;
+      });
+      var release = function(){
+        if(!down){return}
+        down=false;
+        if(performance.now()-lastT > 80){vel = 0}          // se paró antes de soltar
+        // inercia: proyectamos el movimiento y encajamos en la tarjeta más cercana a esa proyección
+        var cur = rail.scrollLeft, proj = cur + vel*260;
+        var pts = snaps(), start = sl, target = pts[0];
+        pts.forEach(function(p){if(Math.abs(p-proj) < Math.abs(target-proj)){target = p}});
+        // un tirón claro siempre avanza al menos una tarjeta en esa dirección
+        var dragDist = cur - start;
+        if(Math.abs(dragDist) > 40 && Math.abs(target - start) < 2){
+          var dir = dragDist > 0 ? 1 : -1;
+          var next = pts.filter(function(p){return dir>0 ? p>start+2 : p<start-2});
+          if(next.length){target = dir>0 ? next[0] : next[next.length-1]}
+        }
+        rail.scrollTo({left:target,behavior:reduce?'auto':'smooth'});
+        settleT = setTimeout(function(){rail.classList.remove('drag')},650);
+      };
+      window.addEventListener('pointerup',release);
+      window.addEventListener('pointercancel',release);
+      window.addEventListener('blur',release);
+      // tras arrastrar, el clic al soltar no activa nada de las tarjetas
+      rail.addEventListener('click',function(e){if(moved){e.preventDefault();e.stopPropagation();moved=false}},true);
     }
   }
 
