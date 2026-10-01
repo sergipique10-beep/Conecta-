@@ -267,7 +267,7 @@
       tickers.forEach(function(tk){
         var sp = +tk.dataset.speed;
         var w = tk.scrollWidth/3;
-        tk._x += sp*(1.2 + Math.abs(vel)*.6);
+        tk._x += sp*1.2;   // velocidad constante, sin acelerones con el scroll
         if(tk._x < -w){tk._x += w}
         if(tk._x > 0){tk._x -= w}
         tk.style.transform = 'translate3d('+tk._x+'px,0,0)';
@@ -288,6 +288,652 @@
     requestAnimationFrame(frame);
   };
   requestAnimationFrame(frame);
+
+  /* ---------- hero «Nadie fuera»: el símbolo hecho de personas ----------
+     Cientos de puntos forman el símbolo de conecta+. Alrededor flotan puntos grises
+     «fuera»; al acercar el cursor (o tocar) se conectan, se vuelven lima y se unen. */
+  var hc = $('heroNet');
+  if(hc){
+    var hx = hc.getContext('2d');
+    var heroEl = hc.parentElement;
+    var hint = $('heroHint'), hintText = $('heroHintText'), hCount = $('heroCount'), hTotal = $('heroTotal');
+    var HD = Math.min(window.devicePixelRatio||1,2);
+    var HW=0,HH=0,S=0,CX=0,CY=0,mob=false;
+    var pts=[],outs=[],connected=0,started=false,t0=0,allDone=false;
+    var hmx=-9999,hmy=-9999,hsmx=0,hsmy=0,heroOn=true;
+    var LIME='196,242,29',MAG='226,75,196',GREY='241,245,238';
+
+    // dibuja el símbolo en un lienzo auxiliar y devuelve puntos muestreados
+    var sampleSymbol = function(size,step){
+      var c = document.createElement('canvas'); c.width = c.height = Math.ceil(size);
+      var g = c.getContext('2d'), k = size/64;
+      var fig = function(color){
+        g.fillStyle = color;
+        g.beginPath(); g.arc(21*k,15*k,8*k,0,Math.PI*2); g.fill();
+        var x=8*k,y=26*k,w=26*k,h=30*k,r=13*k;
+        g.beginPath(); g.moveTo(x+r,y); g.arcTo(x+w,y,x+w,y+h,r); g.arcTo(x+w,y+h,x,y+h,r); g.arcTo(x,y+h,x,y,r); g.arcTo(x,y,x+w,y,r); g.fill();
+      };
+      fig('#f00');
+      g.save(); g.translate(32*k,32*k); g.rotate(Math.PI); g.translate(-32*k,-32*k); fig('#00f'); g.restore();
+      var d = g.getImageData(0,0,c.width,c.height).data, out = [];
+      for(var y=0;y<c.height;y+=step){
+        for(var x=0;x<c.width;x+=step){
+          var jx = x + (Math.random()-.5)*step*.6, jy = y + (Math.random()-.5)*step*.6;
+          var i = (Math.floor(jy)*c.width + Math.floor(jx))*4;
+          if(i<0 || i>=d.length || d[i+3]<128){continue}
+          out.push({x:jx - size/2, y:jy - size/2, c: d[i]>d[i+2] ? LIME : MAG});
+        }
+      }
+      return out;
+    };
+
+    var layout = function(){
+      var r = heroEl.getBoundingClientRect();
+      HW = r.width; HH = r.height; mob = HW < 900;
+      hc.width = HW*HD; hc.height = HH*HD; hx.setTransform(HD,0,0,HD,0,0);
+      S = mob ? Math.min(HW*.78, HH*.42) : Math.min(HH*.54, HW*.32);
+      CX = mob ? HW*.5 : HW*.755;
+      CY = mob ? HH*.36 : HH*.46;
+      var targets = sampleSymbol(S, Math.max(5, S/(mob?34:46)));
+      // reutiliza las partículas existentes al redimensionar
+      var old = pts; pts = [];
+      targets.forEach(function(t,i){
+        var p = old[i] || {x: Math.random()*HW, y: Math.random()<.5 ? -40 : HH+40, vx:0, vy:0, z: .55 + Math.random()*.9, d: Math.random()*.9};
+        p.tx = t.x; p.ty = t.y; p.c = t.c;
+        pts.push(p);
+      });
+      // puntos «fuera»: repartidos alrededor del símbolo, sin tapar el titular
+      if(!outs.length){
+        var n = mob ? 18 : 30;
+        for(var i=0;i<n;i++){
+          var a = Math.random()*Math.PI*2, rad = .62 + Math.random()*.55;
+          outs.push({a:a, rad:rad, ph: Math.random()*6.28, on:false, k:0, x:0, y:0, tgt: Math.floor(Math.random()*targets.length)});
+        }
+        hTotal.textContent = n;
+      }
+      if(hint){ hint.style.left = CX+'px'; hint.style.top = (CY + S*.5 + (mob?14:20))+'px'; }
+      if(reduce){ pts.forEach(function(p){p.x = CX+p.tx; p.y = CY+p.ty}); }
+    };
+
+    var connect = function(o){
+      if(o.on){return}
+      o.on = true; connected++;
+      hCount.textContent = connected;
+      if(connected === outs.length && !allDone){
+        allDone = true;
+        hint.classList.add('done');
+        hintText.innerHTML = '<b>Nadie fuera.</b> Así trabajamos.';
+      }
+    };
+
+    var drawHero = function(now){
+      var el = (now - t0)/1000;
+      var sy = lenis ? lenis.scroll : window.scrollY;
+      var sp = clamp(sy/(HH*.85),0,1);                       // progreso del primer scroll
+      hsmx = lerp(hsmx, hmx>-999 ? (hmx-CX)/HW : 0, .06);    // parallax suave del cursor
+      hsmy = lerp(hsmy, hmy>-999 ? (hmy-CY)/HH : 0, .06);
+      hx.clearRect(0,0,HW,HH);
+
+      // halo detrás del símbolo
+      var glow = hx.createRadialGradient(CX,CY,0,CX,CY,S*.85);
+      glow.addColorStop(0,'rgba(196,242,29,'+(.13*(1-sp))+')'); glow.addColorStop(1,'rgba(196,242,29,0)');
+      hx.fillStyle = glow; hx.fillRect(0,0,HW,HH);
+
+      var alphaAll = (mob ? .55 : 1) * (1 - sp*.9);
+      // partículas del símbolo
+      for(var i=0;i<pts.length;i++){
+        var p = pts[i];
+        var px = CX + p.tx - hsmx*40*p.z, py = CY + p.ty - hsmy*30*p.z;
+        // dispersión al hacer scroll: se abren hacia fuera según su profundidad
+        px += p.tx*sp*1.8*p.z; py += p.ty*sp*1.8*p.z - sp*HH*.15*p.z;
+        if(reduce){ p.x = px; p.y = py; }
+        else if(started && el > p.d){
+          var ax = (px - p.x)*.018, ay = (py - p.y)*.018;
+          var dx = p.x - hmx, dy = p.y - hmy, dd = dx*dx+dy*dy;
+          if(dd < 9000){ var f = (9000-dd)/9000*1.6; var dl = Math.sqrt(dd)||1; ax += dx/dl*f; ay += dy/dl*f; }
+          p.vx = p.vx*.86 + ax; p.vy = p.vy*.86 + ay;
+          p.x += p.vx; p.y += p.vy;
+        }
+        var formed = started ? clamp((el - p.d)*1.1,0,1) : 0;
+        var col = formed < 1 ? GREY : p.c;
+        hx.fillStyle = 'rgba('+col+','+((.35 + .6*formed)*alphaAll)+')';
+        var rr = (mob?1:1.25)*p.z + .35;
+        hx.fillRect(p.x-rr, p.y-rr, rr*2, rr*2);
+      }
+
+      // puntos «fuera»
+      var outA = (1 - sp) * (started ? clamp(el-1.2,0,1) : 0);
+      if(outA > 0){
+        for(var j=0;j<outs.length;j++){
+          var o = outs[j];
+          var bx = CX + Math.cos(o.a + el*.05)*S*o.rad*(mob?.62:.95), by = clamp(CY + Math.sin(o.a + el*.05)*S*o.rad*(mob?.62:.78) + Math.sin(el*.8+o.ph)*6, 110, HH-120);
+          bx = clamp(bx, 16, HW-16);
+          var tp = pts[o.tgt];
+          if(o.on){ o.k = Math.min(1, o.k + .03); }
+          // al conectarse viajan hasta su hueco junto al símbolo
+          var ex = tp ? lerp(bx, (bx+tp.x)/2, o.k*.55) : bx, ey = tp ? lerp(by, (by+tp.y)/2, o.k*.55) : by;
+          o.x = ex; o.y = ey;
+          var mdx = hmx - ex, mdy = hmy - ey, md = Math.sqrt(mdx*mdx+mdy*mdy);
+          if(!o.on && md < 170){
+            hx.strokeStyle = 'rgba('+LIME+','+(.55*(1-md/170)*outA)+')'; hx.lineWidth = 1;
+            hx.beginPath(); hx.moveTo(hmx,hmy); hx.lineTo(ex,ey); hx.stroke();
+            if(md < 60){ connect(o); }
+          }
+          if(o.on && tp){
+            hx.strokeStyle = 'rgba('+LIME+','+(.28*o.k*outA*alphaAll)+')'; hx.lineWidth = 1;
+            hx.beginPath(); hx.moveTo(ex,ey); hx.lineTo(tp.x,tp.y); hx.stroke();
+          }
+          hx.fillStyle = o.on ? 'rgba('+LIME+','+outA+')' : 'rgba('+GREY+','+(.55*outA)+')';
+          hx.beginPath(); hx.arc(ex,ey,o.on?3:2.6,0,Math.PI*2); hx.fill();
+          if(!o.on){ hx.strokeStyle = 'rgba('+GREY+','+(.25*outA)+')'; hx.beginPath(); hx.arc(ex,ey,7+Math.sin(el*2+o.ph)*2,0,Math.PI*2); hx.stroke(); }
+        }
+      }
+      if(hint){ hint.classList.toggle('on', started && el > 1.8 && sp < .3); }
+    };
+
+    var loopHero = function(now){ if(heroOn){drawHero(now)} requestAnimationFrame(loopHero); };
+    layout();
+    if(!fine){ hintText.innerHTML = 'Cada punto es una persona. <b>Toca los puntos grises</b> para conectarlos.'; }
+    // arranca cuando termina la entrada (loader / cortina)
+    (function waitReady(){
+      if(main.classList.contains('ready')){ started = true; t0 = performance.now() - (reduce ? 10000 : 0); }
+      else { setTimeout(waitReady,60); }
+    })();
+    requestAnimationFrame(loopHero);
+    new IntersectionObserver(function(e){heroOn = e[0].isIntersecting}).observe(heroEl);
+    var rT; window.addEventListener('resize',function(){clearTimeout(rT); rT = setTimeout(layout,150)});
+    var setPtr = function(e){ var r = hc.getBoundingClientRect(); hmx = e.clientX - r.left; hmy = e.clientY - r.top; };
+    heroEl.addEventListener('pointermove',setPtr);
+    heroEl.addEventListener('pointerdown',setPtr);
+    heroEl.addEventListener('pointerleave',function(e){ if(e.pointerType==='mouse'){hmx = hmy = -9999} });
+  }
+
+  /* ---------- hilo conductor: la red que recorre cada página ----------
+     Se construye solo a partir de las secciones de la página que tienen etiqueta
+     (.kicker) o título, así que funciona en todas las páginas, también las futuras. */
+  var buildThread = function(){
+    var secs = Array.prototype.filter.call(document.querySelectorAll('main > section'),function(s){
+      return !s.classList.contains('hero') && !s.classList.contains('page-hero') && s.querySelector('.kicker, h2');
+    });
+    if(secs.length < 2){return}
+    var thread = $('thread');
+    if(!thread){
+      thread = document.createElement('nav');
+      thread.className = 'thread'; thread.id = 'thread'; thread.setAttribute('aria-label','Recorrido de la página');
+      thread.innerHTML = '<span class="thread-track"><span class="thread-fill"></span></span>';
+      document.body.appendChild(thread);
+    }
+    var tFill = thread.querySelector('.thread-fill'), tSecs = [], tStart = 0, tEnd = 1, tCur = -1;
+    secs.forEach(function(el){
+      var k = el.querySelector('.kicker'), h = el.querySelector('h2');
+      var label = ((k && k.textContent) || (h && h.textContent) || '').replace(/\s+/g,' ').trim();
+      if(!label){return}
+      if(label.length > 30){label = label.slice(0,28)+'…'}
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'thread-node';
+      b.innerHTML = '<i></i><span></span>'; b.querySelector('span').textContent = label;
+      b.setAttribute('aria-label','Ir a '+label);
+      b.addEventListener('click',function(){scrollToTarget(el)});
+      thread.appendChild(b);
+      tSecs.push({el:el,btn:b});
+    });
+    var measure = function(){
+      var top = document.querySelector('.hero, .page-hero');
+      tStart = top ? top.offsetHeight*.6 : 0;
+      tEnd = Math.max(tStart+1, (footer ? docTop(footer) : document.documentElement.scrollHeight) - window.innerHeight);
+      var last = -1;
+      tSecs.forEach(function(s){
+        s.at = clamp((docTop(s.el) - window.innerHeight*.4 - tStart)/(tEnd - tStart),0,1);
+        s.btn.style.top = (s.at*100)+'%';
+        // nodos demasiado juntos se ocultan para que no se pisen
+        var tooClose = last > -1 && s.at - last < .045;
+        s.btn.hidden = tooClose; if(!tooClose){last = s.at}
+      });
+    };
+    measure();
+    window.addEventListener('resize',measure);
+    window.addEventListener('load',measure);
+    var upd = function(){
+      var y = lenis ? lenis.scroll : window.scrollY;
+      var p = clamp((y - tStart)/(tEnd - tStart),0,1);
+      tFill.style.transform = 'scaleY('+p+')';
+      thread.classList.toggle('on', y > tStart*.8 && y < tEnd + window.innerHeight*.2);
+      var cur = -1;
+      tSecs.forEach(function(s,i){ var lit = p >= s.at - .002; s.btn.classList.toggle('lit',lit); if(lit && !s.btn.hidden){cur = i} });
+      if(cur !== tCur){
+        tSecs.forEach(function(s,i){s.btn.classList.toggle('cur',i===cur)});
+        if(cur > -1){ var bb = tSecs[cur].btn; bb.classList.add('flash'); clearTimeout(bb._f); bb._f = setTimeout(function(){bb.classList.remove('flash')},1400); }
+        tCur = cur;
+      }
+    };
+    window.addEventListener('scroll',upd,{passive:true});
+    upd();
+  };
+  buildThread();
+
+  /* ---------- constelación internacional: resaltar cada conexión ---------- */
+  document.querySelectorAll('.intl-map').forEach(function(map){
+    var sec = map.closest('section') || document;
+    sec.querySelectorAll('.intl-list li[data-arc]').forEach(function(li){
+      var k = li.dataset.arc;
+      li.addEventListener('mouseenter',function(){
+        map.classList.add('hl');
+        map.querySelectorAll('[data-arc]').forEach(function(n){n.classList.toggle('on',n.dataset.arc===k)});
+      });
+      li.addEventListener('mouseleave',function(){
+        map.classList.remove('hl');
+        map.querySelectorAll('[data-arc]').forEach(function(n){n.classList.remove('on')});
+      });
+    });
+  });
+
+  /* ---------- la red que crece: fondo de red y nodo nuevo al enviar un formulario ----------
+     <canvas class="cta-net" data-theme="light|dark" data-form="idDelFormulario"> */
+  var easeOut = function(x){return 1-Math.pow(1-x,3)};
+  document.querySelectorAll('.cta-net').forEach(function(cn){
+    var g = cn.getContext('2d'), D = Math.min(window.devicePixelRatio||1,2), W=0, H=0, nodes=[], on=false;
+    var dark = cn.dataset.theme === 'dark';
+    var base = dark ? '241,245,238' : '22,40,28';
+    var youCol = dark ? '196,242,29' : '206,11,165';
+    var size = function(){
+      var r = cn.getBoundingClientRect(); W = r.width; H = r.height;
+      cn.width = W*D; cn.height = H*D; g.setTransform(D,0,0,D,0,0);
+      if(!nodes.length){
+        var n = W < 700 ? 24 : 44;
+        for(var i=0;i<n;i++){ nodes.push({fx:.52 + Math.random()*.46, fy:.08 + Math.random()*.84, ph:Math.random()*6.28, r:1.6 + Math.random()*1.8, you:false, k:1}); }
+      }
+    };
+    var draw = function(now){
+      var t = now/1000;
+      g.clearRect(0,0,W,H);
+      var P = nodes.map(function(n){ return {x:n.fx*W + Math.sin(t*.4+n.ph)*6, y:n.fy*H + Math.cos(t*.35+n.ph)*6, n:n}; });
+      for(var i=0;i<P.length;i++){
+        var pi = P[i];
+        if(pi.n.you){ pi.n.k = Math.min(1, pi.n.k + .02); var e = easeOut(pi.n.k); pi.x = lerp(pi.n.sx, pi.x, e); pi.y = lerp(pi.n.sy, pi.y, e); }
+      }
+      for(i=0;i<P.length;i++){
+        for(var j=i+1;j<P.length;j++){
+          var dx = P[i].x-P[j].x, dy = P[i].y-P[j].y, d = Math.sqrt(dx*dx+dy*dy);
+          if(d < 150){
+            var you = P[i].n.you || P[j].n.you;
+            g.strokeStyle = you ? 'rgba('+youCol+','+(.6*(1-d/150)*Math.min(P[i].n.k,P[j].n.k))+')' : 'rgba('+base+','+((dark?.1:.14)*(1-d/150))+')';
+            g.lineWidth = you ? 1.4 : 1;
+            g.beginPath(); g.moveTo(P[i].x,P[i].y); g.lineTo(P[j].x,P[j].y); g.stroke();
+          }
+        }
+      }
+      P.forEach(function(p){
+        if(p.n.you){
+          g.fillStyle = 'rgba('+youCol+',.18)'; g.beginPath(); g.arc(p.x,p.y,14+Math.sin(t*3)*3,0,Math.PI*2); g.fill();
+          g.fillStyle = 'rgb('+youCol+')';
+        } else { g.fillStyle = 'rgba('+base+','+(dark?.3:.35)+')'; }
+        g.beginPath(); g.arc(p.x,p.y,p.n.you?5:p.n.r,0,Math.PI*2); g.fill();
+      });
+    };
+    var loop = function(now){ if(on){draw(now)} requestAnimationFrame(loop); };
+    size();
+    window.addEventListener('resize',size);
+    new IntersectionObserver(function(e){on = e[0].isIntersecting}).observe(cn);
+    requestAnimationFrame(loop);
+    var form = cn.dataset.form ? $(cn.dataset.form) : null;
+    if(form){
+      form.addEventListener('cm:ok',function(){
+        var cr = cn.getBoundingClientRect(), fr = (form.querySelector('[type="submit"]')||form).getBoundingClientRect();
+        nodes.push({fx:.55 + Math.random()*.35, fy:.2 + Math.random()*.5, ph:0, r:5, you:true, k:0,
+                    sx: fr.left - cr.left + fr.width/2, sy: fr.top - cr.top + fr.height/2});
+      });
+    }
+  });
+
+  /* ---------- colectivos: «órbita de personas» ----------
+     Los colectivos orbitan alrededor del núcleo; por hilos curvos fluyen partículas
+     de luz. Al entrar en pantalla se conectan uno a uno (nadie fuera). */
+  var orbit = $('orbit');
+  if(orbit && getComputedStyle(orbit).display !== 'none'){
+    var oc = orbit.querySelector('.orbit-canvas'), og = oc.getContext('2d');
+    var oD = Math.min(window.devicePixelRatio||1,2), oW=0, oH=0;
+    var core = orbit.querySelector('.orbit-core');
+    var cTitle = core.querySelector('.orbit-title'), cDesc = core.querySelector('.orbit-desc'), cK = core.querySelector('.orbit-k');
+    var defTitle = cTitle.innerHTML, defDesc = cDesc.textContent, defK = cK.textContent;
+    var oNodes = Array.prototype.map.call(orbit.querySelectorAll('.orbit-node'),function(el,i,all){
+      return {el:el, base: -Math.PI/2 + i*(Math.PI*2/all.length), x:0, y:0, s:1, conn:0, lit:false,
+              parts: Array.from({length:5},function(){return Math.random()})};
+    });
+    var oAng = 0, oSpeed = .06, oActive = -1, oStart = 0, oVisible = false, oStarted = false;
+    var omx = 0, omy = 0, osx = 0, osy = 0;
+    var oSize = function(){
+      var r = orbit.getBoundingClientRect(); oW = r.width; oH = r.height;
+      oc.width = oW*oD; oc.height = oH*oD; og.setTransform(oD,0,0,oD,0,0);
+    };
+    var setCore = function(i){
+      core.classList.remove('swap'); void core.offsetWidth; core.classList.add('swap');
+      if(i < 0){ cTitle.innerHTML = defTitle; cDesc.textContent = defDesc; cK.textContent = defK; }
+      else {
+        var n = oNodes[i].el;
+        cK.textContent = 'Colectivo '+String(i+1).padStart(2,'0');
+        cTitle.innerHTML = n.querySelector('span').textContent.replace(/(\S+)$/,'<em>$1</em>');
+        cDesc.textContent = n.dataset.desc;
+      }
+    };
+    var activate = function(i){
+      if(oActive === i){return}
+      oActive = i;
+      orbit.classList.toggle('has-active', i > -1);
+      oNodes.forEach(function(n,k){n.el.classList.toggle('active',k===i)});
+      setCore(i);
+    };
+    oNodes.forEach(function(n,i){
+      n.el.addEventListener('mouseenter',function(){activate(i)});
+      n.el.addEventListener('focus',function(){activate(i)});
+      n.el.addEventListener('mouseleave',function(){activate(-1)});
+      n.el.addEventListener('blur',function(){activate(-1)});
+      n.el.addEventListener('click',function(){activate(i)});
+    });
+    orbit.addEventListener('mousemove',function(e){var r = orbit.getBoundingClientRect(); omx = (e.clientX-r.left)/oW-.5; omy = (e.clientY-r.top)/oH-.5});
+    orbit.addEventListener('mouseleave',function(){omx = omy = 0});
+
+    // punto de una curva cuadrática
+    var qp = function(t,ax,ay,bx,by,cx,cy){var u = 1-t; return [u*u*ax + 2*u*t*bx + t*t*cx, u*u*ay + 2*u*t*by + t*t*cy]};
+
+    var oLast = 0;
+    var oFrame = function(now){
+      requestAnimationFrame(oFrame);
+      if(!oVisible){oLast = now; return}
+      var dt = Math.min(.05,(now - (oLast||now))/1000); oLast = now;
+      var el = oStarted ? (now - oStart)/1000 : 0;
+      // la órbita se frena al mirar un colectivo
+      oSpeed = lerp(oSpeed, oActive > -1 || reduce ? 0 : .06, .06);
+      oAng += oSpeed*dt;
+      osx = lerp(osx, omx, .05); osy = lerp(osy, omy, .05);
+      var cx = oW/2 + osx*30, cy = oH/2 + osy*20;
+      var rx = Math.min(oW*.39, 540), ry = oH*.36;
+      og.clearRect(0,0,oW,oH);
+
+      // halo del núcleo
+      var gl = og.createRadialGradient(cx,cy,0,cx,cy,ry*1.1);
+      gl.addColorStop(0,'rgba(196,242,29,.10)'); gl.addColorStop(1,'rgba(196,242,29,0)');
+      og.fillStyle = gl; og.fillRect(0,0,oW,oH);
+
+      // anillo de la órbita
+      og.strokeStyle = 'rgba(241,245,238,.07)'; og.lineWidth = 1;
+      og.beginPath(); og.ellipse(cx,cy,rx,ry,0,0,Math.PI*2); og.stroke();
+
+      oNodes.forEach(function(n,i){
+        // entrada: cada colectivo se conecta a su turno
+        var delay = .35 + i*.22;
+        var target = oStarted ? clamp((el - delay)/.7,0,1) : 0;
+        if(reduce && oStarted){target = 1}
+        n.conn = target;
+        if(target >= 1 && !n.lit){ n.lit = true; n.el.classList.add('on'); }
+        var a = n.base + oAng;
+        var depth = (Math.sin(a)+1)/2;                       // 0 = al fondo, 1 = delante
+        var k = n.lit ? 1 : lerp(1.14, 1.05, target);        // «fuera» hasta conectarse
+        n.x = cx + Math.cos(a)*rx*k; n.y = cy + Math.sin(a)*ry*k;
+        n.s = .8 + depth*.35;
+        n.el.style.transform = 'translate(-50%,-50%) translate('+n.x+'px,'+n.y+'px) scale('+n.s+')';
+        n.el.style.zIndex = depth > .5 ? 4 : 2;
+
+        // hilo curvo núcleo → colectivo
+        var bx = (cx+n.x)/2 + (n.y-cy)*.18, by = (cy+n.y)/2 - (n.x-cx)*.18;
+        var isA = oActive === i, dim = oActive > -1 && !isA;
+        var steps = 40, upto = Math.round(steps*n.conn);
+        if(upto > 0){
+          og.strokeStyle = 'rgba(196,242,29,'+(isA ? .7 : dim ? .06 : (n.lit ? .22 : .35))+')';
+          og.lineWidth = isA ? 1.8 : 1;
+          og.beginPath(); og.moveTo(cx,cy);
+          for(var s=1;s<=upto;s++){ var q = qp(s/steps,cx,cy,bx,by,n.x,n.y); og.lineTo(q[0],q[1]); }
+          og.stroke();
+          // cabeza de luz mientras se conecta
+          if(!n.lit){ var h = qp(n.conn,cx,cy,bx,by,n.x,n.y); og.fillStyle = 'rgba(196,242,29,.95)'; og.beginPath(); og.arc(h[0],h[1],3.5,0,Math.PI*2); og.fill(); }
+        }
+        // partículas fluyendo hacia cada colectivo conectado
+        if(n.lit && !reduce){
+          var cnt = isA ? n.parts.length : 3;
+          for(var pI=0;pI<cnt;pI++){
+            n.parts[pI] = (n.parts[pI] + dt*(isA ? .55 : .3)) % 1;
+            var pt = qp(n.parts[pI],cx,cy,bx,by,n.x,n.y);
+            var al = Math.sin(n.parts[pI]*Math.PI);
+            og.fillStyle = (pI%3===2 ? 'rgba(226,75,196,' : 'rgba(196,242,29,')+(al*(dim ? .15 : .9))+')';
+            og.beginPath(); og.arc(pt[0],pt[1],isA ? 2.4 : 1.8,0,Math.PI*2); og.fill();
+          }
+        }
+      });
+    };
+    oSize();
+    window.addEventListener('resize',oSize);
+    new IntersectionObserver(function(e){
+      oVisible = e[0].isIntersecting;
+      if(oVisible && !oStarted && e[0].intersectionRatio > .35){ oStarted = true; oStart = performance.now(); }
+    },{threshold:[0,.35,.6]}).observe(orbit);
+    requestAnimationFrame(oFrame);
+  }
+
+  /* ---------- internacional: «el mundo conectado» ----------
+     Globo de puntos (los continentes salen de world-atlas), arcos de luz desde España
+     hacia Europa e Iberoamérica, giro guiado por el scroll y arrastre con el ratón.
+     Si el mapa no carga, se muestra la constelación plana (.intl-map). */
+  var globe = $('globe');
+  if(globe){
+    var gc = globe.querySelector('.globe-canvas'), gx = gc.getContext('2d');
+    var GD = Math.min(window.devicePixelRatio||1,2), GS = 0;
+    var RAD = Math.PI/180;
+    var gFail = function(){ globe.classList.add('fail'); };
+    var loadScript = function(src){ return new Promise(function(res,rej){ var s = document.createElement('script'); s.src = src; s.onload = res; s.onerror = rej; document.head.appendChild(s); }); };
+
+    // lugares (lat, lon)
+    var ES = [40.42,-3.70];
+    var sedes = [[41.33,2.08],[40.42,-3.70],[37.39,-5.99],[42.88,-8.54]];
+    var places = [
+      {ll:[50.85,4.35], g:'eu', label:'Europa · ALL DIGITAL'},
+      {ll:[52.52,13.40], g:'eu2'}, {ll:[41.90,12.50], g:'eu2'}, {ll:[53.35,-6.26], g:'eu2'}, {ll:[52.23,21.01], g:'eu2', label:'Erasmus+'},
+      {ll:[4.71,-74.07], g:'latam', label:'Iberoamérica'},
+      {ll:[19.43,-99.13], g:'latam'}, {ll:[-12.05,-77.04], g:'latam'}, {ll:[-34.60,-58.38], g:'latam'}, {ll:[-33.45,-70.67], g:'latam'}
+    ];
+    // vistas: [lat0, lon0] del centro del globo
+    var views = {all:[22,-28], eu:[44,6], eu2:[46,10], latam:[2,-52]};
+    var vTarget = views.all.slice(), vNow = [10,-80];   // empieza girado y se acomoda
+    var focus = 'all', land = [], gReady = false, gOn = false, gStart = 0, dragging = false, dragLast = null;
+
+    var gSize = function(){
+      var r = globe.getBoundingClientRect(); GS = r.width;
+      gc.width = GS*GD; gc.height = GS*GD; gx.setTransform(GD,0,0,GD,0,0);
+    };
+    // proyección ortográfica
+    var proj = function(lat,lon,alt){
+      var la = lat*RAD, lo = (lon - vNow[1])*RAD, la0 = vNow[0]*RAD;
+      var cosc = Math.sin(la0)*Math.sin(la) + Math.cos(la0)*Math.cos(la)*Math.cos(lo);
+      var R = GS*.44*(alt||1);
+      return {x: GS/2 + R*Math.cos(la)*Math.sin(lo), y: GS/2 - R*(Math.cos(la0)*Math.sin(la) - Math.sin(la0)*Math.cos(la)*Math.cos(lo)), z: cosc};
+    };
+    var toV = function(ll){ var la = ll[0]*RAD, lo = ll[1]*RAD; return [Math.cos(la)*Math.cos(lo), Math.cos(la)*Math.sin(lo), Math.sin(la)]; };
+    var toLL = function(v){ return [Math.asin(Math.max(-1,Math.min(1,v[2])))/RAD, Math.atan2(v[1],v[0])/RAD]; };
+    var slerp = function(a,b,t){
+      var d = Math.acos(Math.max(-1,Math.min(1,a[0]*b[0]+a[1]*b[1]+a[2]*b[2])));
+      if(d < 1e-6){return a}
+      var s = Math.sin(d), k1 = Math.sin((1-t)*d)/s, k2 = Math.sin(t*d)/s;
+      return [a[0]*k1+b[0]*k2, a[1]*k1+b[1]*k2, a[2]*k1+b[2]*k2];
+    };
+    var angDist = function(a,b){ var A = toV(a), B = toV(b); return Math.acos(Math.max(-1,Math.min(1,A[0]*B[0]+A[1]*B[1]+A[2]*B[2])))/RAD; };
+
+    // arcos precalculados (lat/lon a lo largo del gran círculo)
+    var arcs = places.map(function(p,i){
+      var A = toV(ES), B = toV(p.ll), pts = [];
+      for(var k=0;k<=48;k++){ pts.push(toLL(slerp(A,B,k/48))); }
+      var len = angDist(ES,p.ll);
+      return {p:p, pts:pts, h: .06 + len/180*.35, ph: Math.random(), order: i};
+    });
+
+    var buildLand = function(topo){
+      var feat = topojson.feature(topo, topo.objects.land);
+      var W = 720, H = 360, m = document.createElement('canvas'); m.width = W; m.height = H;
+      var mg = m.getContext('2d'); mg.fillStyle = '#000';
+      var polys = feat.type === 'FeatureCollection' ? feat.features.map(function(f){return f.geometry}) : [feat.geometry];
+      polys.forEach(function(geom){
+        var list = geom.type === 'Polygon' ? [geom.coordinates] : geom.coordinates;
+        list.forEach(function(poly){
+          // los polígonos que cruzan el antimeridiano se «desenrollan» y se pintan también desplazados 360°
+          [-360,0,360].forEach(function(shift){
+            mg.beginPath();
+            poly.forEach(function(ring){
+              var off = 0, prev = null;
+              ring.forEach(function(c,i){
+                if(prev !== null){ var d = c[0] - prev; if(d > 180){off -= 360} else if(d < -180){off += 360} }
+                prev = c[0];
+                var x = (c[0]+off+shift+180)*2, y = (90-c[1])*2;
+                i ? mg.lineTo(x,y) : mg.moveTo(x,y);
+              });
+              mg.closePath();
+            });
+            mg.fill('evenodd');
+          });
+        });
+      });
+      var data = mg.getImageData(0,0,W,H).data;
+      // puntos repartidos uniformemente por la esfera (espiral de Fibonacci)
+      var N = 15000, gold = Math.PI*(3-Math.sqrt(5));
+      for(var i=0;i<N;i++){
+        var y = 1 - (i/(N-1))*2, r = Math.sqrt(1-y*y), th = gold*i;
+        var lat = Math.asin(y)/RAD, lon = ((Math.atan2(Math.sin(th)*r, Math.cos(th)*r)/RAD)+540)%360-180;
+        var px = Math.min(W-1,Math.floor((lon+180)*2)), py = Math.min(H-1,Math.floor((90-lat)*2));
+        if(data[(py*W+px)*4+3] > 100){ land.push({lat:lat, lon:lon, d: angDist(ES,[lat,lon])}); }
+      }
+    };
+
+    var gFrame = function(now){
+      requestAnimationFrame(gFrame);
+      if(!gOn || !gReady){return}
+      var t = (now - gStart)/1000;
+      // vista: se acerca a su objetivo, con un vaivén suave en reposo
+      var sway = dragging || reduce ? 0 : Math.sin(t*.25)*4;
+      vNow[0] = lerp(vNow[0], vTarget[0], dragging ? .25 : .045);
+      vNow[1] = lerp(vNow[1], vTarget[1] + sway, dragging ? .25 : .045);
+      gx.clearRect(0,0,GS,GS);
+      var cx = GS/2, R = GS*.44;
+      // atmósfera
+      var at = gx.createRadialGradient(cx,cx,R*.85,cx,cx,R*1.18);
+      at.addColorStop(0,'rgba(196,242,29,.10)'); at.addColorStop(1,'rgba(196,242,29,0)');
+      gx.fillStyle = at; gx.beginPath(); gx.arc(cx,cx,R*1.18,0,Math.PI*2); gx.fill();
+      var body = gx.createRadialGradient(cx-R*.35,cx-R*.4,R*.1,cx,cx,R);
+      body.addColorStop(0,'rgba(38,90,67,.55)'); body.addColorStop(1,'rgba(11,21,16,.9)');
+      gx.fillStyle = body; gx.beginPath(); gx.arc(cx,cx,R,0,Math.PI*2); gx.fill();
+      gx.strokeStyle = 'rgba(196,242,29,.18)'; gx.lineWidth = 1; gx.stroke();
+
+      // continentes: se encienden en onda desde España
+      var wave = reduce ? 999 : t*95;
+      for(var i=0;i<land.length;i++){
+        var d = land[i];
+        if(d.d > wave){continue}
+        var p = proj(d.lat,d.lon);
+        if(p.z <= 0){continue}
+        var fresh = clamp((wave - d.d)/25,0,1);
+        gx.fillStyle = 'rgba(196,242,29,'+(.18 + .62*p.z)*(.4 + .6*fresh)+')';
+        var s = .9 + p.z*1.1;
+        gx.fillRect(p.x - s/2, p.y - s/2, s, s);
+      }
+
+      // arcos de luz
+      var arcStart = reduce ? -99 : 1.6;
+      arcs.forEach(function(a,k){
+        var prog = clamp((t - arcStart - a.order*.18)/1.1,0,1);
+        if(prog <= 0){return}
+        var on = focus === 'all' || focus === a.p.g || (focus === 'eu' && a.p.g === 'eu2');
+        var upto = Math.round(48*prog), lastV = null;
+        gx.lineWidth = on && focus !== 'all' ? 1.8 : 1.1;
+        gx.strokeStyle = 'rgba('+(a.p.g==='latam'?'226,75,196':'196,242,29')+','+(on ? .75 : .12)+')';
+        gx.beginPath();
+        for(var s2=0;s2<=upto;s2++){
+          var ll = a.pts[s2], alt = 1 + a.h*Math.sin(Math.PI*s2/48);
+          var q = proj(ll[0],ll[1],alt);
+          if(q.z < -.12){ lastV = null; continue; }
+          lastV ? gx.lineTo(q.x,q.y) : gx.moveTo(q.x,q.y); lastV = q;
+        }
+        gx.stroke();
+        // pulso que viaja por el arco
+        if(prog >= 1 && !reduce){
+          var ph = ((t*.35 + a.ph) % 1), idx = Math.floor(ph*48), ll2 = a.pts[idx];
+          var q2 = proj(ll2[0],ll2[1],1 + a.h*Math.sin(Math.PI*idx/48));
+          if(q2.z > -.12){ gx.fillStyle = on ? '#fff' : 'rgba(255,255,255,.3)'; gx.beginPath(); gx.arc(q2.x,q2.y,on?2.6:1.6,0,Math.PI*2); gx.fill(); }
+        }
+        // destino
+        if(prog >= 1){
+          var e = proj(a.p.ll[0],a.p.ll[1]);
+          if(e.z > 0){
+            gx.fillStyle = a.p.g==='latam' ? 'rgba(226,75,196,'+(on?1:.35)+')' : 'rgba(241,245,238,'+(on?1:.35)+')';
+            gx.beginPath(); gx.arc(e.x,e.y,a.p.label?4.2:2.6,0,Math.PI*2); gx.fill();
+            if(a.p.label && (focus === a.p.g || (focus === 'all' && a.p.g !== 'eu2'))){
+              gx.font = '600 '+Math.round(clamp(GS/38,11,14))+'px Archivo, sans-serif';
+              var tw = gx.measureText(a.p.label).width;
+              gx.fillStyle = 'rgba(11,21,16,.75)'; gx.beginPath(); gx.roundRect ? gx.roundRect(e.x+10,e.y-11,tw+16,22,11) : gx.rect(e.x+10,e.y-11,tw+16,22); gx.fill();
+              gx.fillStyle = '#F1F5EE'; gx.fillText(a.p.label,e.x+18,e.y+4.5);
+            }
+          }
+        }
+      });
+
+      // España y sus sedes latiendo
+      sedes.forEach(function(s3,i){
+        var q = proj(s3[0],s3[1]); if(q.z <= 0){return}
+        var pulse = reduce ? 0 : (Math.sin(t*2.4 + i*1.3)+1)/2;
+        gx.fillStyle = 'rgba(196,242,29,'+(.15 + .25*pulse)+')'; gx.beginPath(); gx.arc(q.x,q.y,5 + pulse*5,0,Math.PI*2); gx.fill();
+        gx.fillStyle = '#C4F21D'; gx.beginPath(); gx.arc(q.x,q.y,2.6,0,Math.PI*2); gx.fill();
+      });
+      var es = proj(ES[0],ES[1]);
+      if(es.z > 0){
+        gx.font = '700 '+Math.round(clamp(GS/34,12,16))+'px Archivo, sans-serif';
+        gx.fillStyle = '#C4F21D'; gx.fillText('España · 4 sedes', es.x - 14, es.y + 26);
+      }
+    };
+
+    var setFocus = function(k){
+      focus = k || 'all';
+      vTarget = (views[focus] || views.all).slice();
+      document.querySelectorAll('.intl-list li[data-arc]').forEach(function(li){ li.classList.toggle('focus', li.dataset.arc === k); });
+    };
+    // el globo gira hacia la región de la que estás leyendo
+    var items = document.querySelectorAll('.intl-list li[data-arc]');
+    var seen = new Map();
+    var liIO = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ seen.set(en.target, en.isIntersecting); });
+      var cur = null;
+      items.forEach(function(li){ if(seen.get(li)){cur = li} });
+      if(!dragging){ setFocus(cur ? cur.dataset.arc : 'all'); }
+    },{rootMargin:'-45% 0px -45% 0px'});
+    items.forEach(function(li){
+      liIO.observe(li);
+      li.addEventListener('mouseenter',function(){setFocus(li.dataset.arc)});
+    });
+    // arrastrar para girar
+    globe.addEventListener('pointerdown',function(e){
+      if(e.pointerType !== 'mouse'){return}
+      dragging = true; dragLast = [e.clientX,e.clientY]; globe.classList.add('drag','touched'); e.preventDefault();
+    });
+    window.addEventListener('pointermove',function(e){
+      if(!dragging){return}
+      var dx = e.clientX - dragLast[0], dy = e.clientY - dragLast[1]; dragLast = [e.clientX,e.clientY];
+      vTarget[1] -= dx*.35; vTarget[0] = clamp(vTarget[0] + dy*.35,-60,70);
+    });
+    window.addEventListener('pointerup',function(){ if(dragging){dragging = false; globe.classList.remove('drag')} });
+
+    gSize();
+    window.addEventListener('resize',gSize);
+    new IntersectionObserver(function(e){
+      gOn = e[0].isIntersecting;
+      if(gOn && !gStart && gReady){ gStart = performance.now(); }
+    },{threshold:.25}).observe(globe);
+    requestAnimationFrame(gFrame);
+
+    // carga del mapa (sin bloquear la página)
+    (window.topojson ? Promise.resolve() : loadScript('https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js'))
+      .then(function(){ return fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/land-110m.json'); })
+      .then(function(r){ if(!r.ok){throw new Error('mapa')} return r.json(); })
+      .then(function(topo){
+        buildLand(topo);
+        if(!land.length){throw new Error('sin puntos')}
+        gReady = true; globe.classList.add('ready');
+        if(gOn){ gStart = performance.now(); }
+      })
+      .catch(gFail);
+  }
 
   /* ---------- carrusel de noticias ---------- */
   var rail = $('rail');
@@ -577,6 +1223,7 @@
         if(btn){btn.classList.remove('is-loading');btn.disabled = false;btn.removeAttribute('aria-busy')}
         say(form.dataset.msg,'ok');
         form.reset();
+        form.dispatchEvent(new CustomEvent('cm:ok'));
       },900);
     });
   });

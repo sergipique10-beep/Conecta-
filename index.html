@@ -107,7 +107,8 @@
 <main id="top">
   <!-- ============ HERO ============ -->
   <section class="hero" aria-labelledby="hero-h">
-    <div class="hero-media"><img src="img/bosque.jpg" alt="" id="heroImg" fetchpriority="high"></div>
+    <canvas class="hero-net" id="heroNet" aria-hidden="true"></canvas>
+    <p class="hero-hint" id="heroHint" aria-live="polite"><span class="hh-dot" aria-hidden="true"></span><span id="heroHintText">Cada punto es una persona. <b>Acerca el cursor</b> para conectarla.</span> <span class="hh-count"><b id="heroCount">0</b>/<span id="heroTotal">0</span></span></p>
     <div class="wrap hero-inner">
       <div class="hero-meta fade-up"><span>Educación · Inclusión digital · Acción social</span><span>Andalucía — Madrid<br>Cataluña — Galicia</span></div>
       <h1 id="hero-h">
@@ -233,10 +234,34 @@
         </div>
         <p data-reveal>Diseñamos cada programa desde la escucha y la proximidad a los colectivos con los que trabajamos.</p>
       </div>
+      <div class="orbit" id="orbit">
+        <canvas class="orbit-canvas" aria-hidden="true"></canvas>
+        <div class="orbit-core" aria-live="polite">
+          <svg class="orbit-sym" aria-hidden="true"><use href="#sym"/></svg>
+          <span class="orbit-k">Con quién trabajamos</span>
+          <b class="orbit-title">8 colectivos,<br><em>una red.</em></b>
+          <p class="orbit-desc">Pasa el cursor por cada nodo.</p>
+        </div>
+        <button type="button" class="orbit-node" data-desc="Educación digital y creativa desde los primeros años."><i aria-hidden="true"></i><span>Infancia</span></button>
+        <button type="button" class="orbit-node" data-desc="Formación, participación y liderazgo para tener voz propia."><i aria-hidden="true"></i><span>Jóvenes</span></button>
+        <button type="button" class="orbit-node" data-desc="Acompañamiento para usar la tecnología con autonomía."><i aria-hidden="true"></i><span>Mayores</span></button>
+        <button type="button" class="orbit-node" data-desc="Igualdad de oportunidades también en el mundo digital."><i aria-hidden="true"></i><span>Género</span></button>
+        <button type="button" class="orbit-node" data-desc="Competencias digitales para la inclusión social y laboral."><i aria-hidden="true"></i><span>Migrantes</span></button>
+        <button type="button" class="orbit-node" data-desc="Acceso y acompañamiento para no quedarse atrás."><i aria-hidden="true"></i><span>Personas vulnerables</span></button>
+        <button type="button" class="orbit-node" data-desc="Tecnología accesible y adaptada a cada persona."><i aria-hidden="true"></i><span>Diversidad funcional</span></button>
+        <button type="button" class="orbit-node" data-desc="Formación digital como puente hacia la reinserción."><i aria-hidden="true"></i><span>Personas privadas de libertad</span></button>
+      </div>
+      <ul class="groups">
+        <li class="group" data-reveal style="--d:0.00s"><span class="group-top"><span class="group-n">01</span><i class="group-dot" aria-hidden="true"></i></span><h3>Infancia</h3><p>Educación digital y creativa desde los primeros años.</p></li>
+        <li class="group" data-reveal style="--d:0.06s"><span class="group-top"><span class="group-n">02</span><i class="group-dot" aria-hidden="true"></i></span><h3>Jóvenes</h3><p>Formación, participación y liderazgo para tener voz propia.</p></li>
+        <li class="group" data-reveal style="--d:0.12s"><span class="group-top"><span class="group-n">03</span><i class="group-dot" aria-hidden="true"></i></span><h3>Mayores</h3><p>Acompañamiento para usar la tecnología con autonomía.</p></li>
+        <li class="group" data-reveal style="--d:0.18s"><span class="group-top"><span class="group-n">04</span><i class="group-dot" aria-hidden="true"></i></span><h3>Género</h3><p>Igualdad de oportunidades también en el mundo digital.</p></li>
+        <li class="group" data-reveal style="--d:0.00s"><span class="group-top"><span class="group-n">05</span><i class="group-dot" aria-hidden="true"></i></span><h3>Migrantes</h3><p>Competencias digitales para la inclusión social y laboral.</p></li>
+        <li class="group" data-reveal style="--d:0.06s"><span class="group-top"><span class="group-n">06</span><i class="group-dot" aria-hidden="true"></i></span><h3>Personas vulnerables</h3><p>Acceso y acompañamiento para no quedarse atrás.</p></li>
+        <li class="group" data-reveal style="--d:0.12s"><span class="group-top"><span class="group-n">07</span><i class="group-dot" aria-hidden="true"></i></span><h3>Diversidad funcional</h3><p>Tecnología accesible y adaptada a cada persona.</p></li>
+        <li class="group" data-reveal style="--d:0.18s"><span class="group-top"><span class="group-n">08</span><i class="group-dot" aria-hidden="true"></i></span><h3>Personas privadas de libertad</h3><p>Formación digital como puente hacia la reinserción.</p></li>
+      </ul>
     </div>
-    <div class="ticker" data-speed="-0.35" aria-hidden="true"></div>
-    <div class="ticker alt" data-speed="0.35" aria-hidden="true"></div>
-    <p class="sr-only">Infancia, jóvenes, mayores, género, migrantes, personas vulnerables, diversidad funcional y personas privadas de libertad.</p>
   </section>
 
   <!-- ============ INTERNACIONAL ============ -->
@@ -245,18 +270,45 @@
       <div class="intl-sticky">
         <span class="kicker">Internacional</span>
         <h2 class="h2" id="intl-h" data-lines><span class="line"><span>Una red que</span></span><span class="line"><span><em>cruza fronteras.</em></span></span></h2>
-        <div class="intl-media" data-clip><img src="img/conecta.jpg" alt="Figuras de personas conectadas por hilos de colores" loading="lazy"></div>
+        <div class="globe" id="globe">
+          <canvas class="globe-canvas" aria-label="Globo terráqueo: España conectada con Europa e Iberoamérica" role="img"></canvas>
+          <span class="globe-hint" aria-hidden="true">Arrastra para girar el mundo</span>
+        </div>
+        <figure class="intl-map" id="intlMap" data-reveal aria-label="Mapa de conexiones: España conectada con Europa e Iberoamérica">
+          <svg viewBox="0 0 520 400" role="img" aria-hidden="true">
+            <defs>
+              <pattern id="mapDots" width="14" height="14" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.1" fill="rgba(241,245,238,.12)"/></pattern>
+              <radialGradient id="esGlow"><stop offset="0" stop-color="#C4F21D" stop-opacity=".45"/><stop offset="1" stop-color="#C4F21D" stop-opacity="0"/></radialGradient>
+            </defs>
+            <rect width="520" height="400" rx="28" fill="url(#mapDots)"/>
+            <!-- arcos -->
+            <path class="arc" data-arc="eu" id="arcEU" d="M270 230 Q 330 110 420 105"/>
+            <path class="arc" data-arc="eu2" id="arcEU2" d="M270 230 Q 380 200 450 170"/>
+            <path class="arc" data-arc="latam" id="arcLA" d="M270 230 Q 170 150 80 250"/>
+            <!-- pulsos que viajan por los arcos -->
+            <circle class="pulse" r="3.2"><animateMotion dur="3.2s" repeatCount="indefinite" rotate="auto"><mpath href="#arcEU"/></animateMotion></circle>
+            <circle class="pulse" r="3.2"><animateMotion dur="3.8s" begin="1s" repeatCount="indefinite"><mpath href="#arcEU2"/></animateMotion></circle>
+            <circle class="pulse mag" r="3.2"><animateMotion dur="4.2s" begin=".5s" repeatCount="indefinite" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath href="#arcLA"/></animateMotion></circle>
+            <!-- nodos -->
+            <circle cx="270" cy="230" r="70" fill="url(#esGlow)"/>
+            <g class="node es"><circle cx="270" cy="230" r="9"/><text x="270" y="262">España</text><text class="sub" x="270" y="278">4 sedes</text></g>
+            <g class="node" data-arc="eu"><circle cx="420" cy="105" r="6"/><circle class="sat" cx="444" cy="90" r="2.5"/><circle class="sat" cx="402" cy="84" r="2.5"/><circle class="sat" cx="440" cy="124" r="2.5"/><text x="420" y="70">Europa</text></g>
+            <g class="node" data-arc="eu2"><circle cx="450" cy="170" r="5"/><text x="450" y="198">Erasmus+</text></g>
+            <g class="node" data-arc="latam"><circle cx="80" cy="250" r="6"/><circle class="sat" cx="62" cy="272" r="2.5"/><circle class="sat" cx="100" cy="276" r="2.5"/><circle class="sat" cx="70" cy="226" r="2.5"/><text x="80" y="300">Iberoamérica</text></g>
+          </svg>
+        </figure>
       </div>
       <ol class="intl-list" style="list-style:none;margin:0;padding:0">
-        <li data-reveal><span class="n">01 — Europa</span><h3>ALL DIGITAL</h3><p>Red europea que impulsa la inclusión y las competencias digitales para todas las personas.</p></li>
-        <li data-reveal><span class="n">02 — Iberoamérica</span><h3>La Liga Iberoamericana</h3><p>Cooperación con entidades de América Latina en educación y acción social.</p></li>
-        <li data-reveal><span class="n">03 — Erasmus+</span><h3>Proyectos Europeos</h3><p>Participamos en iniciativas Erasmus+ y de fondos europeos orientadas a la inclusión.</p></li>
+        <li data-reveal data-arc="eu"><span class="n">01 — Europa</span><h3>ALL DIGITAL</h3><p>Red europea que impulsa la inclusión y las competencias digitales para todas las personas.</p></li>
+        <li data-reveal data-arc="latam"><span class="n">02 — Iberoamérica</span><h3>La Liga Iberoamericana</h3><p>Cooperación con entidades de América Latina en educación y acción social.</p></li>
+        <li data-reveal data-arc="eu2"><span class="n">03 — Erasmus+</span><h3>Proyectos Europeos</h3><p>Participamos en iniciativas Erasmus+ y de fondos europeos orientadas a la inclusión.</p></li>
       </ol>
     </div>
   </section>
 
   <!-- ============ CTA ============ -->
   <section class="cta pad" id="unete" aria-labelledby="cta-h">
+    <canvas class="cta-net" data-form="newsletterForm" aria-hidden="true"></canvas>
     <div class="wrap">
       <span class="kicker">Newsletter</span>
       <h2 id="cta-h" data-lines><span class="line"><span>Súmate a una red</span></span><span class="line"><span>que <em>transforma.</em></span></span></h2>

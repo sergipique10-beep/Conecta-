@@ -110,7 +110,8 @@
     </div>
   </section>
 
-  <section class="pad" id="escribenos" aria-labelledby="form-h">
+  <section class="pad net-sec" id="escribenos" aria-labelledby="form-h">
+    <canvas class="cta-net" data-theme="dark" data-form="contactForm" aria-hidden="true"></canvas>
     <div class="wrap contact-grid">
       <div class="prose">
         <span class="kicker">Escríbenos</span>
@@ -122,7 +123,7 @@
         </div>
       </div>
       <div class="contact-form" data-reveal>
-        <form novalidate data-msg="¡Gracias! Hemos recibido tu mensaje y te responderemos pronto.">
+        <form id="contactForm" novalidate data-msg="¡Gracias! Hemos recibido tu mensaje y te responderemos pronto.">
           <div class="fields">
             <div class="field"><label for="cName">Nombre</label><input id="cName" name="nombre" required autocomplete="name"></div>
             <div class="field"><label for="cMail">Correo electrónico</label><input id="cMail" name="email" type="email" required autocomplete="email"></div>

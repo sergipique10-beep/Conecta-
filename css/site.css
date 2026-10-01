@@ -880,3 +880,169 @@ button.btn-ghost{background:transparent}
 @media(max-width:699px){.fc-panel{grid-template-columns:1fr 1fr}.fc-brand,.fc-news{grid-column:1/-1}.fc-center{padding-block:48px 32px}}
 footer::before{background:radial-gradient(55% 40% at 50% 32%,rgba(5,16,10,.45),transparent 75%),linear-gradient(180deg,rgba(5,16,10,.55) 0%,rgba(5,16,10,.15) 30%,rgba(5,16,10,.35) 55%,rgba(5,16,10,.85) 80%,#05100A 100%)}
 .news-rail{-webkit-user-select:none;user-select:none}
+
+/* =========================================================
+   hero firmante: «Nadie fuera» (red de partículas)
+   ========================================================= */
+.hero{background:
+  radial-gradient(55% 60% at 74% 45%,rgba(196,242,29,.10),transparent 65%),
+  radial-gradient(40% 45% at 90% 85%,rgba(206,11,165,.12),transparent 70%),
+  radial-gradient(50% 50% at 0% 100%,rgba(38,90,67,.35),transparent 70%),
+  var(--bg)}
+.hero::after{background:linear-gradient(180deg,rgba(11,21,16,0) 70%,var(--bg) 100%)}
+.hero-net{position:absolute;inset:0;z-index:-1;width:100%;height:100%;display:block;touch-action:pan-y}
+/* el texto queda en la mitad izquierda; el símbolo vive a la derecha */
+@media(min-width:900px){
+  .hero h1{font-size:clamp(52px,min(8vw,13.5vh),150px);max-width:9.5em}
+  .hero-foot{grid-template-columns:minmax(0,46ch) auto;max-width:min(58vw,860px);align-items:end;gap:32px}
+  .hero-foot .scroll-cue{display:none}
+  .hero-meta span:last-child{display:none}
+}
+.hero-actions .btn-tec{transition:color .5s var(--ease),border-color .5s var(--ease),box-shadow .6s var(--ease)}
+.hero-actions .btn-tec:hover{box-shadow:0 0 0 6px rgba(196,242,29,.12),0 12px 44px rgba(196,242,29,.38)}
+.hero-actions .btn-ghost:hover{box-shadow:0 12px 40px rgba(241,245,238,.15)}
+/* leyenda de la interacción (posicionada por JS bajo el símbolo) */
+.hero-hint{position:absolute;z-index:2;left:0;top:0;transform:translate(-50%,0);display:flex;align-items:center;gap:10px;white-space:nowrap;
+  padding:8px 14px;border-radius:100px;border:1px solid rgba(241,245,238,.14);background:rgba(11,21,16,.55);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  font-size:12.5px;color:var(--ink-soft);opacity:0;transition:opacity .8s var(--ease),border-color .6s,color .6s}
+.hero-hint.on{opacity:1}
+.hero-hint b{color:var(--ink);font-weight:600}
+.hh-dot{width:7px;height:7px;border-radius:50%;background:rgba(241,245,238,.45);transition:background .4s}
+.hh-count{font-variant-numeric:tabular-nums;color:var(--ink-dim)}
+.hh-count b{color:var(--tec)}
+.hero-hint.done{border-color:rgba(196,242,29,.5);color:var(--ink)}
+.hero-hint.done .hh-dot{background:var(--tec);animation:txPulse 2s infinite}
+@media(max-width:899px){.hero-hint{font-size:11.5px;white-space:normal;max-width:calc(100vw - 32px);text-align:center;justify-content:center}}
+@media(hover:none){.hero-hint .hh-desk{display:none}}
+@media(min-width:900px){.hero-foot{max-width:min(52vw,760px)}}
+@media(max-width:899px){.hero-hint{display:none}}
+
+/* =========================================================
+   portada: «la red que te acompaña»
+   ========================================================= */
+/* hilo conductor: progreso + índice de secciones */
+.thread{position:fixed;left:clamp(10px,1.4vw,22px);top:18vh;bottom:18vh;z-index:70;width:24px;display:none;opacity:0;transition:opacity .6s var(--ease)}
+@media(min-width:1100px) and (hover:hover){.thread{display:block}}
+.thread.on{opacity:1}
+.thread-track{position:absolute;left:11px;top:0;bottom:0;width:1px;background:rgba(241,245,238,.14);overflow:hidden}
+.thread-fill{position:absolute;left:0;top:0;width:1px;height:100%;background:linear-gradient(180deg,var(--tec),rgba(196,242,29,.6));transform-origin:top;transform:scaleY(0)}
+.thread-node{position:absolute;left:0;width:24px;height:24px;margin-top:-12px;display:grid;place-items:center;background:none;border:none;padding:0;cursor:pointer}
+.thread-node i{width:7px;height:7px;border-radius:50%;background:var(--bg);border:1px solid rgba(241,245,238,.35);transition:background .4s,border-color .4s,transform .5s var(--ease),box-shadow .4s}
+.thread-node.lit i{background:var(--tec);border-color:var(--tec)}
+.thread-node.cur i{transform:scale(1.6);box-shadow:0 0 0 5px rgba(196,242,29,.16)}
+.thread-node span{position:absolute;left:30px;top:50%;transform:translate(-6px,-50%);white-space:nowrap;padding:5px 10px;border-radius:100px;background:rgba(11,21,16,.82);border:1px solid var(--line);
+  font-size:11.5px;font-weight:500;letter-spacing:.04em;color:var(--ink);opacity:0;pointer-events:none;transition:opacity .35s,transform .45s var(--ease);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.thread-node:hover span,.thread-node:focus-visible span,.thread-node.cur.flash span{opacity:1;transform:translate(0,-50%)}
+.thread-node:hover i{transform:scale(1.8);border-color:var(--tec)}
+
+/* internacional: constelación */
+.intl-map{margin:40px 0 0;border-radius:28px;border:1px solid var(--line);background:radial-gradient(80% 70% at 50% 60%,rgba(196,242,29,.06),transparent 70%),#0E1C14;overflow:hidden}
+.intl-map svg{display:block;width:100%;height:auto}
+.intl-map .arc{fill:none;stroke:rgba(196,242,29,.55);stroke-width:1.6;stroke-linecap:round;stroke-dasharray:420;stroke-dashoffset:420;transition:stroke-dashoffset 2.2s var(--ease),stroke .4s,stroke-width .4s}
+.intl-map.in .arc{stroke-dashoffset:0}
+.intl-map.in .arc[data-arc="eu2"]{transition-delay:.3s}
+.intl-map.in .arc[data-arc="latam"]{transition-delay:.6s}
+.intl-map .pulse{fill:var(--tec);opacity:0;transition:opacity .6s 2s}
+.intl-map .pulse.mag{fill:var(--mag)}
+.intl-map.in .pulse{opacity:1}
+.intl-map .node circle{fill:#D8E0D5;transition:fill .4s,transform .5s var(--ease)}
+.intl-map .node .sat{fill:rgba(241,245,238,.45)}
+.intl-map .node.es circle{fill:var(--tec)}
+.intl-map text{fill:var(--ink);font:500 13px var(--sans);text-anchor:middle;letter-spacing:.02em}
+.intl-map text.sub{fill:var(--ink-dim);font-size:11px}
+.intl-map.hl .arc{stroke:rgba(241,245,238,.12)}
+.intl-map.hl .arc.on{stroke:var(--tec);stroke-width:2.6}
+.intl-map.hl .node.on circle{fill:var(--tec)}
+.intl-list li{transition:opacity .4s}
+.intl-list li[data-arc]{cursor:default}
+@media (prefers-reduced-motion:reduce){.intl-map .arc{stroke-dashoffset:0}.intl-map .pulse{display:none}}
+
+/* súmate: la red que crece */
+.cta{position:relative;isolation:isolate}
+.cta-net{position:absolute;inset:0;z-index:-1;width:100%;height:100%;pointer-events:none}
+@media(max-width:600px){.intl-map text{font-size:20px}.intl-map text.sub{font-size:16px}}
+/* secciones con red de fondo */
+.net-sec{position:relative;isolation:isolate}
+.net-sec>.wrap{position:relative;z-index:1}
+.net-sec .field input,.net-sec .field select,.net-sec .field textarea{background-color:rgba(11,21,16,.92)}
+
+/* colectivos: cuadrícula tranquila (sustituye a la cinta de palabras gigantes) */
+.groups{list-style:none;margin:clamp(40px,5vw,72px) 0 0;padding:0;display:grid;gap:12px;grid-template-columns:1fr 1fr}
+@media(min-width:1000px){.groups{grid-template-columns:repeat(4,1fr)}}
+.group{position:relative;display:flex;flex-direction:column;gap:10px;min-height:clamp(170px,15vw,210px);padding:clamp(18px,2vw,26px);border-radius:22px;
+  border:1px solid var(--line);background:rgba(19,37,25,.55);transition:border-color .5s var(--ease),background .5s var(--ease),transform .7s var(--ease)}
+.group-top{display:flex;justify-content:space-between;align-items:center}
+.group-n{font-size:12px;letter-spacing:.14em;color:var(--ink-dim);font-variant-numeric:tabular-nums}
+.group-dot{position:relative;width:9px;height:9px;border-radius:50%;background:rgba(241,245,238,.35);transition:background .5s}
+.group-dot::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:1px solid rgba(241,245,238,.25);transition:border-color .5s,transform .6s var(--ease)}
+.group h3{margin-top:auto;font-size:clamp(20px,1.7vw,26px);font-weight:400;font-stretch:86%;letter-spacing:-.02em;line-height:1.1}
+.group p{font-size:14px;color:var(--ink-soft);line-height:1.45}
+.group:hover{border-color:rgba(196,242,29,.45);background:rgba(28,52,36,.7);transform:translateY(-4px)}
+.group:hover .group-dot{background:var(--tec)}
+.group:hover .group-dot::after{border-color:rgba(196,242,29,.6);transform:scale(1.5)}
+.group:hover h3{color:var(--tec)}
+@media(max-width:480px){.group p{font-size:13px}.group h3{font-size:19px}}
+
+/* cintas de texto restantes: más pequeñas y a velocidad constante */
+.ticker span{font-size:clamp(34px,4.6vw,72px)}
+.group h3{margin-top:clamp(18px,2.6vw,36px)}
+.group p{margin-top:0}
+
+/* =========================================================
+   colectivos: «órbita de personas»
+   ========================================================= */
+.orbit{display:none}
+@media(min-width:900px) and (hover:hover){
+  .orbit{display:block;position:relative;height:clamp(560px,74vh,760px);margin-top:clamp(24px,4vw,56px)}
+  .people .groups{display:none}
+}
+.orbit-canvas{position:absolute;inset:0;width:100%;height:100%}
+.orbit-core{position:absolute;left:50%;top:50%;width:clamp(230px,21vw,300px);aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:28px;z-index:3;
+  background:radial-gradient(circle at 50% 35%,rgba(196,242,29,.10),rgba(11,21,16,.75) 70%);border:1px solid rgba(196,242,29,.22);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 0 80px rgba(196,242,29,.10),inset 0 0 40px rgba(196,242,29,.06)}
+.orbit-core::before{content:"";position:absolute;inset:-14px;border-radius:50%;border:1px dashed rgba(196,242,29,.18);animation:spin 40s linear infinite}
+.orbit-sym{width:40px;height:40px;animation:spin 18s linear infinite}
+.orbit-k{margin-top:12px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-stretch:118%;color:var(--ink-dim)}
+.orbit-title{display:block;margin-top:8px;font-size:clamp(24px,2.1vw,32px);font-weight:300;font-stretch:80%;letter-spacing:-.02em;line-height:1.05;color:var(--ink)}
+.orbit-title em{color:var(--tec)}
+.orbit-desc{margin-top:10px;font-size:13.5px;line-height:1.4;color:var(--ink-soft);max-width:22ch}
+.orbit-core.swap .orbit-title,.orbit-core.swap .orbit-desc,.orbit-core.swap .orbit-k{animation:coreSwap .5s var(--ease)}
+@keyframes coreSwap{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.orbit-node{position:absolute;left:0;top:0;display:flex;flex-direction:column;align-items:center;gap:10px;padding:0;border:none;background:none;cursor:pointer;
+  transform:translate(-50%,-50%);will-change:transform;color:var(--ink-dim);transition:color .5s,opacity .5s}
+.orbit-node i{position:relative;width:16px;height:16px;border-radius:50%;background:rgba(241,245,238,.25);box-shadow:0 0 0 0 rgba(196,242,29,0);transition:background .6s,box-shadow .6s,transform .5s var(--ease)}
+.orbit-node i::after{content:"";position:absolute;inset:-9px;border-radius:50%;border:1px solid rgba(241,245,238,.18);transition:border-color .6s,transform .6s var(--ease)}
+.orbit-node span{white-space:nowrap;font-size:clamp(14px,1.15vw,17px);font-weight:500;letter-spacing:-.005em;padding:6px 12px;border-radius:100px;background:rgba(11,21,16,.6);border:1px solid transparent;transition:border-color .5s,background .5s,color .5s}
+.orbit-node.on{color:var(--ink)}
+.orbit-node.on i{background:var(--tec);box-shadow:0 0 22px rgba(196,242,29,.55)}
+.orbit-node.on i::after{border-color:rgba(196,242,29,.35)}
+.orbit.has-active .orbit-node{opacity:.35}
+.orbit.has-active .orbit-node.active{opacity:1}
+.orbit-node.active i{transform:scale(1.35)}
+.orbit-node.active i::after{transform:scale(1.5);border-color:rgba(196,242,29,.7)}
+.orbit-node.active span{color:var(--forest);background:var(--tec);border-color:var(--tec)}
+.orbit-node:focus-visible{outline:none}
+.orbit-node:focus-visible span{outline:2px solid var(--tec);outline-offset:3px}
+
+/* =========================================================
+   internacional: «el mundo conectado» (globo de puntos)
+   ========================================================= */
+.globe{position:relative;width:min(100%,max(320px,calc(100svh - 360px)));aspect-ratio:1;margin:28px auto 0;cursor:grab;touch-action:pan-y}
+.globe.drag{cursor:grabbing}
+.globe-canvas{position:absolute;inset:0;width:100%;height:100%}
+.globe-hint{position:absolute;left:50%;bottom:4px;transform:translateX(-50%);padding:6px 12px;border-radius:100px;background:rgba(11,21,16,.6);border:1px solid var(--line);
+  font-size:11.5px;letter-spacing:.06em;color:var(--ink-dim);white-space:nowrap;opacity:0;transition:opacity .8s}
+.globe.ready .globe-hint{opacity:1}
+.globe.touched .globe-hint{opacity:0}
+/* la constelación plana queda como respaldo si no carga el mapa */
+.globe~.intl-map{display:none}
+.globe.fail{display:none}
+.globe.fail~.intl-map{display:block}
+@media(min-width:1000px){
+  .intl .intl-sticky{top:96px}
+  .intl:has(.globe) .intl-list li{min-height:34vh;display:flex;flex-direction:column;justify-content:center}
+}
+.intl-list li.focus .n{color:var(--tec)}
+.intl-list li[data-arc]{transition:opacity .5s}
+.intl:has(.intl-list li.focus) .intl-list li:not(.focus){opacity:.45}
