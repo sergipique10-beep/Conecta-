@@ -86,6 +86,7 @@
 
     a.addEventListener('click',function(e){
       if(e.metaKey || e.ctrlKey || e.shiftKey || e.button===1){return}
+      url = new URL(a.href, location.href);            // el destino puede cambiar (p. ej. el rótulo del showreel)
       if(samePage){
         var id = url.hash;
         var el = id.length>1 ? document.querySelector(id) : null;
@@ -243,6 +244,7 @@
 
   /* ---------- bucle de animación ---------- */
   var heroMedia = document.querySelector('.hero-media');
+  var heroLastY = -1;
   var footer = document.getElementById('footer');
   var footInner = footer ? footer.querySelector('.foot-inner') : null;
   var footBg = footer ? footer.querySelector('.fc-bg') : null;
@@ -252,8 +254,10 @@
     vel = lerp(vel, y-prevY, .1); prevY = y;
     var vh = window.innerHeight;
 
-    if(heroMedia && y < vh*1.2 && !reduce){
+    // solo se recalcula cuando cambia el scroll (no en cada fotograma)
+    if(heroMedia && y < vh*1.2 && !reduce && y !== heroLastY){
       heroMedia.style.transform = 'translate3d(0,'+(y*.3)+'px,0)';
+      heroLastY = y;
     }
 
     if(man){
@@ -299,7 +303,7 @@
     var hint = $('heroHint'), hintText = $('heroHintText'), hCount = $('heroCount'), hTotal = $('heroTotal');
     var HD = Math.min(window.devicePixelRatio||1,2);
     var HW=0,HH=0,S=0,CX=0,CY=0,mob=false;
-    var pts=[],outs=[],connected=0,started=false,t0=0,allDone=false;
+    var pts=[],outs=[],connected=0,started=false,hT0=0,allDone=false;
     var hmx=-9999,hmy=-9999,hsmx=0,hsmy=0,heroOn=true;
     var LIME='196,242,29',MAG='226,75,196',GREY='241,245,238';
 
@@ -367,7 +371,7 @@
     };
 
     var drawHero = function(now){
-      var el = (now - t0)/1000;
+      var el = (now - hT0)/1000;
       var sy = lenis ? lenis.scroll : window.scrollY;
       var sp = clamp(sy/(HH*.85),0,1);                       // progreso del primer scroll
       hsmx = lerp(hsmx, hmx>-999 ? (hmx-CX)/HW : 0, .06);    // parallax suave del cursor
@@ -436,7 +440,7 @@
     if(!fine){ hintText.innerHTML = 'Cada punto es una persona. <b>Toca los puntos grises</b> para conectarlos.'; }
     // arranca cuando termina la entrada (loader / cortina)
     (function waitReady(){
-      if(main.classList.contains('ready')){ started = true; t0 = performance.now() - (reduce ? 10000 : 0); }
+      if(main.classList.contains('ready')){ started = true; hT0 = performance.now() - (reduce ? 10000 : 0); }
       else { setTimeout(waitReady,60); }
     })();
     requestAnimationFrame(loopHero);
@@ -933,6 +937,236 @@
         if(gOn){ gStart = performance.now(); }
       })
       .catch(gFail);
+  }
+
+  /* ---------- proyectos internacionales: mapa de proyectos ----------
+     Mapa plano de puntos (América–Europa) con cada proyecto anclado a su región.
+     Tarjeta ↔ marcador se resaltan mutuamente. Si el mapa no carga, quedan las tarjetas. */
+  var fm = $('flatmap');
+  if(fm){
+    var fc = fm.querySelector('.flatmap-canvas'), fx = fc.getContext('2d');
+    var FD = Math.min(window.devicePixelRatio||1,2), FW=0, FH=0;
+    var LON0 = -122, LON1 = 48, LAT0 = 66, LAT1 = -42;      // recorte del mapa
+    var FK = 1, FOX = 0, FOY = 0;                            // escala y margen para no deformar el mapa
+    var ESP = [40.42,-3.70];
+    var pCards = Array.prototype.slice.call(document.querySelectorAll('.pin-card'));
+    var pins = pCards.map(function(c){ return {card:c, key:c.dataset.pin, lat:+c.dataset.lat, lon:+c.dataset.lon, label:c.dataset.label, mag: c.dataset.pin==='latam'}; });
+    var fDots = [], fReady = false, fOn = false, fStart = 0, fActive = -1, fHoverPin = -1;
+    var fxy = function(lat,lon){ return [ FOX + (lon-LON0)*FK, FOY + (LAT0-lat)*FK ]; };
+    var fSize = function(){
+      var r = fm.getBoundingClientRect(); FW = r.width; FH = r.height; fc.width = FW*FD; fc.height = FH*FD; fx.setTransform(FD,0,0,FD,0,0);
+      FK = Math.min(FW/(LON1-LON0), FH/(LAT0-LAT1)); FOX = (FW - (LON1-LON0)*FK)/2; FOY = (FH - (LAT0-LAT1)*FK)/2;
+    };
+    var setActive = function(i){
+      fActive = i;
+      pCards.forEach(function(c,k){ c.classList.toggle('on', k===i); });
+    };
+    pCards.forEach(function(c,i){
+      c.addEventListener('mouseenter',function(){setActive(i)});
+      c.addEventListener('focus',function(){setActive(i)});
+      c.addEventListener('mouseleave',function(){setActive(-1)});
+      c.addEventListener('blur',function(){setActive(-1)});
+      c.addEventListener('click',function(){setActive(i)});
+    });
+    fm.addEventListener('mousemove',function(e){
+      var r = fm.getBoundingClientRect(), mx = e.clientX-r.left, my = e.clientY-r.top, hit = -1;
+      pins.forEach(function(p,i){ var q = fxy(p.lat,p.lon); if(Math.hypot(q[0]-mx,q[1]-my) < 22){hit = i} });
+      if(hit !== fHoverPin){ fHoverPin = hit; setActive(hit); fm.style.cursor = hit > -1 ? 'pointer' : ''; }
+    });
+    fm.addEventListener('mouseleave',function(){ fHoverPin = -1; setActive(-1); });
+
+    var buildDots = function(topo){
+      var feat = topojson.feature(topo, topo.objects.land);
+      var W = 720, H = 360, m = document.createElement('canvas'); m.width = W; m.height = H;
+      var mg = m.getContext('2d'); mg.fillStyle = '#000';
+      var polys = feat.type === 'FeatureCollection' ? feat.features.map(function(f){return f.geometry}) : [feat.geometry];
+      polys.forEach(function(geom){
+        (geom.type === 'Polygon' ? [geom.coordinates] : geom.coordinates).forEach(function(poly){
+          [-360,0,360].forEach(function(shift){
+            mg.beginPath();
+            poly.forEach(function(ring){
+              var off = 0, prev = null;
+              ring.forEach(function(c,i){
+                if(prev !== null){ var d = c[0]-prev; if(d > 180){off -= 360} else if(d < -180){off += 360} }
+                prev = c[0];
+                var x = (c[0]+off+shift+180)*2, y = (90-c[1])*2;
+                i ? mg.lineTo(x,y) : mg.moveTo(x,y);
+              });
+              mg.closePath();
+            });
+            mg.fill('evenodd');
+          });
+        });
+      });
+      var data = mg.getImageData(0,0,W,H).data, step = 1.5;
+      for(var lat = LAT0; lat >= LAT1; lat -= step){
+        for(var lon = LON0; lon <= LON1; lon += step){
+          var px = Math.floor((lon+180)*2), py = Math.floor((90-lat)*2);
+          if(data[(py*W+px)*4+3] > 100){ fDots.push([lat,lon]); }
+        }
+      }
+    };
+
+    var quad = function(u,a,c,b){ return (1-u)*(1-u)*a + 2*(1-u)*u*c + u*u*b; };
+    var fFrame = function(now){
+      requestAnimationFrame(fFrame);
+      if(!fOn || !fReady){return}
+      var t = (now - fStart)/1000;
+      fx.clearRect(0,0,FW,FH);
+      var cell = FK*1.5, r = Math.max(1, cell*.32);
+      var sweep = reduce ? 9e9 : FOX + t*FW*.7;                 // barrido de izquierda a derecha
+      var act = fActive > -1 ? pins[fActive] : null;
+      for(var i=0;i<fDots.length;i++){
+        var q = fxy(fDots[i][0],fDots[i][1]);
+        if(q[0] > sweep){continue}
+        var near = act ? Math.max(0, 1 - Math.hypot(fDots[i][0]-act.lat, (fDots[i][1]-act.lon)*.8)/14) : 0;
+        fx.fillStyle = near > 0 ? 'rgba('+(act.mag?'226,75,196':'196,242,29')+','+(.25+.6*near)+')' : 'rgba(196,242,29,.24)';
+        fx.beginPath(); fx.arc(q[0],q[1],r*(1+near*.5),0,Math.PI*2); fx.fill();
+      }
+      if(!reduce && t < 1.6){return}
+      var es = fxy(ESP[0],ESP[1]);
+      pins.forEach(function(p,k){
+        var d = fxy(p.lat,p.lon), isA = fActive === k, dim = fActive > -1 && !isA;
+        var mx = (es[0]+d[0])/2, my = Math.min(es[1],d[1]) - Math.abs(d[0]-es[0])*.28 - 20;
+        var prog = reduce ? 1 : clamp((t - 1.6 - k*.2)/.9,0,1);
+        var col = p.mag ? '226,75,196' : '196,242,29';
+        fx.strokeStyle = 'rgba('+col+','+(isA ? .9 : dim ? .12 : .45)+')';
+        fx.lineWidth = isA ? 2 : 1.2;
+        fx.beginPath();
+        for(var s=0;s<=40*prog;s++){ var u = s/40, x = quad(u,es[0],mx,d[0]), y = quad(u,es[1],my,d[1]); s ? fx.lineTo(x,y) : fx.moveTo(x,y); }
+        fx.stroke();
+        if(prog < 1){return}
+        if(!reduce){
+          var u2 = (t*.4 + k*.25) % 1;
+          fx.fillStyle = dim ? 'rgba(255,255,255,.25)' : '#fff';
+          fx.beginPath(); fx.arc(quad(u2,es[0],mx,d[0]),quad(u2,es[1],my,d[1]),isA?3:2,0,Math.PI*2); fx.fill();
+        }
+        var pulse = reduce ? 0 : (Math.sin(t*2.2+k)+1)/2;
+        fx.fillStyle = 'rgba('+col+','+((isA?.35:.18) + .15*pulse)+')';
+        fx.beginPath(); fx.arc(d[0],d[1],(isA?13:8)+pulse*4,0,Math.PI*2); fx.fill();
+        fx.fillStyle = 'rgb('+col+')'; fx.beginPath(); fx.arc(d[0],d[1],isA?5.5:4,0,Math.PI*2); fx.fill();
+        if(isA){
+          fx.font = '600 '+Math.round(clamp(FW/70,12,15))+'px Archivo, sans-serif';
+          var tw = fx.measureText(p.label).width, lx = Math.min(d[0]+14, FW-tw-24), ly = d[1]-14;
+          fx.fillStyle = 'rgba(11,21,16,.85)'; fx.beginPath(); fx.roundRect ? fx.roundRect(lx,ly-14,tw+18,26,13) : fx.rect(lx,ly-14,tw+18,26); fx.fill();
+          fx.fillStyle = '#F1F5EE'; fx.fillText(p.label,lx+9,ly+4);
+        }
+      });
+      var pe = reduce ? 0 : (Math.sin(t*2.6)+1)/2;
+      fx.fillStyle = 'rgba(196,242,29,'+(.2+.2*pe)+')'; fx.beginPath(); fx.arc(es[0],es[1],10+pe*6,0,Math.PI*2); fx.fill();
+      fx.fillStyle = '#C4F21D'; fx.beginPath(); fx.arc(es[0],es[1],5,0,Math.PI*2); fx.fill();
+      fx.font = '700 '+Math.round(clamp(FW/64,12,16))+'px Archivo, sans-serif';
+      fx.fillText('España · 4 sedes', es[0]-30, es[1]+28);
+    };
+
+    fSize();
+    window.addEventListener('resize',fSize);
+    new IntersectionObserver(function(e){
+      fOn = e[0].isIntersecting;
+      if(fOn && fReady && !fStart){ fStart = performance.now(); }
+    },{threshold:.3}).observe(fm);
+    requestAnimationFrame(fFrame);
+    (window.topojson ? Promise.resolve() : new Promise(function(res,rej){ var s = document.createElement('script'); s.src = 'https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js'; s.onload = res; s.onerror = rej; document.head.appendChild(s); }))
+      .then(function(){ return fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/land-110m.json'); })
+      .then(function(r){ if(!r.ok){throw new Error('mapa')} return r.json(); })
+      .then(function(topo){ buildDots(topo); if(!fDots.length){throw new Error('vacío')} fReady = true; if(fOn){fStart = performance.now()} })
+      .catch(function(){ fm.classList.add('fail'); });
+  }
+
+  /* ---------- Misión: showreel de las líneas de trabajo ----------
+     Dos <video> que se alternan con fundido; el rótulo enlaza a la línea que se ve. */
+  var reel = $('reel');
+  if(reel){
+    var rv = reel.querySelectorAll('.reel-v'), rClips = Array.prototype.map.call(reel.querySelectorAll('.reel-list li'),function(li){return li.dataset});
+    var rCap = $('reelCap'), rCapT = rCap.querySelector('.reel-t'), rCapN = rCap.querySelector('.reel-n'), rBars = rCap.querySelectorAll('.reel-bars i');
+    var rCur = 0, rFront = 0, rOn = true, rStarted = false;
+    var rSetCap = function(i){
+      rCap.setAttribute('href','#'+rClips[i].href);
+      rCapT.textContent = rClips[i].label; rCapT.classList.remove('swap'); void rCapT.offsetWidth; rCapT.classList.add('swap');
+      rCapN.textContent = String(i+1).padStart(2,'0')+' / '+String(rClips.length).padStart(2,'0');
+      rBars.forEach(function(b,k){ b.classList.toggle('done', k < i); b.firstChild.style.transform = k < i ? 'scaleX(1)' : 'scaleX(0)'; });
+    };
+    var rLoad = function(v,i){ v.src = rClips[i].src; v.poster = rClips[i].poster; v.load(); };
+    var rShow = function(i){
+      var next = rv[1-rFront];
+      if(next.getAttribute('src') !== rClips[i].src){ rLoad(next,i); }
+      var p = next.play(); if(p && p.catch){p.catch(function(){})}
+      next.classList.add('on'); rv[rFront].classList.remove('on');
+      rFront = 1-rFront; rCur = i; rSetCap(i);
+      // precarga el siguiente en el vídeo que queda libre
+      setTimeout(function(){ rLoad(rv[1-rFront], (rCur+1) % rClips.length); }, 1200);
+    };
+    // la barra del clip actual avanza con el vídeo; al acabar pasa al siguiente
+    var rTick = function(){
+      requestAnimationFrame(rTick);
+      if(!rStarted || !rOn){return}
+      var v = rv[rFront];
+      if(v.duration){
+        var k = v.currentTime/v.duration;
+        rBars[rCur].firstChild.style.transform = 'scaleX('+k+')';
+        if(v.currentTime > v.duration - .45 && !v._jumped){ v._jumped = true; rShow((rCur+1) % rClips.length); setTimeout(function(){v._jumped = false},800); }
+      }
+    };
+    rv.forEach(function(v){ v.addEventListener('ended',function(){ if(v === rv[rFront]){ rShow((rCur+1) % rClips.length); } }); });
+    if(reduce){
+      rv[0].poster = rClips[0].poster;   // sin movimiento: solo el fotograma
+    } else {
+      rLoad(rv[0],0);
+      var rStart = function(){ rStarted = true; var p = rv[0].play(); if(p && p.catch){p.catch(function(){})} setTimeout(function(){rLoad(rv[1],1)},1500); };
+      if(rv[0].readyState >= 2){ rStart(); } else { rv[0].addEventListener('canplay',rStart,{once:true}); }
+      requestAnimationFrame(rTick);
+    }
+    new IntersectionObserver(function(e){
+      rOn = e[0].isIntersecting;
+      if(!rStarted){return}
+      var v = rv[rFront]; if(rOn){ var p = v.play(); if(p && p.catch){p.catch(function(){})} } else { v.pause(); }
+    }).observe(reel);
+  }
+
+  /* ---------- Proyectos: arcos de luz sobre la ciudad ---------- */
+  var ca = $('cityArcs');
+  if(ca){
+    var cg = ca.getContext('2d'), CDp = Math.min(window.devicePixelRatio||1,2), CW2=0, CH2=0, cArcs = [], cOn2 = true;
+    var cityV = ca.parentElement.querySelector('.city-v');
+    if(reduce && cityV){ cityV.removeAttribute('autoplay'); cityV.pause(); }
+    var cSize = function(){ var r = ca.getBoundingClientRect(); CW2 = r.width; CH2 = r.height; ca.width = CW2*CDp; ca.height = CH2*CDp; cg.setTransform(CDp,0,0,CDp,0,0); };
+    var rnd = function(a,b){return a + Math.random()*(b-a)};
+    // los arcos nacen y aterrizan sobre todo en la mitad derecha, lejos del titular
+    var newArc = function(now){
+      var mob2 = CW2 < 900, xa = mob2 ? .08 : .52; var x1 = rnd(CW2*xa, CW2*.95), y1 = rnd(CH2*.16, CH2*(mob2?.45:.7)), x2 = rnd(CW2*xa, CW2*.97), y2 = rnd(CH2*.16, CH2*(mob2?.45:.7));
+      if(Math.hypot(x2-x1,y2-y1) < CW2*.12){ x2 = Math.min(CW2*.97, x1 + CW2*.2); }
+      return {x1:x1,y1:y1,x2:x2,y2:y2, h: rnd(.25,.45), t0: now, dur: rnd(1600,2600), mag: Math.random() < .25};
+    };
+    var cFrame = function(now){
+      requestAnimationFrame(cFrame);
+      if(!cOn2 || reduce){return}
+      cg.clearRect(0,0,CW2,CH2);
+      while(cArcs.length < (CW2 < 700 ? 3 : 6)){ cArcs.push(newArc(now - Math.random()*1500)); }
+      cArcs = cArcs.filter(function(a){ return now - a.t0 < a.dur + 900; });
+      cArcs.forEach(function(a){
+        var k = clamp((now - a.t0)/a.dur,0,1), fade = 1 - clamp((now - a.t0 - a.dur)/900,0,1);
+        var mx = (a.x1+a.x2)/2, my = Math.min(a.y1,a.y2) - Math.abs(a.x2-a.x1)*a.h;
+        var col = a.mag ? '226,75,196' : '196,242,29';
+        cg.strokeStyle = 'rgba('+col+','+(.55*fade)+')'; cg.lineWidth = 1.4;
+        cg.beginPath();
+        for(var s=0;s<=30*k;s++){ var u = s/30, x = (1-u)*(1-u)*a.x1 + 2*(1-u)*u*mx + u*u*a.x2, y = (1-u)*(1-u)*a.y1 + 2*(1-u)*u*my + u*u*a.y2; s ? cg.lineTo(x,y) : cg.moveTo(x,y); }
+        cg.stroke();
+        // origen y destino laten
+        cg.fillStyle = 'rgba('+col+','+fade+')';
+        cg.beginPath(); cg.arc(a.x1,a.y1,3,0,Math.PI*2); cg.fill();
+        if(k >= 1){
+          var r2 = 3 + (1-fade)*14;
+          cg.beginPath(); cg.arc(a.x2,a.y2,3.2,0,Math.PI*2); cg.fill();
+          cg.strokeStyle = 'rgba('+col+','+(.6*fade)+')'; cg.beginPath(); cg.arc(a.x2,a.y2,r2,0,Math.PI*2); cg.stroke();
+        } else {
+          var u = k, hx = (1-u)*(1-u)*a.x1 + 2*(1-u)*u*mx + u*u*a.x2, hy = (1-u)*(1-u)*a.y1 + 2*(1-u)*u*my + u*u*a.y2;
+          cg.fillStyle = '#fff'; cg.beginPath(); cg.arc(hx,hy,2.4,0,Math.PI*2); cg.fill();
+        }
+      });
+    };
+    cSize(); window.addEventListener('resize',cSize);
+    new IntersectionObserver(function(e){ cOn2 = e[0].isIntersecting; if(cityV && !reduce){ cOn2 ? cityV.play().catch(function(){}) : cityV.pause(); } }).observe(ca);
+    requestAnimationFrame(cFrame);
   }
 
   /* ---------- carrusel de noticias ---------- */

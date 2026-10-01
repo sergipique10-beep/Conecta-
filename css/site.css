@@ -1046,3 +1046,70 @@ footer::before{background:radial-gradient(55% 40% at 50% 32%,rgba(5,16,10,.45),t
 .intl-list li.focus .n{color:var(--tec)}
 .intl-list li[data-arc]{transition:opacity .5s}
 .intl:has(.intl-list li.focus) .intl-list li:not(.focus){opacity:.45}
+
+/* =========================================================
+   proyectos internacionales: mapa de proyectos (plano)
+   ========================================================= */
+.flatmap{position:relative;width:100%;aspect-ratio:1.7;max-height:66vh;border-radius:28px;border:1px solid var(--line);overflow:hidden;
+  background:radial-gradient(70% 80% at 55% 45%,rgba(196,242,29,.07),transparent 70%),#0C1811}
+.flatmap-canvas{position:absolute;inset:0;width:100%;height:100%}
+.flatmap.fail{display:none}
+.pin-cards{display:grid;gap:12px;margin-top:16px}
+@media(min-width:700px){.pin-cards{grid-template-columns:1fr 1fr}}
+@media(min-width:1100px){.pin-cards{grid-template-columns:repeat(4,1fr)}}
+.pin-card{display:flex;flex-direction:column;gap:10px;padding:clamp(18px,2vw,26px);border-radius:22px;border:1px solid var(--line);background:rgba(19,37,25,.55);cursor:default;outline:none;
+  transition:border-color .5s var(--ease),background .5s var(--ease),transform .6s var(--ease)}
+.pin-card-top{display:flex;align-items:center;gap:10px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-stretch:118%;color:var(--ink-dim)}
+.pin-dot{width:9px;height:9px;border-radius:50%;background:rgba(241,245,238,.4);box-shadow:0 0 0 0 rgba(196,242,29,0);transition:background .4s,box-shadow .4s}
+.pin-card h3{font-size:clamp(21px,1.8vw,26px);font-weight:400;font-stretch:86%;letter-spacing:-.02em;line-height:1.1}
+.pin-card p{font-size:14.5px;color:var(--ink-soft)}
+.pin-card.on,.pin-card:hover,.pin-card:focus-visible{border-color:rgba(196,242,29,.5);background:rgba(28,52,36,.75);transform:translateY(-4px)}
+.pin-card.on .pin-dot,.pin-card:hover .pin-dot,.pin-card:focus-visible .pin-dot{background:var(--tec);box-shadow:0 0 0 5px rgba(196,242,29,.18)}
+.pin-card.on h3,.pin-card:hover h3{color:var(--tec)}
+.pin-card[data-pin="latam"].on .pin-dot,.pin-card[data-pin="latam"]:hover .pin-dot{background:var(--mag);box-shadow:0 0 0 5px rgba(226,75,196,.2)}
+
+/* =========================================================
+   cabeceras con vídeo: Misión (showreel) y Proyectos (ciudad)
+   ========================================================= */
+.hero-media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+/* Misión: dos vídeos que se funden entre sí */
+.reel .reel-v{opacity:0;transform:scale(1.06);transition:opacity 1.1s var(--ease),transform 7s linear;filter:saturate(.9) contrast(1.05)}
+.reel .reel-v.on{opacity:1;transform:scale(1)}
+/* etalonado de marca: un toque lima/magenta sobre la imagen */
+.reel-grade,.city-grade{position:absolute;inset:0;pointer-events:none}
+.reel-grade{background:linear-gradient(115deg,rgba(196,242,29,.20),transparent 45%,rgba(206,11,165,.18));mix-blend-mode:soft-light}
+.hero-reel::after{background:linear-gradient(180deg,rgba(11,21,16,.65) 0%,rgba(11,21,16,.2) 38%,rgba(11,21,16,.55) 70%,var(--bg) 100%)}
+/* rótulo sincronizado: línea actual + barras de progreso */
+.reel-cap{position:absolute;z-index:3;right:var(--gut);top:clamp(96px,14vh,140px);display:flex;flex-direction:column;gap:12px;width:min(320px,40vw);
+  padding:16px 18px;border-radius:20px;background:rgba(11,21,16,.45);border:1px solid rgba(241,245,238,.16);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  transition:border-color .4s,background .4s,transform .6s var(--ease)}
+.reel-cap:hover{border-color:rgba(196,242,29,.55);background:rgba(11,21,16,.6);transform:translateY(-3px)}
+.reel-bars{display:flex;gap:4px}
+.reel-bars i{flex:1;height:3px;border-radius:3px;background:rgba(241,245,238,.22);overflow:hidden}
+.reel-bars b{display:block;height:100%;width:100%;background:var(--tec);transform:scaleX(0);transform-origin:left}
+.reel-bars i.done b{transform:scaleX(1)}
+.reel-meta{display:grid;grid-template-columns:auto 1fr;align-items:baseline;gap:4px 12px}
+.reel-n{font-size:12px;letter-spacing:.12em;color:var(--ink-dim);font-variant-numeric:tabular-nums}
+.reel-t{font-family:var(--serif);font-style:italic;font-weight:400;font-size:clamp(22px,2vw,30px);line-height:1;color:var(--ink)}
+.reel-t.swap{animation:coreSwap .6s var(--ease)}
+.reel-go{grid-column:1/-1;font-size:13px;font-weight:600;color:var(--tec)}
+@media(max-width:899px){.reel-cap{top:auto;bottom:18px;right:16px;left:16px;width:auto}.hero-reel .page-hero-foot .anchors{display:none}.hero-reel{padding-bottom:150px}}
+
+/* Proyectos: ciudad nocturna teñida de marca + arcos */
+.city .city-v{filter:grayscale(1) contrast(1.25) brightness(.95);transform:scale(1.04)}
+.city-grade{background:linear-gradient(160deg,rgba(196,242,29,.95),rgba(38,90,67,.9) 55%,rgba(206,11,165,.7));mix-blend-mode:multiply;opacity:.85}
+.city-grade::after{content:"";position:absolute;inset:0;background:radial-gradient(60% 60% at 70% 40%,rgba(196,242,29,.25),transparent 70%);mix-blend-mode:screen}
+.city-arcs{position:absolute;inset:0;width:100%;height:100%}
+.hero-city::after{background:linear-gradient(180deg,rgba(11,21,16,.55) 0%,rgba(11,21,16,.05) 40%,rgba(11,21,16,.55) 75%,var(--bg) 100%)}
+@media (prefers-reduced-motion:reduce){.reel .reel-v{transition:none;transform:none}}
+
+/* rendimiento de las cabeceras con vídeo: el color de marca va horneado en los propios
+   vídeos, así que no se aplican filtros, fusiones ni desenfoques en tiempo real encima */
+.reel .reel-v,.city .city-v{filter:none}
+.reel .reel-v{will-change:opacity,transform}
+.reel-grade{mix-blend-mode:normal;background:linear-gradient(115deg,rgba(196,242,29,.07),transparent 45%,rgba(206,11,165,.07))}
+.city-grade{mix-blend-mode:normal;opacity:1;background:radial-gradient(55% 60% at 85% 85%,rgba(206,11,165,.14),transparent 70%)}
+.city-grade::after{display:none}
+.reel-cap{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(11,21,16,.72)}
+.reel-cap:hover{background:rgba(11,21,16,.82)}
+.hero-reel .anchors a,.hero-city .anchors a{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(11,21,16,.55)}

@@ -98,8 +98,17 @@
 </div>
 
 <main id="top">
-  <section class="page-hero" aria-labelledby="page-h">
-    <div class="hero-media"><img src="img/contenido.jpg" alt="" fetchpriority="high" style="object-position:center"></div>
+  <section class="page-hero hero-reel" aria-labelledby="page-h">
+    <div class="hero-media reel" id="reel" aria-hidden="true">
+      <video class="reel-v on" muted playsinline preload="auto" poster="video/mision-voluntariado.jpg"></video>
+      <video class="reel-v" muted playsinline preload="auto"></video>
+      <span class="reel-grade"></span>
+      <ul class="reel-list" hidden><li data-src="video/mision-voluntariado.mp4" data-poster="video/mision-voluntariado.jpg" data-href="voluntariado" data-label="Voluntariado"></li><li data-src="video/mision-transformacion.mp4" data-poster="video/mision-transformacion.jpg" data-href="transformacion-digital" data-label="Transformación digital"></li><li data-src="video/mision-justicia.mp4" data-poster="video/mision-justicia.jpg" data-href="justicia-educativa" data-label="Justicia educativa"></li><li data-src="video/mision-inclusion.mp4" data-poster="video/mision-inclusion.jpg" data-href="inclusion-digital" data-label="Inclusión digital"></li><li data-src="video/mision-formacion.mp4" data-poster="video/mision-formacion.jpg" data-href="formacion-tic" data-label="Formación TIC"></li><li data-src="video/mision-liderazgo.mp4" data-poster="video/mision-liderazgo.jpg" data-href="liderazgo-juvenil" data-label="Liderazgo juvenil"></li></ul>
+    </div>
+    <a class="reel-cap" id="reelCap" href="#voluntariado">
+      <span class="reel-bars" aria-hidden="true"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></span>
+      <span class="reel-meta"><span class="reel-n">01 / 06</span><b class="reel-t">Voluntariado</b><span class="reel-go">Ver línea →</span></span>
+    </a>
     <div class="wrap">
       <nav class="crumbs fade-up" aria-label="Ruta"><a href="index.html">Inicio</a><span aria-hidden="true">/</span><span>Misión</span></nav>
       <h1 id="page-h"><span class="line"><span>Que nadie</span></span><span class="line"><span>quede <em>fuera.</em></span></span></h1>
