@@ -28,36 +28,39 @@ Algunas piezas cargan recursos externos (ver [§7](#7-dependencias-externas)), a
 
 ```
 index.html                    Portada (se edita a mano, salvo menú y pie)
-nosotros.html  equipo.html    Páginas internas GENERADAS por tools/build_pages.py
-mision.html    transformacion-digital.html
-proyectos.html recursos.html  contacto.html
+*.html (resto)                Todas las demás páginas: GENERADAS por tools/build_pages.py
 css/site.css                  Todos los estilos (un solo archivo, por secciones)
 js/site.js                    Todo el comportamiento (un solo archivo, por módulos)
-tools/build_pages.py          Generador de páginas internas + menú/pie compartidos
+tools/build_pages.py          Generador de páginas + menú/pie compartidos + listas de datos
 img/                          Imágenes (img/equipo/ = fotos del equipo)
-video/                        Vídeos de las cabeceras de Misión y Proyectos (+ fotograma .jpg)
+video/                        Vídeos de las cabeceras de Qué hacemos y Proyectos (+ fotograma .jpg)
 planeta.html, js/planet*.js,  Escena 3D antigua del planeta. NO está enlazada en la web
 js/earth-webgpu.js            ni la usa ninguna página; se conserva por si se recupera.
 ```
 
 ### Mapa de páginas
 
-| Página | Contenido |
-|---|---|
-| `index.html` | Portada: cabecera «Nadie fuera», manifiesto, cifras, qué hacemos, actualidad, colectivos (órbita), internacional (globo), newsletter |
-| `nosotros.html` | Quiénes somos, cifras, historia, valores, equipos, colaboraciones |
-| `equipo.html` | Subpágina de Nosotros: patronato y equipo (fichas con foto), trabaja con nosotros |
-| `mision.html` | Las 7 líneas de trabajo. Cabecera con *showreel* de vídeo |
-| `transformacion-digital.html` | Subpágina de Misión (equipo de tecnología): servicios, DigComp 2.0, DigitalizaciONG |
-| `proyectos.html` | Proyectos nacionales (con filtros) e internacionales (mapa de proyectos). Cabecera con vídeo |
-| `recursos.html` | Blog/noticias, publicaciones, transparencia, Campus Virtual |
-| `contacto.html` | Formulario, formas de participar, sedes, preguntas frecuentes |
+La navegación sigue el wireframe: cada sección del menú es una página **hub** con tarjetas a sus subpáginas. Las subpáginas llevan un botón «← Volver a …» y un bloque «Sigue explorando» con sus páginas hermanas; las páginas de detalle tienen «anterior / siguiente».
 
----
+| Hub | Subpáginas |
+|---|---|
+| `nosotros.html` | `quienes-somos`, `equipo`, `historia`, `ecosistema` → 9 portales `eco-*.html` |
+| `que-hacemos.html` (cabecera con *showreel*) | `formacion-tic`, `observatorio`, `voluntariado`, `jovenes`, `inclusion-digital`, `transformacion-digital` |
+| `proyectos.html` (cabecera con vídeo) | `proyectos-nacionales` (filtros por área) y `proyectos-internacionales` (mapa) → `proyecto-*.html` |
+| `recursos.html` | `blog` → `noticia-*.html`, `publicaciones` → `publicacion-*.html`, `transparencia`, `preguntas-frecuentes`, `campus` |
+| `contacto.html` | `escribenos`, `sedes` |
+| `colabora.html` (botón de la cabecera) | `hazte-voluntario`, `dona`, `unete` |
+| Pie | `boletin`, `canal-denuncia`, `aviso-legal` (con `#privacidad`, `#cookies`, `#accesibilidad`) |
+
+- `mision.html` ya no existe como página: es una redirección a `que-hacemos.html` para no romper enlaces antiguos.
+- Las áreas enlazan a sus proyectos con `proyectos-nacionales.html?area=<categoría>`, que deja ese filtro activo.
+- Proyectos, noticias, publicaciones y portales salen de las listas `PROJ_NAC`, `PROJ_INT`, `NEWS`, `PUBS` y `ECO` de `tools/build_pages.py`: añadir un elemento a la lista crea su página y la enlaza.
+- El **buscador** de la cabecera es solo la interfaz (panel con campo y accesos rápidos); todavía no busca.
+- Los bloques marcados como **«Provisional»** (borde magenta discontinuo) señalan contenido que falta.
 
 ## 3. Cómo se editan las páginas (¡importante!)
 
-El menú (NAV) y el pie (FOOTER) son iguales en las 8 páginas. Para no copiarlos a mano, se generan con un script:
+El menú (NAV, con el panel del buscador) y el pie (FOOTER) son iguales en todas las páginas. Para no copiarlos a mano, se generan con un script:
 
 ```bash
 python tools/build_pages.py
@@ -65,7 +68,7 @@ python tools/build_pages.py
 
 Ese script:
 
-1. **Reescribe por completo** las páginas internas (`nosotros`, `mision`, `proyectos`, `recursos`, `contacto`, `equipo`, `transformacion-digital`) a partir de las plantillas que contiene.
+1. **Reescribe por completo** todas las páginas salvo la portada, a partir de las plantillas y listas de datos que contiene.
 2. **Sustituye solo el NAV y el FOOTER** dentro de `index.html`. El resto de la portada se respeta.
 
 Por tanto:
@@ -78,7 +81,7 @@ Por tanto:
 | Estilos | `css/site.css` |
 | Comportamiento / animaciones | `js/site.js` |
 
-> ⚠️ Si editas a mano `nosotros.html`, `mision.html`, etc., **el próximo que ejecute el script borrará tus cambios**. Edita siempre en `tools/build_pages.py`.
+> ⚠️ Si editas a mano cualquier página que no sea `index.html`, **el próximo que ejecute el script borrará tus cambios**. Edita siempre en `tools/build_pages.py`.
 
 Al ejecutar el script en Windows, git puede marcar como modificadas páginas que en realidad solo difieren en los saltos de línea (LF/CRLF). Comprueba los cambios reales con `git diff --ignore-cr-at-eol` y descarta los que no tengan contenido.
 
@@ -134,7 +137,7 @@ La web cuenta visualmente el valor de la fundación, **que nadie quede fuera**: 
 | Órbita de colectivos | Portada, en escritorio (en móvil: tarjetas) | `colectivos: «órbita de personas»` |
 | Globo 3D de puntos con arcos | Portada → Internacional | `internacional: «el mundo conectado»` |
 | Mapa plano de proyectos | Proyectos → Internacionales | `proyectos internacionales: mapa de proyectos` |
-| *Showreel* de vídeo de las líneas | Cabecera de Misión | `Misión: showreel` |
+| *Showreel* de vídeo de las líneas | Cabecera de Qué hacemos | `Qué hacemos: showreel` |
 | Ciudad nocturna + arcos | Cabecera de Proyectos | `Proyectos: arcos de luz sobre la ciudad` |
 | La red que crece al enviar un formulario | Newsletter de la portada, Contacto | `la red que crece` |
 | Red de nodos + terminal | Transformación digital | `transformación digital: …` |
@@ -167,7 +170,7 @@ ffmpeg -ss 1 -t 6 -i original.mp4 -an -fps_mode passthrough \
 ffmpeg -ss 1 -i original.mp4 -frames:v 1 -vf "scale=1280:-2" -q:v 4 video/nombre.jpg
 ```
 
-Las escenas del *showreel* se definen en la lista `REEL` de `tools/build_pages.py`.
+Las escenas del *showreel* de Qué hacemos se definen en la lista `REEL` de `tools/build_pages.py`.
 
 ---
 
@@ -187,11 +190,15 @@ Las escenas del *showreel* se definen en la lista `REEL` de `tools/build_pages.p
 ## 8. Contenido provisional que hay que sustituir antes del lanzamiento
 
 - [ ] **Equipo y patronato** (`equipo.html`): los **nombres son ficticios** y las **fotos son de banco de imágenes** (personas reales ajenas a la fundación). Hay que sustituirlos cuanto antes, porque la web ya es pública. Las fotos van en `img/equipo/persona-XX.jpg` y los nombres, cargos y textos en la lista `patronato` / `equipo` de `tools/build_pages.py`.
-- [ ] **Páginas legales**: aviso legal, privacidad, cookies, accesibilidad y canal ético apuntan a `#`.
 - [ ] **Documentos**: memoria anual, guías, estatutos, cuentas… (enlaces `#` en Recursos).
-- [ ] **Campus Virtual**: falta la URL.
+- [ ] **Campus Virtual**: falta la URL (el formulario de `campus.html` no redirige).
+- [ ] **Buscador**: solo interfaz; falta el índice y los resultados.
+- [ ] **Detalles de proyectos, noticias y publicaciones**: faltan textos completos, fechas, financiadores y archivos (bloques «Provisional»).
+- [ ] **Donaciones**: `dona.html` no tiene pasarela de pago.
+- [ ] **Canal de denuncia**: falta la URL del formulario externo.
+- [ ] **Textos legales**: `aviso-legal.html` tiene secciones de relleno.
 - [ ] **Formularios**: conectar newsletter y contacto a un servicio real (con doble confirmación, por RGPD).
-- [ ] **Sedes**: faltan las direcciones de Madrid, Andalucía y Galicia.
+- [ ] **Sedes** (`sedes.html`): faltan las direcciones de Madrid, Andalucía y Galicia.
 - [ ] **Horario de atención**: para mostrarlo junto al reloj del footer.
 - [ ] **Logos de financiadores** (si hay fondos públicos o europeos, suele ser obligatorio mostrarlos).
 - [ ] **Redes sociales**: los iconos del footer apuntan a `#`.

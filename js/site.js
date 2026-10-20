@@ -1073,15 +1073,15 @@
       .catch(function(){ fm.classList.add('fail'); });
   }
 
-  /* ---------- Misión: showreel de las líneas de trabajo ----------
-     Dos <video> que se alternan con fundido; el rótulo enlaza a la línea que se ve. */
+  /* ---------- Qué hacemos: showreel de las áreas de trabajo ----------
+     Dos <video> que se alternan con fundido; el rótulo enlaza al área que se ve. */
   var reel = $('reel');
   if(reel){
     var rv = reel.querySelectorAll('.reel-v'), rClips = Array.prototype.map.call(reel.querySelectorAll('.reel-list li'),function(li){return li.dataset});
     var rCap = $('reelCap'), rCapT = rCap.querySelector('.reel-t'), rCapN = rCap.querySelector('.reel-n'), rBars = rCap.querySelectorAll('.reel-bars i');
     var rCur = 0, rFront = 0, rOn = true, rStarted = false;
     var rSetCap = function(i){
-      rCap.setAttribute('href','#'+rClips[i].href);
+      rCap.setAttribute('href', /\.html/.test(rClips[i].href) ? rClips[i].href : '#'+rClips[i].href);
       rCapT.textContent = rClips[i].label; rCapT.classList.remove('swap'); void rCapT.offsetWidth; rCapT.classList.add('swap');
       rCapN.textContent = String(i+1).padStart(2,'0')+' / '+String(rClips.length).padStart(2,'0');
       rBars.forEach(function(b,k){ b.classList.toggle('done', k < i); b.firstChild.style.transform = k < i ? 'scaleX(1)' : 'scaleX(0)'; });
@@ -1249,6 +1249,53 @@
       });
     });
   });
+  // llegada desde un área: proyectos-nacionales.html?area=formacion deja ese filtro activo
+  var fArea = (location.search.match(/[?&]area=([a-z-]+)/) || [])[1];
+  if(fArea){
+    var fAreaBtn = document.querySelector('[data-filter-group] button[data-filter="'+fArea+'"]');
+    if(fAreaBtn){fAreaBtn.click()}
+  }
+
+  /* ---------- buscador (de momento, solo la interfaz) ----------
+     Abre un panel con el campo de búsqueda y accesos rápidos; todavía no hay índice ni resultados. */
+  var srBox = $('search'), srBtn = $('searchBtn');
+  if(srBox && srBtn){
+    var srInput = $('searchInput'), srNote = $('searchNote'), srNote0 = srNote.textContent, srLast = null, srT = 0;
+    var srOpen = function(){
+      clearTimeout(srT);
+      srLast = document.activeElement;
+      closeMenu();
+      srBox.hidden = false;
+      requestAnimationFrame(function(){srBox.classList.add('open')});
+      srBtn.setAttribute('aria-expanded','true');
+      if(lenis){lenis.stop()}
+      srInput.focus();
+    };
+    var srClose = function(){
+      if(srBox.hidden){return}
+      srBox.classList.remove('open');
+      srBtn.setAttribute('aria-expanded','false');
+      if(lenis){lenis.start()}
+      srT = setTimeout(function(){srBox.hidden = true; srNote.textContent = srNote0}, reduce ? 0 : 350);
+      if(srLast && srLast.focus){srLast.focus()}
+    };
+    srBtn.addEventListener('click',srOpen);
+    srBox.addEventListener('click',function(e){if(e.target===srBox || e.target.closest('[data-search-close]')){srClose()}});
+    document.addEventListener('keydown',function(e){
+      if(srBox.hidden){return}
+      if(e.key==='Escape'){srClose();return}
+      if(e.key!=='Tab'){return}
+      // el foco no sale del panel mientras está abierto
+      var srF = srBox.querySelectorAll('a[href],button,input'), srA = srF[0], srZ = srF[srF.length-1];
+      if(e.shiftKey && document.activeElement===srA){e.preventDefault();srZ.focus()}
+      else if(!e.shiftKey && document.activeElement===srZ){e.preventDefault();srA.focus()}
+    });
+    $('searchForm').addEventListener('submit',function(e){
+      e.preventDefault();
+      var q = srInput.value.trim();
+      srNote.textContent = q ? 'Todavía no podemos buscar «'+q+'»: el buscador estará disponible muy pronto. Prueba con estos accesos:' : 'Escribe qué estás buscando.';
+    });
+  }
 
   /* ---------- acordeón (preguntas frecuentes) ---------- */
   document.querySelectorAll('.faq details').forEach(function(d){

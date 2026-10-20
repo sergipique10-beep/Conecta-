@@ -1121,3 +1121,66 @@ footer::before{background:radial-gradient(55% 40% at 50% 32%,rgba(5,16,10,.45),t
 .stat>span{margin-inline:auto;max-width:24ch}
 .lines-index a{padding:clamp(24px,2.6vw,32px) clamp(24px,3vw,56px)}
 .lines-index a{padding-left:clamp(28px,4.4vw,64px);padding-right:clamp(20px,2.4vw,40px)}
+
+/* ---------- buscador (de momento, solo la interfaz) ---------- */
+.nav-bar{gap:12px}
+.search-btn{flex:none;margin-left:auto;width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:rgba(241,245,238,.04);display:grid;place-items:center;color:var(--ink);cursor:pointer;transition:background .3s,color .3s,border-color .3s}
+.search-btn:hover,.search-btn[aria-expanded="true"]{background:var(--tec);color:var(--forest);border-color:var(--tec)}
+.search-btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round}
+.nav-bar .burger{margin-left:0}
+@media(min-width:1120px){.search-btn{margin-left:0}}
+.search{position:fixed;inset:0;z-index:120;display:flex;align-items:flex-start;justify-content:center;padding:clamp(80px,14vh,160px) var(--gut) 40px;background:rgba(6,12,9,.78);opacity:0;transition:opacity .35s var(--ease)}
+.search.open{opacity:1}
+.search-panel{width:min(720px,100%);padding:clamp(22px,3vw,36px);border-radius:28px;background:var(--bg-2);border:1px solid var(--line);box-shadow:0 40px 80px -30px rgba(0,0,0,.7);transform:translateY(-12px);transition:transform .5s var(--ease)}
+.search.open .search-panel{transform:none}
+.search-head{display:flex;justify-content:space-between;align-items:center;gap:16px}
+.search-title{font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-stretch:118%;color:var(--ink-dim)}
+.search-close{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:none;color:var(--ink);font-size:22px;line-height:1;cursor:pointer;transition:background .3s,color .3s}
+.search-close:hover{background:var(--ink);color:var(--forest)}
+.search-form{position:relative;margin-top:18px}
+.search-form svg{position:absolute;left:20px;top:50%;width:20px;height:20px;transform:translateY(-50%);fill:none;stroke:var(--ink-dim);stroke-width:1.8;stroke-linecap:round;pointer-events:none}
+.search-form input{width:100%;height:64px;padding:0 20px 0 54px;border-radius:100px;border:1px solid var(--line);background:rgba(241,245,238,.05);color:var(--ink);font-size:clamp(18px,2vw,22px);outline:none;transition:border-color .3s}
+.search-form input:focus{border-color:var(--tec)}
+.search-note{margin-top:18px;font-size:14.5px;color:var(--ink-soft)}
+.search-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.search-links a{padding:9px 16px;border-radius:100px;border:1px solid var(--line);font-size:14px;color:var(--ink-soft);transition:background .3s,color .3s,border-color .3s}
+.search-links a:hover{background:var(--tec);color:var(--forest);border-color:var(--tec)}
+@media(prefers-reduced-motion:reduce){.search,.search-panel{transition:none}}
+
+/* ---------- navegación entre páginas: volver, hermanas y anterior/siguiente ---------- */
+.back-pill{display:inline-flex;align-items:center;gap:10px;margin-bottom:18px;padding:9px 16px 9px 12px;border-radius:100px;border:1px solid rgba(241,245,238,.25);background:rgba(11,21,16,.55);font-size:13.5px;font-weight:500;color:var(--ink);transition:background .3s,color .3s,border-color .3s}
+.back-pill span{display:inline-block;transition:transform .5s var(--ease)}
+.back-pill:hover{background:var(--tec);color:var(--forest);border-color:var(--tec)}
+.back-pill:hover span{transform:translateX(-4px)}
+.page-hero.hero-sm{min-height:72vh;min-height:72svh}
+.hero-sm h1{font-size:clamp(44px,min(7.4vw,12vh),128px);line-height:.94;max-width:18ch}
+.sib-sec{border-top:1px solid var(--line)}
+a.tile{color:inherit}
+.values.two .value{min-height:clamp(340px,30vw,460px)}
+@media(min-width:700px){.values.two{grid-template-columns:repeat(2,1fr)}}
+.pager{display:grid;gap:1px;background:var(--line);border-block:1px solid var(--line)}
+@media(min-width:760px){.pager{grid-template-columns:1fr 1fr}}
+.pager>a,.pager-empty{background:var(--bg);padding:clamp(32px,4vw,56px) var(--gut);display:flex;flex-direction:column;gap:14px;transition:background .5s var(--ease)}
+.pager>a:hover{background:var(--surface)}
+.pager .pager-next{text-align:right;align-items:flex-end}
+.pager small{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-dim);font-stretch:118%}
+.pager strong{font-size:clamp(24px,2.6vw,40px);font-weight:300;font-stretch:80%;letter-spacing:-.03em;line-height:1.08;max-width:24ch;transition:color .4s}
+.pager>a:hover strong{color:var(--tec)}
+@media(max-width:759px){.pager-empty{display:none}}
+
+/* ---------- portales externos y contenido provisional ---------- */
+.portal-link{display:inline-flex;align-items:center;gap:10px;font-size:clamp(18px,1.6vw,22px);font-weight:500;color:var(--tec);overflow-wrap:anywhere}
+.portal-link b{font-weight:400;transition:transform .5s var(--ease)}
+.portal-link:hover b{transform:translate(3px,-3px)}
+.portal-link.is-pending{color:var(--ink-dim)}
+.btn.is-disabled{opacity:.5;cursor:not-allowed}
+.btn.is-disabled::before{display:none}
+.ph-note{display:flex;gap:12px;align-items:flex-start;max-width:60ch;padding:14px 18px;border:1px dashed rgba(226,75,196,.55);border-radius:16px;font-size:14px;color:var(--ink-soft)}
+.ph-note::before{content:"Provisional";flex:none;padding:3px 9px;border-radius:100px;background:rgba(226,75,196,.16);color:var(--mag);font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-stretch:118%}
+.prose .ph-note{font-size:14px}
+a.pin-card{cursor:pointer;color:inherit}
+.pin-more{margin-top:auto;font-size:13.5px;font-weight:600;color:var(--tec)}
+.prose a:not(.btn):not(.portal-link):not(.big-link),.faq a{color:var(--tec);text-decoration:underline;text-underline-offset:3px}
+/* la última tarjeta ocupa el hueco que queda en la fila (rejillas de páginas hermanas) */
+@media(min-width:700px) and (max-width:1099px){.tiles>.tile:last-child:nth-child(odd){grid-column:span 2}}
+@media(min-width:1100px){.tiles.c3>.tile:last-child:nth-child(3n+2){grid-column:span 2}.tiles.c3>.tile:last-child:nth-child(3n+1){grid-column:span 3}}

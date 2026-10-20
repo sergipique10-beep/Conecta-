@@ -9,7 +9,7 @@ Web estática de fundación conecta+ (HTML + CSS + JS, sin framework ni build). 
 ## Reglas
 
 - **Idioma:** contenido, comentarios de código y mensajes de commit en español.
-- **Páginas internas generadas:** `nosotros`, `mision`, `proyectos`, `recursos`, `contacto`, `equipo` y `transformacion-digital` (.html) se generan con `python tools/build_pages.py`. Edita su contenido en ese script y vuelve a ejecutarlo; **nunca edites esos .html a mano** (se sobrescriben).
+- **Páginas generadas:** todas las páginas salvo `index.html` (y `planeta.html`) se generan con `python tools/build_pages.py` (hubs, subpáginas y detalles a partir de las listas de datos del script). Edita su contenido en ese script y vuelve a ejecutarlo; **nunca edites esos .html a mano** (se sobrescriben). La estructura de navegación (hub → subpágina → detalle) está en README §2.
 - **Menú y pie compartidos:** el NAV y el FOOTER están en `tools/build_pages.py` y el script los copia también en `index.html`. El resto de `index.html` se edita a mano.
 - **Estilos y comportamiento:** todos los estilos en `css/site.css` y todo el JS en `js/site.js`. Añade lo nuevo como bloque comentado con el formato existente (`/* ---------- nombre ---------- */`).
 - **Ámbito compartido en `js/site.js`:** todo el archivo es una sola función, así que las `var` de todos los módulos comparten ámbito. Usa nombres con prefijo propio en módulos nuevos y comprueba que no choquen con los existentes; esto ya causó errores silenciosos.
@@ -22,4 +22,5 @@ Web estática de fundación conecta+ (HTML + CSS + JS, sin framework ni build). 
 
 - Revisa las páginas afectadas en escritorio (1440×900) y móvil (390×844), sin errores de consola.
 - Las anclas internas deben aterrizar justo bajo el menú (`scrollToTarget`).
+- Tras regenerar, comprueba que no hay enlaces internos rotos (todas las páginas y `#id` enlazados deben existir).
 - No hagas commit ni push sin que el usuario lo pida: publicar en `main` sale directamente a producción.
