@@ -1354,6 +1354,46 @@
     if(fAreaBtn){fAreaBtn.click()}
   }
 
+  /* ---------- ecosistema: filtro de portales por tipo ----------
+     Cada tarjeta lleva data-tipo y cada chip data-tipo-filtro. Al pulsar un chip, las
+     tarjetas de otro tipo se atenúan (no se ocultan). Los contadores se calculan aquí
+     a partir de las tarjetas: añadir o mover un portal solo requiere cambiar su data-tipo.
+     Los nombres visibles se leen de los propios chips (vienen de ECO_TIPOS). */
+  var ecofBox = document.querySelector('[data-eco-filtros]');
+  var ecofGrid = ecofBox && document.querySelector(ecofBox.dataset.ecoFiltros);
+  if(ecofBox && ecofGrid){
+    var ecofCards = [].slice.call(ecofGrid.querySelectorAll('[data-tipo].tile'));
+    var ecofBtns = [].slice.call(ecofBox.querySelectorAll('[data-tipo-filtro]'));
+    var ecofLive = $('ecoFiltroEstado');
+    var ecofCount = function(t){
+      return t === 'todos' ? ecofCards.length : ecofCards.filter(function(c){return c.dataset.tipo === t}).length;
+    };
+    var ecofSet = function(t, announce){
+      var shown = 0, label = '';
+      ecofBtns.forEach(function(b){
+        var on = b.dataset.tipoFiltro === t;
+        b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        if(on){ var l = b.querySelector('.eco-lbl'); label = l ? l.textContent : ''; }
+      });
+      ecofGrid.classList.toggle('is-filtrando', t !== 'todos');
+      ecofCards.forEach(function(c){
+        var match = t === 'todos' || c.dataset.tipo === t;
+        c.classList.toggle('is-dim', !match);
+        if(match){ shown++; }
+      });
+      if(ecofLive && announce){
+        ecofLive.textContent = t === 'todos' ? 'Se muestran destacados los ' + shown + ' portales.'
+          : shown + (shown === 1 ? ' portal destacado' : ' portales destacados') + ' en ' + label + '.';
+      }
+    };
+    ecofBtns.forEach(function(b){
+      var t = b.dataset.tipoFiltro, n = ecofCount(t), out = b.querySelector('.eco-n');
+      if(out){ out.textContent = n; }
+      if(!n && t !== 'todos'){ b.hidden = true; }
+      b.addEventListener('click', function(){ ecofSet(t, true); });
+    });
+  }
+
   /* ---------- buscador (de momento, solo la interfaz) ----------
      Abre un panel con el campo de búsqueda y accesos rápidos; todavía no hay índice ni resultados. */
   var srBox = $('search'), srBtn = $('searchBtn');
