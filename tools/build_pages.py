@@ -37,7 +37,8 @@ HEAD = '''<!DOCTYPE html>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..800&family=Fredoka:wght@500..700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-<script>document.documentElement.classList.add('js')</script>
+<!-- paleta guardada antes de pintar (selector «Modo») -->
+<script>(function(d){{var ok={{bosque:1,verde:1,noche:1,papel:1,lima:1,magenta:1}},p=null;try{{var q=new URLSearchParams(location.search).get('paleta');if(ok[q]){{p=q;localStorage.setItem('conecta-paleta',q)}}else{{p=localStorage.getItem('conecta-paleta')}}}}catch(e){{}}d.setAttribute('data-paleta',ok[p]?p:'bosque');d.classList.add('js')}})(document.documentElement)</script>
 <link rel="stylesheet" href="css/site.css">
 </head>
 <body>
@@ -46,11 +47,11 @@ HEAD = '''<!DOCTYPE html>
 CHROME = '''
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="sym" viewBox="0 0 64 64">
-    <circle cx="21" cy="15" r="8" fill="var(--tec)"/>
-    <rect x="8" y="26" width="26" height="30" rx="13" fill="var(--tec)"/>
+    <circle cx="21" cy="15" r="8" fill="var(--sym-1)"/>
+    <rect x="8" y="26" width="26" height="30" rx="13" fill="var(--sym-1)"/>
     <g transform="rotate(180 32 32)">
-      <circle cx="21" cy="15" r="8" fill="var(--mag-solid)"/>
-      <rect x="8" y="26" width="26" height="30" rx="13" fill="var(--mag-solid)"/>
+      <circle cx="21" cy="15" r="8" fill="var(--sym-2)"/>
+      <rect x="8" y="26" width="26" height="30" rx="13" fill="var(--sym-2)"/>
     </g>
   </symbol>
 </svg>
@@ -115,6 +116,10 @@ NAV = '''<!-- ============ NAV ============ -->
       </li>
     </ul>
     <button class="search-btn" id="searchBtn" type="button" aria-label="Abrir el buscador" aria-controls="search" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5l5 5"/></svg></button>
+    <div class="modo" id="modo">
+      <button class="modo-btn" id="modoBtn" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="modoMenu" aria-label="Modo de color: cambiar paleta"><span class="modo-sw" aria-hidden="true"><i></i><i></i><i></i></span><span class="modo-lbl">Modo</span><span class="modo-chev" aria-hidden="true"></span></button>
+      <div class="modo-menu" id="modoMenu" role="menu" aria-label="Paleta de colores"></div>
+    </div>
     <a class="btn btn-tec nav-cta magnetic" href="colabora.html">Colabora <span class="arr">→</span></a>
     <button class="burger" id="burger" aria-expanded="false" aria-controls="mmenu" aria-label="Abrir menú"><div><span></span><span></span></div></button>
   </div>

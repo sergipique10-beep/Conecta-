@@ -89,16 +89,28 @@ Al ejecutar el script en Windows, git puede marcar como modificadas páginas que
 
 ## 4. Sistema de diseño
 
-### Colores (tokens en `:root` de `css/site.css`)
+### Colores y paletas (selector «Modo»)
 
-| Token | Valor | Uso |
+La web tiene **6 paletas** que se eligen con el botón **Modo** de la cabecera (entre el buscador y «Colabora»):
+
+| id | Nombre | Tipo |
 |---|---|---|
-| `--bg` | `#0B1510` | Fondo general (verde casi negro) |
-| `--forest` | `#16281C` | Verde bosque (texto sobre lima, fondos) |
-| `--tec` | `#C4F21D` | **Lima de marca**: acentos, lo «conectado» |
-| `--mag` / `--mag-solid` | `#E24BC4` / `#CE0BA5` | **Magenta de marca**: movimiento, segundo acento |
-| `--cream` | `#EFF2E8` | Bloques claros (newsletter, CTA) |
-| `--ink` / `--ink-soft` / `--ink-dim` | blanco roto en 3 intensidades | Texto |
+| `bosque` | Bosque (la original, por defecto) | oscura |
+| `verde` | Verde marca | oscura |
+| `noche` | Noche magenta | oscura |
+| `papel` | Papel | clara |
+| `lima` | Lima | clara |
+| `magenta` | Magenta suave | clara |
+
+Cómo funciona:
+
+- **CSS** (`css/site.css`, bloque «paletas» al principio): cada paleta define sus colores base en `:root[data-paleta="…"]`. Los colores derivados (`--ink-soft`, `--ink-dim`, `--line`) se calculan con `color-mix`. En el resto del archivo no hay colores escritos a mano: todo usa tokens.
+- **Tokens principales:** `--bg`, `--bg-2`, `--surface` (fondos) · `--ink` (texto) · `--tec` y `--on-tec` (relleno de acento y texto encima) · `--tec-text` (acento usado como texto) · `--mag-solid` / `--mag` (segundo acento) · `--cta-*` (bloque de newsletter) · `--foot-bg` / `--foot-accent` (pie) · `--logo-*` y `--sym-*` (logotipo y símbolo) · `--net-1` / `--net-2` (animaciones en canvas). La lista completa está comentada en el CSS.
+- **Zonas siempre oscuras:** el pie, las tarjetas sobre foto (`.value`) y el terminal (`.tx-term`) redefinen los tokens para verse oscuros en todas las paletas.
+- **`<head>`:** un script mínimo aplica la paleta guardada antes de pintar (sin parpadeo). Se puede forzar una paleta con `?paleta=lima` en la URL (útil para enviar un enlace a una variante concreta).
+- **`js/site.js`:** el módulo «selector Modo» construye el desplegable y emite el evento `conecta:paleta` al cambiar; las animaciones en canvas lo escuchan y releen sus colores con `cpRGB()`.
+
+**Dejar solo dos paletas** (cuando se elija la versión definitiva): en `js/site.js`, cambia `cpmVisibles` por los dos ids elegidos (por ejemplo `['verde','papel']`). Si la paleta por defecto deja de ser Bosque, cambia también el valor de reserva `'bosque'` del script del `<head>` en `tools/build_pages.py` e `index.html` y regenera las páginas.
 
 ### Tipografías (Google Fonts)
 
