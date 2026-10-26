@@ -1318,3 +1318,27 @@ body,.nav-bar,.stat,.news,.cta,.mmenu{transition-property:background-color,color
 @media(max-width:1119px){.nav-bar{position:relative}.modo{position:static}.modo-menu{right:6px}}
 @media(min-width:1320px){.modo-btn{padding:0 12px 0 8px}.modo-lbl,.modo-chev{display:inline-block}}
 @media(prefers-reduced-motion:reduce){.modo-menu,.modo-chev{transition:none}}
+
+/* ---------- ecosistema: filtro de portales por tipo ---------- */
+/* color de cada tipo: versión para paletas oscuras (por defecto) y para claras */
+:root{--tipo-formacion:#FF9FE6;--tipo-tecnologia:#C4F21D;--tipo-intervencion:#6FDDB4}
+:root[data-paleta="papel"],:root[data-paleta="lima"],:root[data-paleta="magenta"]{--tipo-formacion:#B0098D;--tipo-tecnologia:#4D6B00;--tipo-intervencion:#0E7A5A}
+[data-tipo="formacion"],[data-tipo-filtro="formacion"]{--tipo:var(--tipo-formacion)}
+[data-tipo="tecnologia"],[data-tipo-filtro="tecnologia"]{--tipo:var(--tipo-tecnologia)}
+[data-tipo="intervencion"],[data-tipo-filtro="intervencion"]{--tipo:var(--tipo-intervencion)}
+.eco-chip{display:inline-flex;align-items:center;gap:9px}
+.eco-chip svg{width:18px;height:18px;flex:none;fill:none;stroke:var(--tipo,currentColor);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;transition:stroke .4s}
+.eco-chip[aria-pressed="true"] svg{stroke:currentColor}
+.eco-n{min-width:22px;height:22px;padding:0 7px;border-radius:100px;display:inline-grid;place-items:center;font-size:12px;font-weight:600;font-variant-numeric:tabular-nums;background:color-mix(in srgb,currentColor 12%,transparent)}
+.eco-chip:focus-visible{outline:2px solid var(--tec-text);outline-offset:3px}
+.eco-grid .tile-top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 12px}
+.eco-tag{display:inline-flex;align-items:center;gap:7px;padding:5px 11px;border-radius:100px;border:1px solid color-mix(in srgb,var(--tipo) 45%,transparent);background:color-mix(in srgb,var(--tipo) 12%,transparent);
+  color:var(--tipo);font-size:11.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;font-stretch:118%;white-space:nowrap}
+.eco-tag::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+/* atenuar (sin ocultar) las tarjetas que no coinciden con el filtro: se atenúa el contenido
+   y no la tarjeta, para que el fondo y las líneas de la rejilla no cambien */
+.eco-grid .tile>*{transition:opacity .45s var(--ease)}
+.eco-grid.is-filtrando .tile.is-dim>*{opacity:.25}
+.eco-grid.is-filtrando .tile.is-dim:hover>*,.eco-grid.is-filtrando .tile.is-dim:focus-visible>*{opacity:.7}
+.eco-grid .tile:focus-visible{outline-offset:-4px}
+@media(prefers-reduced-motion:reduce){.eco-grid .tile>*,.eco-chip svg{transition:none}}
