@@ -12,7 +12,7 @@ aquí y vuelve a ejecutar el script; no edites esos .html a mano.
 index.html es la excepción: se edita a mano salvo su NAV y su FOOTER.
 
 Estructura (según el wireframe de navegación):
-    Nosotros      → quienes-somos, equipo, historia, ecosistema (→ eco-*)
+    Nosotros      → quienes-somos, equipo, historia, ecosistema (enlaza a los portales externos)
     Qué hacemos   → formacion-tic, observatorio, voluntariado, jovenes,
                     inclusion-digital, transformacion-digital
     Proyectos     → proyectos-nacionales / proyectos-internacionales (→ proyecto-*)
@@ -580,38 +580,28 @@ PUBS = [
 for p in PUBS:
     p['href'] = f"publicacion-{p['slug']}.html"
 
-# Portales del ecosistema (URL reales; '#' = pendiente de confirmar).
+# Portales del ecosistema: cada tarjeta de ecosistema.html enlaza directamente a su url
+# (URL reales; '#' = pendiente de confirmar). No tienen página propia en la web.
 ECO = [
-    dict(slug='gestion-tercer-sector', tipo='formacion', name='Gestión Tercer Sector', domain='gestiontercersector.org', url='https://gestiontercersector.org/', img='news-tercer-sector.jpg',
-         short='El sitio del tercer sector para el tercer sector.',
-         body='Recursos, asesoría y herramientas para la gestión de las entidades sociales: calidad, protección de datos, gestión económica y buen gobierno.'),
-    dict(slug='voluntariado', tipo='intervencion', name='Voluntariado.net', domain='voluntariado.net', url='https://voluntariado.net/', img='news-voluntariado.jpg',
-         short='El portal del voluntariado.',
-         body='Información, asesoramiento y un espacio de relación entre organizaciones y personas voluntarias.'),
-    dict(slug='conecta-ia', tipo='formacion', name='Conecta IA', domain='conecta-ia.fundacionesplai.org', url='https://conecta-ia.fundacionesplai.org/', img='news-formacion.jpg',
-         short='Cursos online de competencias digitales e inteligencia artificial.',
-         body='Catálogo de formación online para profesionales de la educación, entidades y dinamizadores sociodigitales.'),
-    dict(slug='observatorio', tipo='tecnologia', name='Observatorio de Brechas Digitales', domain='observatoriobrechasdigitales.org', url='https://observatoriobrechasdigitales.org/', img='contenido.jpg',
-         short='Datos sobre las desigualdades digitales en España.',
-         body='Informes, barómetro, revista semestral sobre inclusión social y centro de documentación sobre el acceso y el uso de la tecnología.'),
-    dict(slug='red-conecta', tipo='intervencion', name='Red Conecta', domain='redconecta.org', url='https://redconecta.org/', img='conecta.jpg',
-         short='Una red de entidades contra la brecha digital.',
-         body='Una plataforma de entidades con más de veinte años de experiencia contra la brecha digital: crea espacios de acceso a las TIC, forma a dinamizadores y ofrece formación en competencias digitales.'),
-    dict(slug='digitalizaciong', tipo='tecnologia', name='DigitalizaciONG', domain='digitalizaciong.org', url='https://digitalizaciong.org/', img='tech.jpg',
-         short='Transformación digital del tercer sector.',
-         body='Evaluamos la madurez digital de cada entidad y la acompañamos en la confección y la implantación de su Plan de Transformación Digital.'),
-    dict(slug='innovacion', tipo='tecnologia', name='ESInnovación', domain='innovaccion.net', url='https://innovaccion.net/', img='bosque.jpg',
-         short='Innovación y transformación digital para la economía social.',
-         body='Una iniciativa para impulsar a las entidades de la economía social a través de la innovación y la transformación digital.'),
-    dict(slug='liga-iberoamericana', tipo='intervencion', name='La Liga Iberoamericana', domain='ligaiberoamericana.org', url='https://ligaiberoamericana.org/', img='news-internacional.jpg',
-         short='Organizaciones de la sociedad civil de Iberoamérica.',
-         body='Reúne a organizaciones de la sociedad civil de 18 países de Iberoamérica que trabajan por el desarrollo de la infancia, la juventud y las familias, y por la incidencia en políticas públicas.'),
-    dict(slug='foro-derechos-digitales', tipo='intervencion', name='Foro de Derechos Digitales', domain='foroderechosdigitales.org', url='https://foroderechosdigitales.org/', img='conexion-personas.jpg',
-         short='Derechos digitales en la era de la inteligencia artificial.',
-         body='Un encuentro sobre acceso efectivo a la tecnología, alfabetización digital crítica, inclusión social, discurso de odio, desinformación y retos éticos de la inteligencia artificial.'),
+    dict(slug='gestion-tercer-sector', tipo='formacion', name='Gestión Tercer Sector', domain='gestiontercersector.org', url='https://gestiontercersector.org/',
+         short='El sitio del tercer sector para el tercer sector.'),
+    dict(slug='voluntariado', tipo='intervencion', name='Voluntariado.net', domain='voluntariado.net', url='https://voluntariado.net/',
+         short='El portal del voluntariado.'),
+    dict(slug='conecta-ia', tipo='formacion', name='Conecta IA', domain='conecta-ia.fundacionesplai.org', url='https://conecta-ia.fundacionesplai.org/',
+         short='Cursos online de competencias digitales e inteligencia artificial.'),
+    dict(slug='observatorio', tipo='tecnologia', name='Observatorio de Brechas Digitales', domain='observatoriobrechasdigitales.org', url='https://observatoriobrechasdigitales.org/',
+         short='Datos sobre las desigualdades digitales en España.'),
+    dict(slug='red-conecta', tipo='intervencion', name='Red Conecta', domain='redconecta.org', url='https://redconecta.org/',
+         short='Una red de entidades contra la brecha digital.'),
+    dict(slug='digitalizaciong', tipo='tecnologia', name='DigitalizaciONG', domain='digitalizaciong.org', url='https://digitalizaciong.org/',
+         short='Transformación digital del tercer sector.'),
+    dict(slug='innovacion', tipo='tecnologia', name='ESInnovación', domain='innovaccion.net', url='https://innovaccion.net/',
+         short='Innovación y transformación digital para la economía social.'),
+    dict(slug='liga-iberoamericana', tipo='intervencion', name='La Liga Iberoamericana', domain='ligaiberoamericana.org', url='https://ligaiberoamericana.org/',
+         short='Organizaciones de la sociedad civil de Iberoamérica.'),
+    dict(slug='foro-derechos-digitales', tipo='intervencion', name='Foro de Derechos Digitales', domain='foroderechosdigitales.org', url='https://foroderechosdigitales.org/',
+         short='Derechos digitales en la era de la inteligencia artificial.'),
 ]
-for e in ECO:
-    e['href'] = f"eco-{e['slug']}.html"
 
 # Tipos de portal para el filtro de «Nuestro ecosistema».
 # Es el ÚNICO sitio donde están los nombres visibles: chips, etiquetas de las tarjetas
@@ -770,7 +760,7 @@ hist += '''
 write('historia.html', 'Historia · fundación conecta+', 'La historia de la fundación conecta+ desde 1995.', hist, parent='nosotros.html')
 
 # ------------------------------------------------------------------ NUESTRO ECOSISTEMA
-eco_tiles = ''.join(f'''        <a class="tile" href="{e['href']}" data-tipo="{e['tipo']}" data-reveal style="--d:{(i % 3) * .08:.2f}s"><span class="tile-top"><span class="n">{e['domain']}</span><span class="eco-tag" data-tipo="{e['tipo']}">{ECO_TIPO_NOMBRE[e['tipo']]}</span></span><h3>{e['name']}</h3><p>{e['short']}</p><span class="more">Ver portal <span>→</span></span></a>
+eco_tiles = ''.join(f'''        <a class="tile" href="{e['url']}" target="_blank" rel="noopener" data-tipo="{e['tipo']}" data-reveal style="--d:{(i % 3) * .08:.2f}s"><span class="tile-top"><span class="eco-tag" data-tipo="{e['tipo']}">{ECO_TIPO_NOMBRE[e['tipo']]}</span></span><h3>{e['name']}</h3><span class="n eco-dom">{e['domain']}</span><p>{e['short']}</p><span class="more">Ir al portal <span aria-hidden="true">↗</span><span class="sr-only"> (se abre en una pestaña nueva)</span></span></a>
 ''' for i, e in enumerate(ECO))
 # chips del filtro: los contadores también los recalcula js/site.js a partir de data-tipo
 def eco_chip(tid, nombre, icon, n, on=False):
@@ -793,27 +783,6 @@ ecos += '''
   </section>
 ''' + siblings('Nosotros', SIB_NOS, 'ecosistema.html')
 write('ecosistema.html', 'Nuestro ecosistema · fundación conecta+', 'Los portales y redes del ecosistema de la fundación conecta+.', ecos, parent='nosotros.html')
-
-for i, e in enumerate(ECO):
-    prev, nxt = neighbours(ECO, i, lambda x: (x['href'], x['name']))
-    pend = ('\n        ' + ph_note(e['pending'])) if e.get('pending') else ''
-    pg = page_hero(crumbs(('Nosotros', 'nosotros.html'), ('Nuestro ecosistema', 'ecosistema.html'), (e['name'], None)),
-        e['name'], None, e['short'], e['img'], cls=' hero-sm', back=('ecosistema.html', 'Nuestro ecosistema'))
-    pg += f'''
-  <section class="pad" id="info" aria-labelledby="info-h">
-    <div class="wrap split">
-      <div class="prose">
-        <span class="kicker">Portal del ecosistema</span>
-        <h2 class="h2" id="info-h" data-lines><span class="line"><span>Información sobre</span></span><span class="line"><span><em>{e['domain']}</em></span></span></h2>
-        <p class="big" data-reveal>{e['short']}</p>
-        <p data-reveal>{e['body']}</p>
-        <div data-reveal>{portal_link(e['domain'], e['url'])}</div>{pend}
-      </div>
-      <div class="split-media" data-clip><img src="img/{e['img']}" alt="" loading="lazy"></div>
-    </div>
-  </section>
-''' + portal_cta('cta-h', 'Visita', f'<em>{e["name"]}.</em>', e['body'], e['name'], e['url']) + pager('Más portales del ecosistema', prev, nxt)
-    write(e['href'], f"{e['name']} · Nuestro ecosistema · fundación conecta+", f"Información sobre {e['domain']}, portal del ecosistema de la fundación conecta+.", pg, parent='nosotros.html')
 
 # ================================================================== QUÉ HACEMOS (hub, antes «Misión»)
 # Escenas del showreel de la cabecera: (página del área, rótulo, archivo en video/ sin extensión)

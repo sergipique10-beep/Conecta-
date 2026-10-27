@@ -44,7 +44,7 @@ La navegación sigue el wireframe: cada sección del menú es una página **hub*
 
 | Hub | Subpáginas |
 |---|---|
-| `nosotros.html` | `quienes-somos`, `equipo`, `historia`, `ecosistema` → 9 portales `eco-*.html` |
+| `nosotros.html` | `quienes-somos`, `equipo`, `historia`, `ecosistema` (tarjetas que enlazan a los 9 portales externos) |
 | `que-hacemos.html` (cabecera con *showreel*) | `formacion-tic`, `observatorio`, `voluntariado`, `jovenes`, `inclusion-digital`, `transformacion-digital` |
 | `proyectos.html` (cabecera con vídeo) | `proyectos-nacionales` (filtros por área) y `proyectos-internacionales` (mapa) → `proyecto-*.html` |
 | `recursos.html` | `blog` → `noticia-*.html`, `publicaciones` → `publicacion-*.html`, `transparencia`, `preguntas-frecuentes`, `campus` |
@@ -54,7 +54,8 @@ La navegación sigue el wireframe: cada sección del menú es una página **hub*
 
 - `mision.html` ya no existe como página: es una redirección a `que-hacemos.html` para no romper enlaces antiguos.
 - Las áreas enlazan a sus proyectos con `proyectos-nacionales.html?area=<categoría>`, que deja ese filtro activo.
-- Proyectos, noticias, publicaciones y portales salen de las listas `PROJ_NAC`, `PROJ_INT`, `NEWS`, `PUBS` y `ECO` de `tools/build_pages.py`: añadir un elemento a la lista crea su página y la enlaza.
+- Proyectos, noticias y publicaciones salen de las listas `PROJ_NAC`, `PROJ_INT`, `NEWS` y `PUBS` de `tools/build_pages.py`: añadir un elemento a la lista crea su página y la enlaza.
+- Los portales salen de la lista `ECO`: cada elemento es una tarjeta de `ecosistema.html` que enlaza directamente al portal externo (sin página propia).
 - El **buscador** de la cabecera es solo la interfaz (panel con campo y accesos rápidos); todavía no busca.
 - Los bloques marcados como **«Provisional»** (borde magenta discontinuo) señalan contenido que falta.
 
