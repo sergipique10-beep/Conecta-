@@ -1350,6 +1350,22 @@ body,.nav-bar,.stat,.news,.cta,.mmenu{transition-property:background-color,color
 @media(prefers-reduced-motion:reduce){.eco-grid .tile{transition:none}}
 .eco-grid .tile:focus-visible{outline-offset:-4px}
 @media(prefers-reduced-motion:reduce){.eco-grid .tile>*,.eco-chip svg{transition:none}}
+
+/* ---------- rutas legibles y velo de Proyectos en paletas claras ---------- */
+/* oscuras (valor por defecto): más tinta y separadores más visibles */
+.crumbs{color:color-mix(in srgb,var(--ink) 90%,transparent);font-weight:500}
+.crumbs span[aria-hidden]{opacity:.7}
+.crumbs>span:last-child{color:var(--ink)}
+/* claras: tinta plena sobre cápsula, mismo lenguaje que .back-pill */
+:root[data-paleta="papel"] .crumbs,:root[data-paleta="lima"] .crumbs,:root[data-paleta="magenta"] .crumbs{
+  color:var(--ink);font-weight:600;width:fit-content;padding:7px 14px;border-radius:100px;
+  background:color-mix(in srgb,var(--bg) 67%,transparent);border:1px solid color-mix(in srgb,var(--ink) 14%,transparent)}
+:root[data-paleta="papel"] .crumbs span[aria-hidden],:root[data-paleta="lima"] .crumbs span[aria-hidden],:root[data-paleta="magenta"] .crumbs span[aria-hidden]{opacity:.6}
+@media(max-width:899px){:root[data-paleta="papel"] .crumbs,:root[data-paleta="lima"] .crumbs,:root[data-paleta="magenta"] .crumbs{border-radius:18px}}
+/* Proyectos: velo mucho más denso bajo la ruta y el título */
+:root[data-paleta="papel"] .hero-city::after,:root[data-paleta="lima"] .hero-city::after,:root[data-paleta="magenta"] .hero-city::after{
+  background:linear-gradient(180deg,color-mix(in srgb,var(--bg) 78%,transparent) 0%,color-mix(in srgb,var(--bg) 30%,transparent) 35%,color-mix(in srgb,var(--bg) 65%,transparent) 60%,color-mix(in srgb,var(--bg) 72%,transparent) 82%,var(--bg) 100%)}
+
 /* tarjetas compactas: en ordenador, los chips y los 9 portales caben en una pantalla.
    El relleno y los huecos dependen también del alto de la ventana (vh), para que quepa
    en portátiles bajos sin dejar las tarjetas apretadas en pantallas grandes. */
