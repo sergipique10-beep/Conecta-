@@ -208,9 +208,9 @@
     {id:'bosque', grupo:'Oscuros', nombre:'Bosque', desc:'La paleta actual. Casi negro verdoso, lima y magenta.', c:['#0B1510','#F1F5EE','#C4F21D','#CE0BA5']},
     {id:'verde', grupo:'Oscuros', nombre:'Verde marca', desc:'Fondo en el verde oscuro oficial (Pantone 5535c), lima protagonista.', c:['#1C3E2B','#FFFFFF','#C4F21D','#E24BC4']},
     {id:'noche', grupo:'Oscuros', nombre:'Noche magenta', desc:'Negro neutro con el magenta como color principal y lima puntual.', c:['#0D0A0D','#F8F1F6','#CE0BA5','#C4F21D']},
-    {id:'papel', grupo:'Claros', nombre:'Papel', desc:'Crema suave, texto verde oscuro, botones y enlaces en magenta.', c:['#F7F6EF','#1C3E2B','#CE0BA5','#C4F21D']},
-    {id:'lima', grupo:'Claros', nombre:'Lima', desc:'Blanco con franjas lima, como los posts de redes del brand book.', c:['#FFFFFF','#12261A','#CE0BA5','#C4F21D']},
-    {id:'magenta', grupo:'Claros', nombre:'Magenta suave', desc:'Blanco con tintes magenta al 5–25 % y acentos lima.', c:['#FFFFFF','#1E1620','#CE0BA5','#FBEEF8']}
+    {id:'papel', grupo:'Claros', nombre:'Papel', desc:'Crema suave, texto negro, botones y enlaces en magenta.', c:['#F7F6EF','#000000','#CE0BA5','#C4F21D']},
+    {id:'lima', grupo:'Claros', nombre:'Lima', desc:'Blanco con franjas lima, como los posts de redes del brand book.', c:['#FFFFFF','#000000','#CE0BA5','#C4F21D']},
+    {id:'magenta', grupo:'Claros', nombre:'Magenta suave', desc:'Blanco con tintes magenta al 5–25 % y acentos lima.', c:['#FFFFFF','#000000','#CE0BA5','#FBEEF8']}
   ];
   var cpmBox = $('modo'), cpmBtn = $('modoBtn'), cpmMenu = $('modoMenu');
   if(cpmBox && cpmBtn && cpmMenu){

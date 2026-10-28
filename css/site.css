@@ -53,32 +53,32 @@
 }
 :root[data-paleta="papel"]{
   color-scheme:light;
-  --bg:#F7F6EF; --bg-2:#ECEDE2; --surface:#E1E4D6; --ink:#1C3E2B;
+  --bg:#F7F6EF; --bg-2:#ECEDE2; --surface:#E1E4D6; --ink:#000000;
   --tec:#CE0BA5; --on-tec:#FFFFFF; --tec-text:#B4098F; --mag-solid:#CE0BA5; --mag:#B4098F; --dot:#CE0BA5;
   --hi:#C4F21D; --hi-2:#CE0BA5; --hi-k:3; --sh-k:.3; --soft-k:80%; --dim-k:70%;
   --cta-bg:#1C3E2B; --cta-ink:#F7F6EF; --cta-accent:#C4F21D; --cta-btn:#CE0BA5; --cta-btn-ink:#FFFFFF;
   --foot-bg:#12291D; --foot-accent:#C4F21D;
-  --logo-word:#CE0BA5; --logo-plus:#1C3E2B; --sym-1:#1C3E2B; --sym-2:#CE0BA5;
+  --logo-word:#CE0BA5; --logo-plus:#000000; --sym-1:#000000; --sym-2:#CE0BA5;
   --net-1:#1C3E2B; --net-2:#CE0BA5; --err:#B0165F;
 }
 :root[data-paleta="lima"]{
   color-scheme:light;
-  --bg:#FFFFFF; --bg-2:#C4F21D; --surface:#EEF0E8; --ink:#12261A;
+  --bg:#FFFFFF; --bg-2:#C4F21D; --surface:#EEF0E8; --ink:#000000;
   --tec:#CE0BA5; --on-tec:#FFFFFF; --tec-text:#A8088A; --mag-solid:#CE0BA5; --mag:#A8088A; --dot:#CE0BA5;
   --hi:#C4F21D; --hi-2:#CE0BA5; --hi-k:3.5; --sh-k:.3; --soft-k:80%; --dim-k:70%;
   --cta-bg:#12261A; --cta-ink:#FFFFFF; --cta-accent:#C4F21D; --cta-btn:#C4F21D; --cta-btn-ink:#12261A;
   --foot-bg:#0E1F15; --foot-accent:#C4F21D;
-  --logo-word:#12261A; --logo-plus:#CE0BA5; --sym-1:#CE0BA5; --sym-2:#12261A;
+  --logo-word:#000000; --logo-plus:#CE0BA5; --sym-1:#CE0BA5; --sym-2:#000000;
   --net-1:#12261A; --net-2:#CE0BA5; --err:#B0165F;
 }
 :root[data-paleta="magenta"]{
   color-scheme:light;
-  --bg:#FFFFFF; --bg-2:#FBEEF8; --surface:#F5D9EE; --ink:#1E1620;
+  --bg:#FFFFFF; --bg-2:#FBEEF8; --surface:#F5D9EE; --ink:#000000;
   --tec:#CE0BA5; --on-tec:#FFFFFF; --tec-text:#B0098D; --mag-solid:#CE0BA5; --mag:#B0098D; --dot:#CE0BA5;
   --hi:#CE0BA5; --hi-2:#C4F21D; --hi-k:1.6; --sh-k:.3; --soft-k:80%; --dim-k:70%;
   --cta-bg:#CE0BA5; --cta-ink:#FFFFFF; --cta-accent:#C4F21D; --cta-btn:#1E1620; --cta-btn-ink:#FFFFFF;
   --foot-bg:#1E1620; --foot-accent:#F062D2;
-  --logo-word:#1E1620; --logo-plus:#CE0BA5; --sym-1:#CE0BA5; --sym-2:#1E1620;
+  --logo-word:#000000; --logo-plus:#CE0BA5; --sym-1:#CE0BA5; --sym-2:#000000;
   --net-1:#CE0BA5; --net-2:#1E1620; --err:#B0165F;
 }
 /* zonas oscuras: el pie en todas las paletas; el menú y las cabeceras solo en las paletas
