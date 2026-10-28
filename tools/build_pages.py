@@ -760,7 +760,7 @@ hist += '''
 write('historia.html', 'Historia · fundación conecta+', 'La historia de la fundación conecta+ desde 1995.', hist, parent='nosotros.html')
 
 # ------------------------------------------------------------------ NUESTRO ECOSISTEMA
-eco_tiles = ''.join(f'''        <a class="tile" href="{e['url']}" target="_blank" rel="noopener" data-tipo="{e['tipo']}" data-reveal style="--d:{(i % 3) * .08:.2f}s"><span class="tile-top"><span class="eco-tag" data-tipo="{e['tipo']}">{ECO_TIPO_NOMBRE[e['tipo']]}</span></span><h3>{e['name']}</h3><span class="n eco-dom">{e['domain']}</span><p>{e['short']}</p><span class="more">Ir al portal <span aria-hidden="true">↗</span><span class="sr-only"> (se abre en una pestaña nueva)</span></span></a>
+eco_tiles = ''.join(f'''        <a class="tile" href="{e['url']}" target="_blank" rel="noopener" data-tipo="{e['tipo']}" data-reveal style="--d:{(i % 3) * .08:.2f}s"><div class="eco-head"><h3>{e['name']}</h3><span class="eco-tag" data-tipo="{e['tipo']}">{ECO_TIPO_NOMBRE[e['tipo']]}</span></div><span class="n eco-dom">{e['domain']}</span><p>{e['short']}</p><span class="more">Ir al portal <span aria-hidden="true">↗</span><span class="sr-only"> (se abre en una pestaña nueva)</span></span></a>
 ''' for i, e in enumerate(ECO))
 # chips del filtro: los contadores también los recalcula js/site.js a partir de data-tipo
 def eco_chip(tid, nombre, icon, n, on=False):
