@@ -30,7 +30,7 @@ HEAD = '''<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{title}</title>
 <meta name="description" content="{desc}">
 <meta name="theme-color" content="#0B1510">
@@ -125,19 +125,35 @@ NAV = '''<!-- ============ NAV ============ -->
   </div>
 </header>
 
-<div class="mmenu" id="mmenu">
-  <a class="big" href="nosotros.html">Nosotros</a>
-  <div class="subs"><a href="quienes-somos.html">Quiénes somos</a><a href="equipo.html">Equipo y patronato</a><a href="historia.html">Historia</a><a href="ecosistema.html">Nuestro ecosistema</a></div>
-  <a class="big" href="que-hacemos.html"><em>Qué hacemos</em></a>
-  <div class="subs"><a href="formacion-tic.html">Formación TIC</a><a href="observatorio.html">Observatorio</a><a href="voluntariado.html">Voluntariado</a><a href="jovenes.html">Jóvenes</a><a href="inclusion-digital.html">e-Inclusión digital</a><a href="transformacion-digital.html">Transformación digital</a></div>
-  <a class="big" href="proyectos.html">Proyectos</a>
-  <div class="subs"><a href="proyectos-nacionales.html">Nacionales</a><a href="proyectos-internacionales.html">Internacionales</a></div>
-  <a class="big" href="recursos.html">Recursos</a>
-  <div class="subs"><a href="blog.html">Blog</a><a href="publicaciones.html">Publicaciones</a><a href="transparencia.html">Transparencia</a><a href="preguntas-frecuentes.html">Preguntas frecuentes</a><a href="campus.html">Campus Virtual</a></div>
-  <a class="big" href="contacto.html">Contacto</a>
-  <div class="subs"><a href="escribenos.html">Escríbenos</a><a href="sedes.html">Sedes</a></div>
-  <a class="btn btn-tec" href="colabora.html">Colabora <span class="arr">→</span></a>
-</div>
+<!-- menú móvil: una fila por sección con sus páginas en acordeón; Colabora y Modo abajo -->
+<nav class="mmenu" id="mmenu" aria-label="Menú">
+  <div class="mm-list">
+    <div class="mm-sec" style="--i:0">
+      <div class="mm-row"><a class="big" href="nosotros.html">Nosotros</a><button type="button" class="mm-tog" aria-expanded="false" aria-controls="mm-nosotros" aria-label="Páginas de Nosotros"><i aria-hidden="true"></i></button></div>
+      <div class="mm-subs" id="mm-nosotros"><ul><li><a href="quienes-somos.html">Quiénes somos</a></li><li><a href="equipo.html">Equipo y patronato</a></li><li><a href="historia.html">Historia</a></li><li><a href="ecosistema.html">Nuestro ecosistema</a></li></ul></div>
+    </div>
+    <div class="mm-sec" style="--i:1">
+      <div class="mm-row"><a class="big" href="que-hacemos.html"><em>Qué hacemos</em></a><button type="button" class="mm-tog" aria-expanded="false" aria-controls="mm-que-hacemos" aria-label="Páginas de Qué hacemos"><i aria-hidden="true"></i></button></div>
+      <div class="mm-subs" id="mm-que-hacemos"><ul><li><a href="formacion-tic.html">Formación TIC e inserción laboral</a></li><li><a href="observatorio.html">Observatorio de Brechas Digitales</a></li><li><a href="voluntariado.html">Voluntariado</a></li><li><a href="jovenes.html">Jóvenes</a></li><li><a href="inclusion-digital.html">e-Inclusión digital</a></li><li><a href="transformacion-digital.html">Transformación digital y Tercer Sector</a></li></ul></div>
+    </div>
+    <div class="mm-sec" style="--i:2">
+      <div class="mm-row"><a class="big" href="proyectos.html">Proyectos</a><button type="button" class="mm-tog" aria-expanded="false" aria-controls="mm-proyectos" aria-label="Páginas de Proyectos"><i aria-hidden="true"></i></button></div>
+      <div class="mm-subs" id="mm-proyectos"><ul><li><a href="proyectos-nacionales.html">Proyectos nacionales</a></li><li><a href="proyectos-internacionales.html">Proyectos internacionales</a></li></ul></div>
+    </div>
+    <div class="mm-sec" style="--i:3">
+      <div class="mm-row"><a class="big" href="recursos.html">Recursos</a><button type="button" class="mm-tog" aria-expanded="false" aria-controls="mm-recursos" aria-label="Páginas de Recursos"><i aria-hidden="true"></i></button></div>
+      <div class="mm-subs" id="mm-recursos"><ul><li><a href="blog.html">Blog y noticias</a></li><li><a href="publicaciones.html">Publicaciones y descargables</a></li><li><a href="transparencia.html">Transparencia</a></li><li><a href="preguntas-frecuentes.html">Preguntas frecuentes</a></li><li><a href="campus.html">Campus Virtual</a></li></ul></div>
+    </div>
+    <div class="mm-sec" style="--i:4">
+      <div class="mm-row"><a class="big" href="contacto.html">Contacto</a><button type="button" class="mm-tog" aria-expanded="false" aria-controls="mm-contacto" aria-label="Páginas de Contacto"><i aria-hidden="true"></i></button></div>
+      <div class="mm-subs" id="mm-contacto"><ul><li><a href="escribenos.html">Escríbenos</a></li><li><a href="sedes.html">Sedes</a></li></ul></div>
+    </div>
+  </div>
+  <div class="mm-foot">
+    <a class="btn btn-tec" href="colabora.html">Colabora <span class="arr">→</span></a>
+    <div class="mm-modo"><span class="mm-modo-lbl" id="mmModoLbl">Modo</span><div class="mm-modo-sw" id="mmModo" role="radiogroup" aria-labelledby="mmModoLbl"></div></div>
+  </div>
+</nav>
 
 <!-- buscador: de momento solo la interfaz (sin resultados) -->
 <div class="search" id="search" role="dialog" aria-modal="true" aria-labelledby="searchTitle" hidden>
@@ -149,7 +165,7 @@ NAV = '''<!-- ============ NAV ============ -->
     <form class="search-form" id="searchForm" role="search">
       <label for="searchInput" class="sr-only">¿Qué estás buscando?</label>
       <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5l5 5"/></svg>
-      <input id="searchInput" type="search" placeholder="¿Qué estás buscando?" autocomplete="off">
+      <input id="searchInput" type="search" placeholder="¿Qué estás buscando?" autocomplete="off" enterkeyhint="search">
     </form>
     <p class="search-note" id="searchNote" aria-live="polite">El buscador estará disponible muy pronto. Mientras tanto, prueba con estos accesos:</p>
     <div class="search-links"><a href="que-hacemos.html">Qué hacemos</a><a href="proyectos.html">Proyectos</a><a href="blog.html">Blog y noticias</a><a href="publicaciones.html">Publicaciones</a><a href="campus.html">Campus Virtual</a><a href="colabora.html">Colabora</a><a href="escribenos.html">Contacto</a></div>
@@ -207,7 +223,7 @@ FOOTER = '''<!-- ============ FOOTER ============ -->
         <form class="foot-form" novalidate data-msg="¡Gracias! Te hemos enviado un correo para confirmar la suscripción.">
           <label for="footMail" class="sr-only">Correo electrónico para el boletín</label>
           <div class="foot-form-row">
-            <input id="footMail" type="email" placeholder="tu@email.com" required autocomplete="email">
+            <input id="footMail" type="email" placeholder="tu@email.com" required autocomplete="email" enterkeyhint="send">
             <button type="submit" aria-label="Suscribirme">→</button>
           </div>
           <p class="foot-privacy">Un correo al mes, sin spam. Al suscribirte aceptas la <a href="aviso-legal.html#privacidad">política de privacidad</a>.</p>
@@ -237,9 +253,8 @@ FOOTER = '''<!-- ============ FOOTER ============ -->
 
 <!-- acceso rápido en móvil -->
 <nav class="quickbar" id="quickbar" aria-label="Acceso rápido">
-  <a href="tel:+34934745546"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>Llamar</a>
-  <a href="escribenos.html"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>Escribir</a>
-  <a href="https://www.google.com/maps/search/?api=1&amp;query=C%2F%20Riu%20Anoia%2042-54%2C%2008820%20El%20Prat%20de%20Llobregat" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>Cómo llegar</a>
+  <a class="qb-icon" href="escribenos.html" aria-label="Contacto"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></a>
+  <a class="qb-main" href="colabora.html">Colabora <span class="arr" aria-hidden="true">→</span></a>
 </nav>
 
 <!-- panel de cookies -->
@@ -389,12 +404,19 @@ def neighbours(lst, i, key):
     nxt = key(lst[i + 1]) if i < len(lst) - 1 else None
     return prev, nxt
 
+QB_OFF = {'colabora.html', 'dona.html', 'hazte-voluntario.html', 'unete.html'}
+
 def write(name, title, desc, body, parent=None, extra_head=''):
     head = HEAD.format(title=title, desc=desc)
     if extra_head:
         head = head.replace('</head>', extra_head + '\n</head>')
+    attrs = ''
     if parent:  # marca la sección padre como activa en el menú
-        head = head.replace('<body>', f'<body data-parent="{parent}">')
+        attrs += f' data-parent="{parent}"'
+    if name in QB_OFF:  # la barra inferior «Colabora» sobra en las páginas de Colabora
+        attrs += ' data-qb-off'
+    if attrs:
+        head = head.replace('<body>', f'<body{attrs}>')
     html = head + CHROME + '\n' + NAV + '\n<main id="top">\n' + body + '</main>\n\n' + FOOTER + TAIL
     io.open(os.path.join(ROOT, name), 'w', encoding='utf-8', newline='\n').write(html)
     print('wrote', name)
@@ -797,7 +819,7 @@ _reel_items = ''.join(f'<li data-src="video/{v}.mp4" data-poster="video/{v}.jpg"
 _reel_bars = ''.join('<i><b></b></i>' for _ in REEL)
 REEL_MEDIA = f'''    <div class="hero-media reel" id="reel" aria-hidden="true">
       <video class="reel-v on" muted playsinline preload="auto" poster="video/{REEL[0][2]}.jpg"></video>
-      <video class="reel-v" muted playsinline preload="auto"></video>
+      <video class="reel-v" muted playsinline preload="metadata"></video>
       <span class="reel-grade"></span>
       <ul class="reel-list" hidden>{_reel_items}</ul>
     </div>
@@ -905,7 +927,7 @@ intl = page_hero(crumbs(('Proyectos', 'proyectos.html'), ('Proyectos internacion
 intl += '''
   <section class="pad" id="internacionales" aria-labelledby="int-h" style="background:var(--bg-2)">
     <div class="wrap">
-''' + head2('Proyectos internacionales', 'Del mapa', 'al <em>proyecto.</em>', 'Pasa el cursor por cada proyecto para verlo en el mapa, y entra para conocerlo.', 'int-h') + f'''      <div class="flatmap" id="flatmap" data-reveal>
+''' + head2('Proyectos internacionales', 'Del mapa', 'al <em>proyecto.</em>', '<span data-touch="Toca un punto del mapa o una tarjeta para ver cada proyecto, y entra para conocerlo.">Pasa el cursor por cada proyecto para verlo en el mapa, y entra para conocerlo.</span>', 'int-h') + f'''      <div class="flatmap" id="flatmap" data-reveal>
         <canvas class="flatmap-canvas" role="img" aria-label="Mapa de proyectos internacionales: España conectada con Europa e Iberoamérica"></canvas>
       </div>
       <div class="pin-cards">
@@ -1090,7 +1112,7 @@ campus += '''
       <div class="contact-form" data-reveal>
         <form id="campusForm" novalidate data-msg="El acceso al Campus Virtual estará disponible muy pronto.">
           <div class="fields">
-            <div class="field full"><label for="cvUser">Usuario o correo electrónico</label><input id="cvUser" name="usuario" required autocomplete="username"></div>
+            <div class="field full"><label for="cvUser">Usuario o correo electrónico</label><input id="cvUser" name="usuario" required autocomplete="username" autocapitalize="none" spellcheck="false"></div>
             <div class="field full"><label for="cvPass">Contraseña</label><input id="cvPass" name="password" type="password" required autocomplete="current-password"></div>
           </div>
           <button type="submit" class="btn btn-tec magnetic">Entrar al Campus <span class="arr">→</span></button>
@@ -1155,7 +1177,7 @@ esc += '''
               </select>
             </div>
             <div class="field full"><label for="cMsg">Mensaje</label><textarea id="cMsg" name="mensaje" required></textarea></div>
-            <label class="check full"><input type="checkbox" required> He leído y acepto la <a href="aviso-legal.html#privacidad">política de privacidad</a>.</label>
+            <label class="check full"><input type="checkbox" required><span>He leído y acepto la <a href="aviso-legal.html#privacidad">política de privacidad</a>.</span></label>
           </div>
           <button type="submit" class="btn btn-tec magnetic">Enviar mensaje <span class="arr">→</span></button>
         </form>
@@ -1238,7 +1260,7 @@ vol += f'''
             <div class="field"><label for="vSede">Sede</label><select id="vSede" name="sede">{sede_opts}</select></div>
             <div class="field full"><label for="vArea">Área que te interesa</label><select id="vArea" name="area">{area_opts}</select></div>
             <div class="field full"><label for="vMsg">Disponibilidad y experiencia</label><textarea id="vMsg" name="mensaje" required></textarea></div>
-            <label class="check full"><input type="checkbox" required> He leído y acepto la <a href="aviso-legal.html#privacidad">política de privacidad</a>.</label>
+            <label class="check full"><input type="checkbox" required><span>He leído y acepto la <a href="aviso-legal.html#privacidad">política de privacidad</a>.</span></label>
           </div>
           <button type="submit" class="btn btn-tec magnetic">Enviar inscripción <span class="arr">→</span></button>
         </form>
@@ -1270,7 +1292,7 @@ dona += '''
             <div class="field"><label for="dFreq">Periodicidad</label><select id="dFreq" name="periodicidad"><option>Una sola vez</option><option>Mensual</option><option>Anual</option></select></div>
             <div class="field"><label for="dName">Nombre y apellidos</label><input id="dName" name="nombre" required autocomplete="name"></div>
             <div class="field"><label for="dMail">Correo electrónico</label><input id="dMail" name="email" type="email" required autocomplete="email"></div>
-            <label class="check full"><input type="checkbox" required> He leído y acepto la <a href="aviso-legal.html#privacidad">política de privacidad</a>.</label>
+            <label class="check full"><input type="checkbox" required><span>He leído y acepto la <a href="aviso-legal.html#privacidad">política de privacidad</a>.</span></label>
           </div>
           <button type="submit" class="btn btn-tec magnetic">Continuar con el donativo <span class="arr">→</span></button>
         </form>
