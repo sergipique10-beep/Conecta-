@@ -1378,3 +1378,17 @@ body,.nav-bar,.stat,.news,.cta,.mmenu{transition-property:background-color,color
   .eco-grid .tile p{font-size:14px;line-height:1.4}
   .eco-grid .tile .more{padding-top:0;font-size:13.5px}
 }
+
+/* ---------- ecosistema: tarjeta en tres partes ----------
+   arriba: título + «Ir al portal» (a la derecha) y la URL debajo
+   medio: descripción, separada de la URL
+   abajo: etiqueta de tipo, siempre al pie de la tarjeta */
+.eco-grid .tile h3{font-size:clamp(26px,2.1vw,36px)}
+.eco-grid .eco-head .more{flex:none;margin-top:0;padding-top:0;white-space:nowrap}
+.eco-grid .tile p{margin-top:clamp(6px,1.4vh,16px)}
+.eco-grid .eco-foot{margin-top:auto;padding-top:clamp(6px,1vh,12px);display:flex}
+@media(min-width:1100px) and (max-height:820px){
+  .eco-grid .tile h3{font-size:25px}
+  .eco-grid .tile p{margin-top:6px}
+}
+@media(max-width:699px){.eco-grid .tile h3{font-size:27px}}
