@@ -1362,6 +1362,10 @@ body,.nav-bar,.stat,.news,.cta,.mmenu{transition-property:background-color,color
 .eco-grid .eco-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
 .eco-grid .eco-head h3{margin-top:0;flex:1 1 auto;min-width:0}
 .eco-grid .eco-head .eco-tag{flex:none}
+/* en ordenador (3 columnas) las tarjetas crecen con el alto de la ventana: la rejilla
+   ocupa la pantalla que queda bajo el menú y los chips, sin dejar un hueco abajo.
+   200px = menú + chips + márgenes; 300px = alto máximo en pantallas muy altas */
+@media(min-width:1100px){.eco-grid .tile{min-height:min(calc((100vh - 200px) / 3),300px)}}
 /* portátiles bajos (768 px o menos de alto): todavía más compacto */
 @media(min-width:1100px) and (max-height:820px){
   .eco-filtros{margin-bottom:12px}
