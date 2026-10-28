@@ -108,6 +108,8 @@ footer,:root:not([data-paleta="papel"],[data-paleta="lima"],[data-paleta="magent
 /* en las paletas oscuras, el menú y las cabeceras comparten el estilo del pie (logo claro)
    y la animación de Inicio usa siempre los colores de Bosque */
 :root:not([data-paleta="papel"],[data-paleta="lima"],[data-paleta="magenta"]) :is(.nav,.mmenu,.hero,.page-hero){--logo-word:#F1F5EE; --logo-plus:var(--foot-accent)}
+/* Verde marca conserva su logo propio en el menú y la cabecera: «conecta» en lima y «+» en magenta */
+:root[data-paleta="verde"] :is(.nav,.mmenu,.hero,.page-hero){--logo-word:#C4F21D; --logo-plus:#E24BC4}
 :root:not([data-paleta="papel"],[data-paleta="lima"],[data-paleta="magenta"]) .hero{--net-1:#C4F21D; --net-2:#E24BC4}
 /* ---------- fin de paletas ---------- */
 :root{
