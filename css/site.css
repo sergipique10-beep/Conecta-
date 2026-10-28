@@ -1406,3 +1406,15 @@ body,.nav-bar,.stat,.news,.cta,.mmenu{transition-property:background-color,color
   .eco-grid .tile p{margin-top:6px}
 }
 @media(max-width:699px){.eco-grid .tile h3{font-size:30px}}
+
+/* ---------- hero a pantalla completa y botones coherentes ---------- */
+/* el primer bloque de cada página llena la pantalla (Inicio ya lo hace, con el carrusel .trust dentro) */
+.page-hero,.page-hero.hero-sm{min-height:100vh;min-height:100svh}
+/* píldoras del hero con la misma tipografía que .btn */
+.page-hero .anchors a,.page-hero .back-pill{display:inline-flex;align-items:center;height:44px;padding:0 20px;
+  font-size:14.5px;font-weight:600;font-stretch:108%;letter-spacing:.01em}
+/* hover y foco: relleno con el acento de la paleta */
+.page-hero .anchors a:hover,.page-hero .anchors a:focus-visible,
+.page-hero .back-pill:hover,.page-hero .back-pill:focus-visible{background:var(--tec);color:var(--on-tec);border-color:var(--tec)}
+.hero .btn-ghost::before{background:var(--tec)}
+.hero .btn-ghost:hover{color:var(--on-tec);border-color:var(--tec)}
