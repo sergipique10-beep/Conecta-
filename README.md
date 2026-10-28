@@ -155,7 +155,15 @@ La web cuenta visualmente el valor de la fundación, **que nadie quede fuera**: 
 | La red que crece al enviar un formulario | Newsletter de la portada, Contacto | `la red que crece` |
 | Red de nodos + terminal | Transformación digital | `transformación digital: …` |
 
-Además, en todas las páginas: scroll suave (Lenis), cursor personalizado, transición de cortina entre páginas, footer a pantalla completa, panel de cookies y barra de acceso rápido en móvil.
+Además, en todas las páginas: scroll suave (Lenis, solo con ratón), cursor personalizado, transición de cortina entre páginas, footer a pantalla completa (en escritorio) y panel de cookies.
+
+### Móvil (por debajo de 1120 px)
+
+- **Cabecera:** solo logo, Buscar y menú. El selector «Modo» pasa al pie del menú.
+- **Menú** (`NAV` en `tools/build_pages.py`, módulo `menú móvil`): una fila por sección con un botón + / − que despliega sus páginas en acordeón (una abierta a la vez; la de la página actual se abre sola). Al pie, fijos, el botón **Colabora** y las muestras de **Modo**. Con el menú abierto la página no se desplaza, el resto queda inerte (`inert`), el foco no sale del panel y Escape lo cierra.
+- **Barra inferior «Colabora»** (`quickbar`, módulo `acceso rápido en móvil`): botón Colabora y acceso a Contacto. Aparece tras la primera pantalla, se oculta al bajar y vuelve al subir, y se retira con el footer a la vista, el menú o las cookies abiertos. No sale en las páginas de Colabora: `write()` pone `data-qb-off` en su `<body>` (lista `QB_OFF`).
+- **Táctil:** los `:hover` de tarjetas y botones van dentro de `@media(hover:hover)`; sin ratón hay una pulsación breve (`:active`). Los textos que hablan del cursor tienen su versión táctil en `data-touch`.
+- Los estilos móviles están juntos al final de `css/site.css`, en los bloques `móvil: …`.
 
 ---
 
