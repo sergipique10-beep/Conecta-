@@ -585,7 +585,7 @@ for p in PUBS:
 ECO = [
     dict(slug='gestion-tercer-sector', tipo='formacion', name='Gestión Tercer Sector', domain='gestiontercersector.org', url='https://gestiontercersector.org/',
          short='El sitio del tercer sector para el tercer sector.'),
-    dict(slug='voluntariado', tipo='intervencion', name='Voluntariado.net', domain='voluntariado.net', url='https://voluntariado.net/',
+    dict(slug='voluntariado', tipo='intervencion', name='Voluntariado', domain='voluntariado.net', url='https://voluntariado.net/',
          short='El portal del voluntariado.'),
     dict(slug='conecta-ia', tipo='formacion', name='Conecta IA', domain='conecta-ia.fundacionesplai.org', url='https://conecta-ia.fundacionesplai.org/',
          short='Cursos online de competencias digitales e inteligencia artificial.'),
