@@ -1406,3 +1406,8 @@ body,.nav-bar,.stat,.news,.cta,.mmenu{transition-property:background-color,color
   .eco-grid .tile p{margin-top:6px}
 }
 @media(max-width:699px){.eco-grid .tile h3{font-size:30px}}
+
+/* ---------- ecosistema: líneas de separación más visibles ----------
+   la línea entre tarjetas es el fondo de la rejilla que asoma por el hueco (gap):
+   2px y el acento de la paleta mezclado con el fondo de las tarjetas */
+.eco-grid{--eco-sep:color-mix(in srgb,var(--tec-text) 45%,var(--surface));gap:2px;background:var(--eco-sep);border:2px solid var(--eco-sep)}
