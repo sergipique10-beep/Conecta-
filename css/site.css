@@ -1334,7 +1334,7 @@ body,.nav-bar,.stat,.news,.cta,.mmenu{transition-property:background-color,color
 /* tarjetas: fondo de superficie de cada paleta, etiqueta siempre arriba a la derecha
    y dominio pegado bajo el título */
 .eco-grid .tile{background:var(--surface)}
-.eco-grid .tile:hover,.eco-grid .tile:focus-visible{background:color-mix(in srgb,var(--surface) 80%,var(--tec-text))}
+.eco-grid .tile:hover,.eco-grid .tile:focus-visible{background:color-mix(in srgb,var(--surface) 90%,var(--tec-text))}
 .eco-grid .eco-dom{margin-top:-8px;overflow-wrap:anywhere}
 .eco-tag{display:inline-flex;align-items:center;gap:7px;padding:5px 11px;border-radius:100px;border:1px solid color-mix(in srgb,var(--tipo) 45%,transparent);background:color-mix(in srgb,var(--tipo) 12%,transparent);
   color:var(--tipo);font-size:11.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;font-stretch:118%;white-space:nowrap}
@@ -1344,9 +1344,9 @@ body,.nav-bar,.stat,.news,.cta,.mmenu{transition-property:background-color,color
 .eco-grid .tile>*{transition:opacity .45s var(--ease)}
 .eco-grid.is-filtrando .tile.is-dim>*{opacity:.25}
 .eco-grid.is-filtrando .tile.is-dim:hover>*,.eco-grid.is-filtrando .tile.is-dim:focus-visible>*{opacity:1}
-/* fondos: tarjeta resaltada por el filtro = 10 % de acento; cualquier tarjeta con el ratón
-   o el foco encima = 20 % (el mismo color, esté o no resaltada o atenuada) */
-.eco-grid.is-filtrando .tile:not(.is-dim):not(:hover):not(:focus-visible){background:color-mix(in srgb,var(--surface) 90%,var(--tec-text))}
+/* fondos: tarjeta resaltada por el filtro = 25 % de acento; cualquier tarjeta con el ratón
+   o el foco encima = 10 % (el mismo color, esté o no resaltada o atenuada) */
+.eco-grid.is-filtrando .tile:not(.is-dim):not(:hover):not(:focus-visible){background:color-mix(in srgb,var(--surface) 75%,var(--tec-text))}
 @media(prefers-reduced-motion:reduce){.eco-grid .tile{transition:none}}
 .eco-grid .tile:focus-visible{outline-offset:-4px}
 @media(prefers-reduced-motion:reduce){.eco-grid .tile>*,.eco-chip svg{transition:none}}
