@@ -59,13 +59,7 @@
           <li><a href="transformacion-digital.html">Transformación digital y Tercer Sector</a></li>
         </ul></div></div>
       </li>
-      <li class="has-drop">
-        <a href="proyectos.html" aria-haspopup="true">Proyectos</a>
-        <div class="drop"><div class="drop-panel"><ul>
-          <li><a href="proyectos-nacionales.html">Proyectos nacionales</a></li>
-          <li><a href="proyectos-internacionales.html">Proyectos internacionales</a></li>
-        </ul></div></div>
-      </li>
+      <li><a href="proyectos.html">Proyectos</a></li>
       <li class="has-drop">
         <a href="recursos.html" aria-haspopup="true">Recursos</a>
         <div class="drop"><div class="drop-panel"><ul>
@@ -106,8 +100,7 @@
       <div class="mm-subs" id="mm-que-hacemos"><ul><li><a href="formacion-tic.html">Formación TIC e inserción laboral</a></li><li><a href="observatorio.html">Observatorio de Brechas Digitales</a></li><li><a href="voluntariado.html">Voluntariado</a></li><li><a href="jovenes.html">Jóvenes</a></li><li><a href="inclusion-digital.html">e-Inclusión digital</a></li><li><a href="transformacion-digital.html">Transformación digital y Tercer Sector</a></li></ul></div>
     </div>
     <div class="mm-sec" style="--i:2">
-      <div class="mm-row"><a class="big" href="proyectos.html">Proyectos</a><button type="button" class="mm-tog" aria-expanded="false" aria-controls="mm-proyectos" aria-label="Páginas de Proyectos"><i aria-hidden="true"></i></button></div>
-      <div class="mm-subs" id="mm-proyectos"><ul><li><a href="proyectos-nacionales.html">Proyectos nacionales</a></li><li><a href="proyectos-internacionales.html">Proyectos internacionales</a></li></ul></div>
+      <div class="mm-row"><a class="big" href="proyectos.html">Proyectos</a></div>
     </div>
     <div class="mm-sec" style="--i:3">
       <div class="mm-row"><a class="big" href="recursos.html">Recursos</a><button type="button" class="mm-tog" aria-expanded="false" aria-controls="mm-recursos" aria-label="Páginas de Recursos"><i aria-hidden="true"></i></button></div>
@@ -153,35 +146,76 @@
       <h1 id="page-h"><span class="line"><span>Proyectos que</span></span><span class="line"><span>dejan <em>huella.</em></span></span></h1>
       <div class="page-hero-foot fade-up">
         <p>Iniciativas en España y en el resto del mundo para que la tecnología abra puertas en lugar de cerrarlas.</p>
-        <div class="anchors"><a href="#ambitos">Nacionales e internacionales</a></div>
+        <div class="anchors"><a href="#proyectos">Ver proyectos</a></div>
       </div>
     </div>
   </section>
 
-  <section class="pad values-sec" id="ambitos" aria-labelledby="amb-h">
+  <section class="pad" id="proyectos" aria-labelledby="proy-h">
     <div class="wrap">
       <div class="head">
         <div>
           <span class="kicker">Proyectos</span>
-          <h2 class="h2" id="amb-h" data-lines style="margin-top:22px"><span class="line"><span>Cerca y</span></span><span class="line"><span><em>lejos.</em></span></span></h2>
+          <h2 class="h2" id="proy-h" data-lines style="margin-top:22px"><span class="line"><span>Filtra por</span></span><span class="line"><span><em>área.</em></span></span></h2>
         </div>
-        <p data-reveal>Proyectos en nuestras cuatro sedes y alianzas con Europa e Iberoamérica.</p>
       </div>
-      <div class="values two">
-        <a class="value" href="proyectos-nacionales.html" data-reveal style="--d:0.00s">
-          <img src="img/news-campamentos.jpg" alt="" loading="lazy">
-          <div class="value-top"><span class="n">09</span><svg class="sym" aria-hidden="true"><use href="#sym"/></svg></div>
-          <div class="value-body"><h3>Proyectos nacionales</h3><p>Andalucía, Madrid, Cataluña y Galicia: proyectos cercanos, diseñados con cada comunidad.</p><span class="more">Ver proyectos <b aria-hidden="true">→</b></span></div>
+      <div class="filters" data-filter-group="#proyLista" role="group" aria-label="Filtrar proyectos por área">
+        <button type="button" data-filter="all" aria-pressed="true">Todos</button>
+        <button type="button" data-filter="formacion" aria-pressed="false">Formación TIC</button>
+        <button type="button" data-filter="observatorio" aria-pressed="false">Observatorio (OBD)</button>
+        <button type="button" data-filter="voluntariado" aria-pressed="false">Voluntariado</button>
+        <button type="button" data-filter="jovenes" aria-pressed="false">Jóvenes</button>
+        <button type="button" data-filter="inclusion" aria-pressed="false">e-Inclusión digital</button>
+        <button type="button" data-filter="tercer" aria-pressed="false">Transformación digital y Tercer Sector</button>
+        <button type="button" data-filter="internacional" aria-pressed="false">Proyectos internacionales</button>
+      </div>
+      <div id="proyLista">
+        <div class="pgrid" id="pgridNac">
+        <a class="card" href="proyecto-saad.html" data-cat="tercer" data-reveal style="--d:0.00s"><div class="card-img"><img src="img/news-tercer-sector.jpg" alt="Dos personas revisando código en un portátil" loading="lazy"><span class="card-tag">Tercer sector</span></div><h3>SAAD: asesoría digital gratuita para entidades sociales</h3><p>Acompañamiento para que las entidades sociales den el salto digital sin coste.</p><span class="meta">Ver proyecto</span></a>
+        <a class="card" href="proyecto-ens.html" data-cat="tercer" data-reveal style="--d:0.08s"><div class="card-img"><img src="img/news-ens.jpg" alt="Placa de circuito iluminada" loading="lazy"><span class="card-tag">Calidad</span></div><h3>Certificación en el Esquema Nacional de Seguridad</h3><p>Garantizamos la seguridad de la información de las personas y entidades con las que trabajamos.</p><span class="meta">Ver proyecto</span></a>
+        <a class="card" href="proyecto-itinerarios.html" data-cat="formacion" data-reveal style="--d:0.16s"><div class="card-img"><img src="img/tech.jpg" alt="Manos en un teclado con datos luminosos" loading="lazy"><span class="card-tag">Formación</span></div><h3>Itinerarios de competencias digitales</h3><p>Formación orientada a la inserción laboral, presencial y en nuestro Campus Virtual.</p><span class="meta">Ver proyecto</span></a>
+        <a class="card" href="proyecto-tric.html" data-cat="formacion" data-reveal style="--d:0.00s"><div class="card-img"><img src="img/news-formacion.jpg" alt="Grupo de personas aprendiendo con portátiles" loading="lazy"><span class="card-tag">Formación</span></div><h3>Curso de TRIC aplicadas a la educación no formal</h3><p>Formación en Madrid para educadores que quieren incorporar la tecnología a su trabajo.</p><span class="meta">Ver proyecto</span></a>
+        <a class="card" href="proyecto-informe-brechas.html" data-cat="observatorio" data-reveal style="--d:0.08s"><div class="card-img"><img src="img/contenido.jpg" alt="Pantallas con datos y gráficos" loading="lazy"><span class="card-tag">Observatorio</span></div><h3>Informe sobre brechas digitales</h3><p>Datos actualizados sobre las desigualdades digitales en España.</p><span class="meta">Ver proyecto</span></a>
+        <a class="card" href="proyecto-red-voluntariado.html" data-cat="voluntariado" data-reveal style="--d:0.16s"><div class="card-img"><img src="img/news-voluntariado.jpg" alt="Persona voluntaria con camiseta de voluntariado" loading="lazy"><span class="card-tag">Voluntariado</span></div><h3>Red de personas voluntarias</h3><p>Una nueva red que acompaña a las personas que más lo necesitan en su día a día digital.</p><span class="meta">Ver proyecto</span></a>
+        <a class="card" href="proyecto-campamentos.html" data-cat="jovenes" data-reveal style="--d:0.00s"><div class="card-img"><img src="img/news-campamentos.jpg" alt="Niñas y niños en un aula durante una actividad" loading="lazy"><span class="card-tag">Jóvenes</span></div><h3>Campamentos tecnológicos de verano</h3><p>Programación, robótica y creatividad en Madrid y Galicia durante el verano.</p><span class="meta">Ver proyecto</span></a>
+        <a class="card" href="proyecto-conecta-joven.html" data-cat="inclusion jovenes" data-reveal style="--d:0.08s"><div class="card-img"><img src="img/conexion-personas.jpg" alt="Personas conectadas" loading="lazy"><span class="card-tag">e-Inclusión</span></div><h3>Conecta Joven</h3><p>Jóvenes que enseñan tecnología a personas mayores para reducir la brecha digital generacional.</p><span class="meta">Ver proyecto</span></a>
+        <a class="card" href="proyecto-chicas-in-tech.html" data-cat="inclusion jovenes" data-reveal style="--d:0.16s"><div class="card-img"><img src="img/hero-personas.jpg" alt="Grupo de personas" loading="lazy"><span class="card-tag">e-Inclusión</span></div><h3>#ChicasInTech</h3><p>Talleres, mentorías y divulgación para orientar a mujeres jóvenes hacia vocaciones STEAM.</p><span class="meta">Ver proyecto</span></a>
+        </div>
+        <div class="proy-intl" id="internacionales" data-cat="internacional">
+          <span class="kicker">Proyectos internacionales</span>
+          <div class="flatmap" id="flatmap">
+            <canvas class="flatmap-canvas" role="img" aria-label="Mapa de proyectos internacionales: España conectada con Europa e Iberoamérica"></canvas>
+          </div>
+          <div class="pin-cards">
+        <a class="pin-card" href="proyecto-all-digital.html" data-pin="eu" data-lat="50.85" data-lon="4.35" data-label="ALL DIGITAL" data-reveal style="--d:0.00s">
+          <span class="pin-card-top"><span class="pin-dot" aria-hidden="true"></span>01 — Europa</span>
+          <h3>ALL DIGITAL</h3>
+          <p>Red europea que impulsa la inclusión y las competencias digitales para todas las personas.</p>
+          <span class="pin-more">Ver proyecto →</span>
         </a>
-        <a class="value" href="proyectos-internacionales.html" data-reveal style="--d:0.08s">
-          <img src="img/news-internacional.jpg" alt="" loading="lazy">
-          <div class="value-top"><span class="n">04</span><svg class="sym" aria-hidden="true"><use href="#sym"/></svg></div>
-          <div class="value-body"><h3>Proyectos internacionales</h3><p>Una red que cruza fronteras, de Europa a Iberoamérica.</p><span class="more">Ver proyectos <b aria-hidden="true">→</b></span></div>
+        <a class="pin-card" href="proyecto-inclusion-europa.html" data-pin="eu2" data-lat="48.2" data-lon="16.4" data-label="Inclusión digital en Europa" data-reveal style="--d:0.07s">
+          <span class="pin-card-top"><span class="pin-dot" aria-hidden="true"></span>02 — Erasmus+</span>
+          <h3>Inclusión digital en Europa</h3>
+          <p>Nuevo proyecto Erasmus+ para compartir metodologías de inclusión digital con entidades europeas.</p>
+          <span class="pin-more">Ver proyecto →</span>
         </a>
+        <a class="pin-card" href="proyecto-liga-iberoamericana.html" data-pin="latam" data-lat="4.7" data-lon="-74.1" data-label="La Liga Iberoamericana" data-reveal style="--d:0.14s">
+          <span class="pin-card-top"><span class="pin-dot" aria-hidden="true"></span>03 — Iberoamérica</span>
+          <h3>La Liga Iberoamericana</h3>
+          <p>Cooperación con entidades de América Latina en educación y acción social.</p>
+          <span class="pin-more">Ver proyecto →</span>
+        </a>
+        <a class="pin-card" href="proyecto-movilidad-juvenil.html" data-pin="youth" data-lat="45.4" data-lon="9.2" data-label="Movilidad juvenil" data-reveal style="--d:0.21s">
+          <span class="pin-card-top"><span class="pin-dot" aria-hidden="true"></span>04 — Juventud</span>
+          <h3>Movilidad juvenil</h3>
+          <p>Intercambios que permiten a jóvenes vivir experiencias de participación en otros países.</p>
+          <span class="pin-more">Ver proyecto →</span>
+        </a>
+          </div>
+        </div>
       </div>
     </div>
   </section>
-
   <section class="people" aria-hidden="true" style="padding-block:clamp(40px,6vw,80px)">
     <div class="ticker" data-speed="-0.35"></div>
   </section>
@@ -250,7 +284,7 @@
         </form>
         <p class="form-note" aria-live="polite"></p>
         <div class="foot-trust">
-          <a href="transparencia.html">ENS</a><a href="transparencia.html">ISO 9001</a><a href="transparencia.html">ISO 14001</a><a href="transparencia.html">ISO 27001</a><a href="proyectos-internacionales.html">ALL DIGITAL</a><a href="proyectos-internacionales.html">Erasmus+</a>
+          <a href="transparencia.html">ENS</a><a href="transparencia.html">ISO 9001</a><a href="transparencia.html">ISO 14001</a><a href="transparencia.html">ISO 27001</a><a href="proyectos.html?area=internacional#internacionales">ALL DIGITAL</a><a href="proyectos.html?area=internacional#internacionales">Erasmus+</a>
         </div>
       </div>
 

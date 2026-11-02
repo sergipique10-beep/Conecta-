@@ -1620,3 +1620,12 @@ html.mm-lock,html.mm-lock body{overflow:hidden}
   html:has(.nav.hide) .filters{top:calc(8px + env(safe-area-inset-top))}
 }
 @media(max-width:899px) and (prefers-reduced-motion:reduce){.filters{transition:none}}
+
+/* ---------- proyectos: bloque de proyectos internacionales dentro del filtro ----------
+   título, mapa y las cuatro tarjetas caben en una pantalla en ordenador: el mapa
+   ocupa el alto que queda (menú + chips + título + tarjetas ≈ 440px) */
+.proy-intl{display:flex;flex-direction:column;gap:16px;margin-top:clamp(40px,5vw,64px)}
+.pgrid[hidden]+.proy-intl,.pgrid:not(:has(> :not([hidden])))+.proy-intl{margin-top:0}
+.proy-intl .flatmap{aspect-ratio:auto;height:clamp(240px,calc(100svh - 440px),66vh);max-height:none;margin-top:0}
+.proy-intl .pin-cards{margin-top:0}
+@media(max-width:1099px){.proy-intl .flatmap{aspect-ratio:1.7;height:auto;max-height:66vh}}

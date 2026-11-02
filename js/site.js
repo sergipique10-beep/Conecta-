@@ -1311,6 +1311,16 @@
 
     fSize();
     rzOn(fSize);
+    // en Proyectos el mapa está dentro de un filtro: al mostrarse hay que medirlo de nuevo
+    // al elegir «Proyectos internacionales», la página baja hasta su título para que
+    // título, mapa y tarjetas queden enteros en pantalla
+    document.addEventListener('conecta:filtro', function(e){
+      if(fm.offsetParent){ fSize(); }
+      var fmBloque = fm.closest('.proy-intl');
+      if(fmBloque && e.detail.filtro === 'internacional' && e.detail.usuario){
+        requestAnimationFrame(function(){ scrollToTarget(fmBloque); });
+      }
+    });
     new IntersectionObserver(function(e){
       fOn = e[0].isIntersecting;
       if(fOn && fReady && !fStart){ fStart = performance.now(); }
@@ -1493,12 +1503,14 @@
   document.querySelectorAll('[data-filter-group]').forEach(function(group){
     var target = document.querySelector(group.dataset.filterGroup);
     group.querySelectorAll('button').forEach(function(btn){
-      btn.addEventListener('click',function(){
+      btn.addEventListener('click',function(ev){
         group.querySelectorAll('button').forEach(function(b){b.setAttribute('aria-pressed',b===btn?'true':'false')});
         var f = btn.dataset.filter;
         target.querySelectorAll('[data-cat]').forEach(function(item){
           item.hidden = f!=='all' && item.dataset.cat.split(' ').indexOf(f)<0;
         });
+        // lo que estaba oculto (p. ej. el mapa de internacionales) se mide de nuevo al aparecer
+        document.dispatchEvent(new CustomEvent('conecta:filtro', {detail:{filtro:f, usuario:!!(ev && ev.isTrusted)}}));
       });
     });
   });
@@ -1510,7 +1522,7 @@
       fsBox.scrollTo({left: fsBtn.offsetLeft - (fsBox.clientWidth - fsBtn.offsetWidth)/2, behavior: reduce ? 'auto' : 'smooth'});
     });
   });
-  // llegada desde un área: proyectos-nacionales.html?area=formacion deja ese filtro activo
+  // llegada desde un área: proyectos.html?area=formacion (o ?area=internacional) deja ese filtro activo
   var fArea = (location.search.match(/[?&]area=([a-z-]+)/) || [])[1];
   if(fArea){
     var fAreaBtn = document.querySelector('[data-filter-group] button[data-filter="'+fArea+'"]');

@@ -15,7 +15,7 @@ Estructura (según el wireframe de navegación):
     Nosotros      → quienes-somos, equipo, historia, ecosistema (enlaza a los portales externos)
     Qué hacemos   → formacion-tic, observatorio, voluntariado, jovenes,
                     inclusion-digital, transformacion-digital
-    Proyectos     → proyectos-nacionales / proyectos-internacionales (→ proyecto-*)
+    Proyectos     → filtro por área + bloque de proyectos internacionales (→ proyecto-*)
     Recursos      → blog (→ noticia-*), publicaciones (→ publicacion-*),
                     transparencia, preguntas-frecuentes, campus
     Contacto      → escribenos, sedes
@@ -90,13 +90,7 @@ NAV = '''<!-- ============ NAV ============ -->
           <li><a href="transformacion-digital.html">Transformación digital y Tercer Sector</a></li>
         </ul></div></div>
       </li>
-      <li class="has-drop">
-        <a href="proyectos.html" aria-haspopup="true">Proyectos</a>
-        <div class="drop"><div class="drop-panel"><ul>
-          <li><a href="proyectos-nacionales.html">Proyectos nacionales</a></li>
-          <li><a href="proyectos-internacionales.html">Proyectos internacionales</a></li>
-        </ul></div></div>
-      </li>
+      <li><a href="proyectos.html">Proyectos</a></li>
       <li class="has-drop">
         <a href="recursos.html" aria-haspopup="true">Recursos</a>
         <div class="drop"><div class="drop-panel"><ul>
@@ -137,8 +131,7 @@ NAV = '''<!-- ============ NAV ============ -->
       <div class="mm-subs" id="mm-que-hacemos"><ul><li><a href="formacion-tic.html">Formación TIC e inserción laboral</a></li><li><a href="observatorio.html">Observatorio de Brechas Digitales</a></li><li><a href="voluntariado.html">Voluntariado</a></li><li><a href="jovenes.html">Jóvenes</a></li><li><a href="inclusion-digital.html">e-Inclusión digital</a></li><li><a href="transformacion-digital.html">Transformación digital y Tercer Sector</a></li></ul></div>
     </div>
     <div class="mm-sec" style="--i:2">
-      <div class="mm-row"><a class="big" href="proyectos.html">Proyectos</a><button type="button" class="mm-tog" aria-expanded="false" aria-controls="mm-proyectos" aria-label="Páginas de Proyectos"><i aria-hidden="true"></i></button></div>
-      <div class="mm-subs" id="mm-proyectos"><ul><li><a href="proyectos-nacionales.html">Proyectos nacionales</a></li><li><a href="proyectos-internacionales.html">Proyectos internacionales</a></li></ul></div>
+      <div class="mm-row"><a class="big" href="proyectos.html">Proyectos</a></div>
     </div>
     <div class="mm-sec" style="--i:3">
       <div class="mm-row"><a class="big" href="recursos.html">Recursos</a><button type="button" class="mm-tog" aria-expanded="false" aria-controls="mm-recursos" aria-label="Páginas de Recursos"><i aria-hidden="true"></i></button></div>
@@ -230,7 +223,7 @@ FOOTER = '''<!-- ============ FOOTER ============ -->
         </form>
         <p class="form-note" aria-live="polite"></p>
         <div class="foot-trust">
-          <a href="transparencia.html">ENS</a><a href="transparencia.html">ISO 9001</a><a href="transparencia.html">ISO 14001</a><a href="transparencia.html">ISO 27001</a><a href="proyectos-internacionales.html">ALL DIGITAL</a><a href="proyectos-internacionales.html">Erasmus+</a>
+          <a href="transparencia.html">ENS</a><a href="transparencia.html">ISO 9001</a><a href="transparencia.html">ISO 14001</a><a href="transparencia.html">ISO 27001</a><a href="proyectos.html?area=internacional#internacionales">ALL DIGITAL</a><a href="proyectos.html?area=internacional#internacionales">Erasmus+</a>
         </div>
       </div>
 
@@ -659,7 +652,7 @@ def area_projects(cat):
     <div class="wrap">
 ''' + head2('Proyectos del área', 'Lo que estamos', '<em>haciendo.</em>', None, 'pa-h') + f'''      <div class="pgrid">
 {cards}      </div>
-      <div style="margin-top:clamp(40px,5vw,64px)" data-reveal><a class="btn btn-ghost magnetic" href="proyectos-nacionales.html?area={cat}">Ver todos los proyectos del área <span class="arr">→</span></a></div>
+      <div style="margin-top:clamp(40px,5vw,64px)" data-reveal><a class="btn btn-ghost magnetic" href="proyectos.html?area={cat}#proyectos">Ver todos los proyectos del área <span class="arr">→</span></a></div>
     </div>
   </section>
 '''
@@ -881,39 +874,11 @@ PROY_MEDIA = '''    <div class="hero-media city" aria-hidden="true">
 '''
 proyectos = page_hero('Proyectos', 'Proyectos que', 'dejan <em>huella.</em>',
     'Iniciativas en España y en el resto del mundo para que la tecnología abra puertas en lugar de cerrarlas.',
-    'tech.jpg', [('ambitos', 'Nacionales e internacionales')], 'center 30%', media=PROY_MEDIA, cls=' hero-city')
-proyectos += hub_section('Proyectos', 'Cerca y', '<em>lejos.</em>', 'Proyectos en nuestras cuatro sedes y alianzas con Europa e Iberoamérica.', 'amb-h', [
-        ('proyectos-nacionales.html', 'news-campamentos.jpg', f'{len(PROJ_NAC):02d}', 'Proyectos nacionales', 'Andalucía, Madrid, Cataluña y Galicia: proyectos cercanos, diseñados con cada comunidad.', 'Ver proyectos'),
-        ('proyectos-internacionales.html', 'news-internacional.jpg', f'{len(PROJ_INT):02d}', 'Proyectos internacionales', 'Una red que cruza fronteras, de Europa a Iberoamérica.', 'Ver proyectos'),
-    ], ' two', sid='ambitos') + '''
-  <section class="people" aria-hidden="true" style="padding-block:clamp(40px,6vw,80px)">
-    <div class="ticker" data-speed="-0.35"></div>
-  </section>
-''' + next_link('recursos.html', 'Siguiente', 'Explorar <em>recursos</em>')
-write('proyectos.html', 'Proyectos · fundación conecta+', 'Proyectos nacionales e internacionales de la fundación conecta+.', proyectos)
+    'tech.jpg', [('proyectos', 'Ver proyectos')], 'center 30%', media=PROY_MEDIA, cls=' hero-city')
 
-SIB_PROY = [('proyectos-nacionales.html', 'Proyectos nacionales', 'En nuestras cuatro sedes.'),
-            ('proyectos-internacionales.html', 'Proyectos internacionales', 'Una red que cruza fronteras.')]
-
-# ------------------------------------------------------------------ PROYECTOS NACIONALES
+# Filtro por área. «Proyectos internacionales» es un filtro más: muestra el bloque del mapa
+# (data-cat="internacional") y oculta los nacionales; «Todos» muestra los dos.
 filters = ''.join(f'        <button type="button" data-filter="{a["cat"]}" aria-pressed="false">{a["short"]}</button>\n' for a in AREAS)
-nac = page_hero(crumbs(('Proyectos', 'proyectos.html'), ('Proyectos nacionales', None)), 'En nuestras', '<em>cuatro sedes.</em>',
-    'Andalucía, Madrid, Cataluña y Galicia: proyectos cercanos, diseñados con cada comunidad.',
-    'news-campamentos.jpg', [('nacionales', 'Ver proyectos')], back=('proyectos.html', 'Proyectos'))
-nac += '''
-  <section class="pad" id="nacionales" aria-labelledby="nac-h">
-    <div class="wrap">
-''' + head2('Proyectos nacionales', 'Filtra por', '<em>área.</em>', None, 'nac-h') + '''      <div class="filters" data-filter-group="#pgridNac" role="group" aria-label="Filtrar proyectos por área">
-        <button type="button" data-filter="all" aria-pressed="true">Todos</button>
-''' + filters + '''      </div>
-      <div class="pgrid" id="pgridNac">
-''' + ''.join(pcard(p, f'{(i % 3) * .08:.2f}s') for i, p in enumerate(PROJ_NAC)) + '''      </div>
-    </div>
-  </section>
-''' + siblings('Proyectos', SIB_PROY, 'proyectos-nacionales.html')
-write('proyectos-nacionales.html', 'Proyectos nacionales · fundación conecta+', 'Proyectos de la fundación conecta+ en Andalucía, Madrid, Cataluña y Galicia.', nac, parent='proyectos.html')
-
-# ------------------------------------------------------------------ PROYECTOS INTERNACIONALES
 pins = ''.join(f'''        <a class="pin-card" href="{p['href']}" data-pin="{p['pin']}" data-lat="{p['lat']}" data-lon="{p['lon']}" data-label="{p['title']}" data-reveal style="--d:{i * .07:.2f}s">
           <span class="pin-card-top"><span class="pin-dot" aria-hidden="true"></span>{p['zone']}</span>
           <h3>{p['title']}</h3>
@@ -921,21 +886,37 @@ pins = ''.join(f'''        <a class="pin-card" href="{p['href']}" data-pin="{p['
           <span class="pin-more">Ver proyecto →</span>
         </a>
 ''' for i, p in enumerate(PROJ_INT))
-intl = page_hero(crumbs(('Proyectos', 'proyectos.html'), ('Proyectos internacionales', None)), 'Una red que', '<em>cruza fronteras.</em>',
-    'Desde nuestras cuatro sedes en España tejemos alianzas con Europa e Iberoamérica.',
-    'news-internacional.jpg', [('internacionales', 'Ver el mapa')], back=('proyectos.html', 'Proyectos'))
-intl += '''
-  <section class="pad" id="internacionales" aria-labelledby="int-h" style="background:var(--bg-2)">
+proyectos += '''
+  <section class="pad" id="proyectos" aria-labelledby="proy-h">
     <div class="wrap">
-''' + head2('Proyectos internacionales', 'Del mapa', 'al <em>proyecto.</em>', '<span data-touch="Toca un punto del mapa o una tarjeta para ver cada proyecto, y entra para conocerlo.">Pasa el cursor por cada proyecto para verlo en el mapa, y entra para conocerlo.</span>', 'int-h') + f'''      <div class="flatmap" id="flatmap" data-reveal>
-        <canvas class="flatmap-canvas" role="img" aria-label="Mapa de proyectos internacionales: España conectada con Europa e Iberoamérica"></canvas>
+''' + head2('Proyectos', 'Filtra por', '<em>área.</em>', None, 'proy-h') + '''      <div class="filters" data-filter-group="#proyLista" role="group" aria-label="Filtrar proyectos por área">
+        <button type="button" data-filter="all" aria-pressed="true">Todos</button>
+''' + filters + '''        <button type="button" data-filter="internacional" aria-pressed="false">Proyectos internacionales</button>
       </div>
-      <div class="pin-cards">
-{pins}      </div>
+      <div id="proyLista">
+        <div class="pgrid" id="pgridNac">
+''' + ''.join(pcard(p, f'{(i % 3) * .08:.2f}s') for i, p in enumerate(PROJ_NAC)) + f'''        </div>
+        <div class="proy-intl" id="internacionales" data-cat="internacional">
+          <span class="kicker">Proyectos internacionales</span>
+          <div class="flatmap" id="flatmap">
+            <canvas class="flatmap-canvas" role="img" aria-label="Mapa de proyectos internacionales: España conectada con Europa e Iberoamérica"></canvas>
+          </div>
+          <div class="pin-cards">
+{pins}          </div>
+        </div>
+      </div>
     </div>
   </section>
-''' + siblings('Proyectos', SIB_PROY, 'proyectos-internacionales.html')
-write('proyectos-internacionales.html', 'Proyectos internacionales · fundación conecta+', 'Proyectos internacionales de la fundación conecta+ en Europa e Iberoamérica.', intl, parent='proyectos.html')
+  <section class="people" aria-hidden="true" style="padding-block:clamp(40px,6vw,80px)">
+    <div class="ticker" data-speed="-0.35"></div>
+  </section>
+''' + next_link('recursos.html', 'Siguiente', 'Explorar <em>recursos</em>')
+write('proyectos.html', 'Proyectos · fundación conecta+', 'Proyectos nacionales e internacionales de la fundación conecta+.', proyectos)
+
+# Las antiguas páginas de proyectos nacionales e internacionales ya no existen:
+# sus direcciones llevan a Proyectos (la de internacionales, con su filtro activo).
+redirect('proyectos-nacionales.html', 'proyectos.html#proyectos')
+redirect('proyectos-internacionales.html', 'proyectos.html?area=internacional#internacionales')
 
 # ------------------------------------------------------------------ PROYECTO CONCRETO
 def project_page(p, i, lst, list_href, list_name):
@@ -944,7 +925,8 @@ def project_page(p, i, lst, list_href, list_name):
     area = AREA_BY_CAT.get(cats[0]) if cats else None
     area_btn = (f'<a class="btn btn-ghost magnetic" href="{area["href"]}">Área: {area["short"]} <span class="arr">→</span></a>' if area else '')
     tag = p.get('tag') or p.get('zone')
-    pg = page_hero(crumbs(('Proyectos', 'proyectos.html'), (list_name, list_href), (p['title'], None)),
+    ruta = [('Proyectos', 'proyectos.html')] + ([(list_name, list_href)] if list_name != 'Proyectos' else []) + [(p['title'], None)]
+    pg = page_hero(crumbs(*ruta),
         p['title'], None, p['text'], p['img'], cls=' hero-sm', back=(list_href, list_name))
     pg += f'''
   <section class="pad" id="proyecto" aria-labelledby="pr-h">
@@ -964,9 +946,9 @@ def project_page(p, i, lst, list_href, list_name):
     write(p['href'], f"{p['title']} · Proyectos · fundación conecta+", p['text'], pg, parent='proyectos.html')
 
 for i, p in enumerate(PROJ_NAC):
-    project_page(p, i, PROJ_NAC, 'proyectos-nacionales.html', 'Proyectos nacionales')
+    project_page(p, i, PROJ_NAC, 'proyectos.html#proyectos', 'Proyectos')
 for i, p in enumerate(PROJ_INT):
-    project_page(p, i, PROJ_INT, 'proyectos-internacionales.html', 'Proyectos internacionales')
+    project_page(p, i, PROJ_INT, 'proyectos.html?area=internacional#internacionales', 'Proyectos internacionales')
 
 # ================================================================== RECURSOS (hub)
 recursos = page_hero('Recursos', 'Aprende,', 'descarga, <em>consulta.</em>',

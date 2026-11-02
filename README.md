@@ -46,14 +46,14 @@ La navegación sigue el wireframe: cada sección del menú es una página **hub*
 |---|---|
 | `nosotros.html` | `quienes-somos`, `equipo`, `historia`, `ecosistema` (tarjetas que enlazan a los 9 portales externos) |
 | `que-hacemos.html` (cabecera con *showreel*) | `formacion-tic`, `observatorio`, `voluntariado`, `jovenes`, `inclusion-digital`, `transformacion-digital` |
-| `proyectos.html` (cabecera con vídeo) | `proyectos-nacionales` (filtros por área) y `proyectos-internacionales` (mapa) → `proyecto-*.html` |
+| `proyectos.html` (cabecera con vídeo, filtro por área y bloque de internacionales con mapa) | → `proyecto-*.html` |
 | `recursos.html` | `blog` → `noticia-*.html`, `publicaciones` → `publicacion-*.html`, `transparencia`, `preguntas-frecuentes`, `campus` |
 | `contacto.html` | `escribenos`, `sedes` |
 | `colabora.html` (botón de la cabecera) | `hazte-voluntario`, `dona`, `unete` |
 | Pie | `boletin`, `canal-denuncia`, `aviso-legal` (con `#privacidad`, `#cookies`, `#accesibilidad`) |
 
 - `mision.html` ya no existe como página: es una redirección a `que-hacemos.html` para no romper enlaces antiguos.
-- Las áreas enlazan a sus proyectos con `proyectos-nacionales.html?area=<categoría>`, que deja ese filtro activo.
+- Las áreas enlazan a sus proyectos con `proyectos.html?area=<categoría>#proyectos`, que deja ese filtro activo. El filtro «Proyectos internacionales» (`?area=internacional#internacionales`) muestra el mapa y oculta los nacionales. Las antiguas `proyectos-nacionales.html` y `proyectos-internacionales.html` son solo redirecciones.
 - Proyectos, noticias y publicaciones salen de las listas `PROJ_NAC`, `PROJ_INT`, `NEWS` y `PUBS` de `tools/build_pages.py`: añadir un elemento a la lista crea su página y la enlaza.
 - Los portales salen de la lista `ECO`: cada elemento es una tarjeta de `ecosistema.html` que enlaza directamente al portal externo (sin página propia).
 - El **buscador** de la cabecera es solo la interfaz (panel con campo y accesos rápidos); todavía no busca.
@@ -149,7 +149,7 @@ La web cuenta visualmente el valor de la fundación, **que nadie quede fuera**: 
 | Hilo conductor (progreso + índice de secciones a la izquierda) | Todas las páginas, en escritorio | `hilo conductor` |
 | Órbita de colectivos | Portada, en escritorio (en móvil: tarjetas) | `colectivos: «órbita de personas»` |
 | Globo 3D de puntos con arcos | Portada → Internacional | `internacional: «el mundo conectado»` |
-| Mapa plano de proyectos | Proyectos → Internacionales | `proyectos internacionales: mapa de proyectos` |
+| Mapa plano de proyectos | Proyectos → filtro «Proyectos internacionales» | `proyectos internacionales: mapa de proyectos` |
 | *Showreel* de vídeo de las líneas | Cabecera de Qué hacemos | `Qué hacemos: showreel` |
 | Ciudad nocturna + arcos | Cabecera de Proyectos | `Proyectos: arcos de luz sobre la ciudad` |
 | La red que crece al enviar un formulario | Newsletter de la portada, Contacto | `la red que crece` |
