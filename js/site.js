@@ -1185,6 +1185,16 @@
     var fSize = function(){
       var r = fm.getBoundingClientRect(); FW = r.width; FH = r.height; fc.width = FW*FD; fc.height = FH*FD; fx.setTransform(FD,0,0,FD,0,0);
       FK = Math.min(FW/(LON1-LON0), FH/(LAT0-LAT1)); FOX = (FW - (LON1-LON0)*FK)/2; FOY = (FH - (LAT0-LAT1)*FK)/2;
+      // Recuadro muy ancho y bajo (portátiles): el mapa se acerca para que los continentes ocupen
+      // ~62 % del ancho, como en pantallas grandes, recortando algo de norte y sur. Límite: siempre
+      // caben de -4° a 63° de latitud (los proyectos, España, sus arcos y rótulos).
+      var fkAncho = Math.min(FW*.62/(LON1-LON0), FH/67);
+      if(fkAncho > FK){
+        FK = fkAncho;
+        var fVer = FH/FK;                                        // grados de latitud visibles
+        var fTop = Math.min(LAT0, Math.max(63, 12 + fVer/2));    // latitud del borde superior
+        FOX = (FW - (LON1-LON0)*FK)/2; FOY = -(LAT0 - fTop)*FK;
+      }
     };
     var setActive = function(i){
       fActive = i;
