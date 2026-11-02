@@ -12,7 +12,7 @@ aquí y vuelve a ejecutar el script; no edites esos .html a mano.
 index.html es la excepción: se edita a mano salvo su NAV y su FOOTER.
 
 Estructura (según el wireframe de navegación):
-    Nosotros      → quienes-somos, equipo, historia, ecosistema (enlaza a los portales externos)
+    La fundación  → quienes-somos, equipo, historia, ecosistema (enlaza a los portales externos)
     Qué hacemos   → formacion-tic, observatorio, voluntariado, jovenes,
                     inclusion-digital, transformacion-digital
     Proyectos     → proyectos-nacionales / proyectos-internacionales (→ proyecto-*)
@@ -71,23 +71,23 @@ NAV = '''<!-- ============ NAV ============ -->
     </a>
     <ul class="nav-links">
       <li class="has-drop">
-        <a href="nosotros.html" aria-haspopup="true">Nosotros</a>
+        <a href="nosotros.html" aria-haspopup="true">La fundación</a>
         <div class="drop"><div class="drop-panel"><ul>
           <li><a href="quienes-somos.html">Quiénes somos</a></li>
           <li><a href="equipo.html">Equipo y patronato</a></li>
           <li><a href="historia.html">Historia</a></li>
-          <li><a href="ecosistema.html">Nuestro ecosistema</a></li>
+          <li><a href="ecosistema.html">Portales y redes</a></li>
         </ul></div></div>
       </li>
       <li class="has-drop">
         <a href="que-hacemos.html" aria-haspopup="true">Qué hacemos</a>
         <div class="drop"><div class="drop-panel"><ul>
-          <li><a href="formacion-tic.html">Formación TIC e inserción laboral</a></li>
+          <li><a href="formacion-tic.html">Formación digital y empleo</a></li>
           <li><a href="observatorio.html">Observatorio de Brechas Digitales</a></li>
-          <li><a href="voluntariado.html">Voluntariado</a></li>
+          <li><a href="voluntariado.html">Programa de voluntariado</a></li>
           <li><a href="jovenes.html">Jóvenes</a></li>
-          <li><a href="inclusion-digital.html">e-Inclusión digital</a></li>
-          <li><a href="transformacion-digital.html">Transformación digital y Tercer Sector</a></li>
+          <li><a href="inclusion-digital.html">Inclusión digital</a></li>
+          <li><a href="transformacion-digital.html">Apoyo digital a entidades sociales</a></li>
         </ul></div></div>
       </li>
       <li class="has-drop">
@@ -129,12 +129,12 @@ NAV = '''<!-- ============ NAV ============ -->
 <nav class="mmenu" id="mmenu" aria-label="Menú">
   <div class="mm-list">
     <div class="mm-sec" style="--i:0">
-      <div class="mm-row"><a class="big" href="nosotros.html">Nosotros</a><button type="button" class="mm-tog" aria-expanded="false" aria-controls="mm-nosotros" aria-label="Páginas de Nosotros"><i aria-hidden="true"></i></button></div>
-      <div class="mm-subs" id="mm-nosotros"><ul><li><a href="quienes-somos.html">Quiénes somos</a></li><li><a href="equipo.html">Equipo y patronato</a></li><li><a href="historia.html">Historia</a></li><li><a href="ecosistema.html">Nuestro ecosistema</a></li></ul></div>
+      <div class="mm-row"><a class="big" href="nosotros.html">La fundación</a><button type="button" class="mm-tog" aria-expanded="false" aria-controls="mm-nosotros" aria-label="Páginas de La fundación"><i aria-hidden="true"></i></button></div>
+      <div class="mm-subs" id="mm-nosotros"><ul><li><a href="quienes-somos.html">Quiénes somos</a></li><li><a href="equipo.html">Equipo y patronato</a></li><li><a href="historia.html">Historia</a></li><li><a href="ecosistema.html">Portales y redes</a></li></ul></div>
     </div>
     <div class="mm-sec" style="--i:1">
       <div class="mm-row"><a class="big" href="que-hacemos.html"><em>Qué hacemos</em></a><button type="button" class="mm-tog" aria-expanded="false" aria-controls="mm-que-hacemos" aria-label="Páginas de Qué hacemos"><i aria-hidden="true"></i></button></div>
-      <div class="mm-subs" id="mm-que-hacemos"><ul><li><a href="formacion-tic.html">Formación TIC e inserción laboral</a></li><li><a href="observatorio.html">Observatorio de Brechas Digitales</a></li><li><a href="voluntariado.html">Voluntariado</a></li><li><a href="jovenes.html">Jóvenes</a></li><li><a href="inclusion-digital.html">e-Inclusión digital</a></li><li><a href="transformacion-digital.html">Transformación digital y Tercer Sector</a></li></ul></div>
+      <div class="mm-subs" id="mm-que-hacemos"><ul><li><a href="formacion-tic.html">Formación digital y empleo</a></li><li><a href="observatorio.html">Observatorio de Brechas Digitales</a></li><li><a href="voluntariado.html">Programa de voluntariado</a></li><li><a href="jovenes.html">Jóvenes</a></li><li><a href="inclusion-digital.html">Inclusión digital</a></li><li><a href="transformacion-digital.html">Apoyo digital a entidades sociales</a></li></ul></div>
     </div>
     <div class="mm-sec" style="--i:2">
       <div class="mm-row"><a class="big" href="proyectos.html">Proyectos</a><button type="button" class="mm-tog" aria-expanded="false" aria-controls="mm-proyectos" aria-label="Páginas de Proyectos"><i aria-hidden="true"></i></button></div>
@@ -284,7 +284,7 @@ TAIL = '''
 # ================================================================== HELPERS
 
 def crumbs(*items):
-    """Migas tras «Inicio»: crumbs(('Nosotros', 'nosotros.html'), ('Historia', None))."""
+    """Migas tras «Inicio»: crumbs(('La fundación', 'nosotros.html'), ('Historia', None))."""
     sep = '<span aria-hidden="true">/</span>'
     return sep.join(f'<a href="{h}">{t}</a>' if h else f'<span>{t}</span>' for t, h in items)
 
@@ -442,9 +442,9 @@ def redirect(name, to):
 
 # Áreas de «Qué hacemos». cat = categoría de los proyectos de esa área (filtro de Proyectos nacionales).
 AREAS = [
-    dict(href='formacion-tic.html', cat='formacion', name='Formación TIC e inserción laboral', short='Formación TIC',
+    dict(href='formacion-tic.html', cat='formacion', name='Formación digital y empleo', short='Formación digital y empleo',
          img='news-formacion.jpg', alt='Grupo de personas aprendiendo con portátiles',
-         h1=('Formación TIC', 'e <em>inserción laboral.</em>'),
+         h1=('Formación digital', 'y <em>empleo.</em>'),
          card='Capacitación digital orientada a la empleabilidad real.',
          lede='La formación tecnológica como vía de inclusión social, ciudadana y laboral, sobre todo para los colectivos más vulnerables.',
          lead='Itinerarios formativos conectados con lo que pide el mercado de trabajo.',
@@ -464,9 +464,9 @@ AREAS = [
          tags=['Investigación', 'Administraciones', 'Entidades'],
          portal=('el Observatorio', 'observatoriobrechasdigitales.org', 'https://observatoriobrechasdigitales.org/',
                  'Informes, barómetro, revista y centro de documentación del Observatorio de Brechas Digitales.')),
-    dict(href='voluntariado.html', cat='voluntariado', name='Voluntariado', short='Voluntariado',
+    dict(href='voluntariado.html', cat='voluntariado', name='Programa de voluntariado', short='Programa de voluntariado',
          img='news-voluntariado.jpg', alt='Persona voluntaria con camiseta de voluntariado',
-         h1=('Equipo de', '<em>voluntariado.</em>'),
+         h1=('Programa de', '<em>voluntariado.</em>'),
          card='Personas voluntarias que multiplican nuestro impacto.',
          lede='Promovemos la participación ciudadana, el trabajo en red y las alianzas para el cambio social.',
          lead='Creemos en la fuerza de la ciudadanía comprometida.',
@@ -485,9 +485,9 @@ AREAS = [
          ticks=['Propuestas educativas sobre participación y ciudadanía global', 'Aprendizaje y Servicio y acción comunitaria', 'Foro anual liderado por jóvenes', 'Recursos sobre hábitos digitales saludables'],
          tags=['Jóvenes', 'Adolescentes', 'Profesionales de juventud'],
          portal=None),
-    dict(href='inclusion-digital.html', cat='inclusion', name='e-Inclusión digital', short='e-Inclusión digital',
+    dict(href='inclusion-digital.html', cat='inclusion', name='Inclusión digital', short='Inclusión digital',
          img='vinculo-manos.avif', alt='Dos manos digitales a punto de tocarse',
-         h1=('e-Inclusión', '<em>digital.</em>'),
+         h1=('Inclusión', '<em>digital.</em>'),
          card='Que nadie quede atrás en lo digital.',
          lede='Competencias digitales para que cada persona pueda participar activamente en la sociedad.',
          lead='Acceso, competencias y acompañamiento para moverse en lo digital con autonomía.',
@@ -495,7 +495,7 @@ AREAS = [
          ticks=['Jóvenes que enseñan tecnología a personas mayores', 'Vocaciones STEAM para chicas jóvenes', 'Capacitación digital para mujeres en situación de vulnerabilidad', 'Formación en igualdad y competencias transversales'],
          tags=['Mayores', 'Mujeres', 'Jóvenes', 'Migrantes'],
          portal=None),
-    dict(href='transformacion-digital.html', cat='tercer', name='Transformación digital y Gestión del Tercer Sector', short='Transformación digital y Tercer Sector',
+    dict(href='transformacion-digital.html', cat='tercer', name='Apoyo digital a entidades sociales', short='Apoyo digital a entidades sociales',
          img='tech.jpg', alt='Manos en un teclado con datos luminosos',
          card='Asesoría, formación y consultoría digital para entidades sociales.'),
 ]
@@ -506,7 +506,7 @@ SIB_NOS = [
     ('quienes-somos.html', 'Quiénes somos', 'Qué somos, qué nos mueve y con quién caminamos.'),
     ('equipo.html', 'Equipo y patronato', 'Las personas que hacen posible la fundación.'),
     ('historia.html', 'Historia', 'Tres décadas conectando personas y tecnología.'),
-    ('ecosistema.html', 'Nuestro ecosistema', 'Los portales y redes que impulsamos.'),
+    ('ecosistema.html', 'Portales y redes', 'Los portales y redes que impulsamos.'),
 ]
 SIB_REC = [
     ('blog.html', 'Blog y noticias', 'Lo último de la red.'),
@@ -625,7 +625,7 @@ ECO = [
          short='Derechos digitales en la era de la inteligencia artificial.'),
 ]
 
-# Tipos de portal para el filtro de «Nuestro ecosistema».
+# Tipos de portal para el filtro de «Portales y redes».
 # Es el ÚNICO sitio donde están los nombres visibles: chips, etiquetas de las tarjetas
 # y mensajes del filtro salen de aquí. Si se decide usar los pilares de la portada,
 # basta con cambiar la columna del nombre (p. ej. Formación → Aprender,
@@ -664,7 +664,7 @@ def area_projects(cat):
   </section>
 '''
 
-# ================================================================== NOSOTROS (hub)
+# ================================================================== LA FUNDACIÓN (hub, antes «Nosotros»)
 STATS = '''
   <section aria-label="Cifras">
     <div class="stats">
@@ -675,7 +675,7 @@ STATS = '''
     </div>
   </section>
 '''
-nosotros = page_hero('Nosotros', 'Somos', '<em>conecta+.</em>',
+nosotros = page_hero('La fundación', 'Somos', '<em>conecta+.</em>',
     'Una fundación que lleva desde 1995 tendiendo puentes entre la tecnología y las personas que más lo necesitan.',
     'news-internacional.jpg', [('secciones', 'Conócenos')], 'center 40%')
 nosotros += STATS + hub_section('Conócenos', 'Todo sobre', '<em>la fundación.</em>',
@@ -683,14 +683,14 @@ nosotros += STATS + hub_section('Conócenos', 'Todo sobre', '<em>la fundación.<
         ('quienes-somos.html', 'vinculo-manos.avif', '01', 'Quiénes somos', 'Tecnología con propósito social: misión, valores y colaboraciones.', 'Conócenos'),
         ('equipo.html', 'news-voluntariado.jpg', '02', 'Equipo y patronato', 'Las personas detrás de la red.', 'Conoce al equipo'),
         ('historia.html', 'bosque.jpg', '03', 'Historia', 'Tres décadas conectando personas y tecnología.', 'Ver la historia'),
-        ('ecosistema.html', 'conecta.jpg', '04', 'Nuestro ecosistema', 'Portales y redes que multiplican nuestro impacto.', 'Explorar'),
+        ('ecosistema.html', 'conecta.jpg', '04', 'Portales y redes', 'Portales y redes que multiplican nuestro impacto.', 'Explorar'),
     ], ' four', sid='secciones') + '\n' + next_link('que-hacemos.html', 'Siguiente', 'Qué <em>hacemos</em>')
-write('nosotros.html', 'Nosotros · fundación conecta+', 'Quiénes somos, equipo y patronato, historia y ecosistema de la fundación conecta+.', nosotros)
+write('nosotros.html', 'La fundación · fundación conecta+', 'Quiénes somos, equipo y patronato, historia y portales y redes de la fundación conecta+.', nosotros)
 
 # ------------------------------------------------------------------ QUIÉNES SOMOS
-qs = page_hero(crumbs(('Nosotros', 'nosotros.html'), ('Quiénes somos', None)), 'Tecnología con', '<em>propósito social.</em>',
+qs = page_hero(crumbs(('La fundación', 'nosotros.html'), ('Quiénes somos', None)), 'Tecnología con', '<em>propósito social.</em>',
     'Somos una entidad sin ánimo de lucro dedicada a la educación, la inclusión digital y la acción social.',
-    'vinculo-manos.avif', [('quienes-somos', 'Quiénes somos'), ('valores', 'Valores'), ('colaboraciones', 'Colaboraciones')], back=('nosotros.html', 'Nosotros'))
+    'vinculo-manos.avif', [('quienes-somos', 'Quiénes somos'), ('valores', 'Valores'), ('colaboraciones', 'Colaboraciones')], back=('nosotros.html', 'La fundación'))
 qs += '''
   <section class="pad" id="quienes-somos" aria-labelledby="qs-h">
     <div class="wrap split">
@@ -759,13 +759,13 @@ qs += '''
       <div class="split-media wide" data-clip><img src="img/conecta.jpg" alt="Figuras de personas conectadas por hilos de colores" loading="lazy"></div>
     </div>
   </section>
-''' + siblings('Nosotros', SIB_NOS, 'quienes-somos.html')
+''' + siblings('La fundación', SIB_NOS, 'quienes-somos.html')
 write('quienes-somos.html', 'Quiénes somos · fundación conecta+', 'Qué es la fundación conecta+, sus valores y sus colaboraciones.', qs, parent='nosotros.html')
 
 # ------------------------------------------------------------------ HISTORIA
-hist = page_hero(crumbs(('Nosotros', 'nosotros.html'), ('Historia', None)), 'Tres décadas', '<em>conectando.</em>',
+hist = page_hero(crumbs(('La fundación', 'nosotros.html'), ('Historia', None)), 'Tres décadas', '<em>conectando.</em>',
     'De una pequeña iniciativa a una red con presencia en cuatro comunidades autónomas y en proyectos europeos e iberoamericanos.',
-    'bosque.jpg', back=('nosotros.html', 'Nosotros'))
+    'bosque.jpg', back=('nosotros.html', 'La fundación'))
 hist += '''
   <section class="pad" id="historia" aria-labelledby="hist-h">
     <div class="wrap">
@@ -778,10 +778,10 @@ hist += '''
       </div>
     </div>
   </section>
-''' + siblings('Nosotros', SIB_NOS, 'historia.html')
+''' + siblings('La fundación', SIB_NOS, 'historia.html')
 write('historia.html', 'Historia · fundación conecta+', 'La historia de la fundación conecta+ desde 1995.', hist, parent='nosotros.html')
 
-# ------------------------------------------------------------------ NUESTRO ECOSISTEMA
+# ------------------------------------------------------------------ PORTALES Y REDES (antes «Nuestro ecosistema»)
 eco_tiles = ''.join(f'''        <a class="tile" href="{e['url']}" target="_blank" rel="noopener" data-tipo="{e['tipo']}" data-reveal style="--d:{(i % 3) * .08:.2f}s"><div class="eco-head"><h3>{e['name']}</h3><span class="more">Ir al portal <span aria-hidden="true">↗</span><span class="sr-only"> (se abre en una pestaña nueva)</span></span></div><span class="n eco-dom">{e['domain']}</span><p>{e['short']}</p><span class="eco-foot"><span class="eco-tag" data-tipo="{e['tipo']}">{ECO_TIPO_NOMBRE[e['tipo']]}</span></span></a>
 ''' for i, e in enumerate(ECO))
 # chips del filtro: los contadores también los recalcula js/site.js a partir de data-tipo
@@ -790,9 +790,9 @@ def eco_chip(tid, nombre, icon, n, on=False):
             f'{icon}<span class="eco-lbl">{nombre}</span><span class="eco-n">{n}</span></button>\n')
 eco_chips = eco_chip('todos', 'Todos', ECO_TODOS_ICON, len(ECO), True) + ''.join(
     eco_chip(t, nombre, icon, sum(1 for e in ECO if e['tipo'] == t)) for t, nombre, icon in ECO_TIPOS)
-ecos = page_hero(crumbs(('Nosotros', 'nosotros.html'), ('Nuestro ecosistema', None)), 'Nuestro', '<em>ecosistema.</em>',
+ecos = page_hero(crumbs(('La fundación', 'nosotros.html'), ('Portales y redes', None)), 'Portales', '<em>y redes.</em>',
     'Portales, redes y encuentros que impulsamos para multiplicar el impacto de nuestro trabajo.',
-    'conecta.jpg', [('portales', 'Portales')], back=('nosotros.html', 'Nosotros'))
+    'conecta.jpg', [('portales', 'Portales')], back=('nosotros.html', 'La fundación'))
 ecos += '''
   <section class="pad" id="portales" aria-labelledby="eco-h">
     <div class="wrap">
@@ -803,16 +803,16 @@ ecos += '''
 {eco_tiles}      </div>
     </div>
   </section>
-''' + siblings('Nosotros', SIB_NOS, 'ecosistema.html')
-write('ecosistema.html', 'Nuestro ecosistema · fundación conecta+', 'Los portales y redes del ecosistema de la fundación conecta+.', ecos, parent='nosotros.html')
+''' + siblings('La fundación', SIB_NOS, 'ecosistema.html')
+write('ecosistema.html', 'Portales y redes · fundación conecta+', 'Los portales y redes que impulsa la fundación conecta+.', ecos, parent='nosotros.html')
 
 # ================================================================== QUÉ HACEMOS (hub, antes «Misión»)
 # Escenas del showreel de la cabecera: (página del área, rótulo, archivo en video/ sin extensión)
 REEL = [
-    ('voluntariado.html', 'Voluntariado', 'mision-voluntariado'),
-    ('transformacion-digital.html', 'Transformación digital', 'mision-transformacion'),
-    ('inclusion-digital.html', 'e-Inclusión digital', 'mision-inclusion'),
-    ('formacion-tic.html', 'Formación TIC', 'mision-formacion'),
+    ('voluntariado.html', 'Programa de voluntariado', 'mision-voluntariado'),
+    ('transformacion-digital.html', 'Apoyo digital a entidades sociales', 'mision-transformacion'),
+    ('inclusion-digital.html', 'Inclusión digital', 'mision-inclusion'),
+    ('formacion-tic.html', 'Formación digital y empleo', 'mision-formacion'),
     ('jovenes.html', 'Jóvenes', 'mision-liderazgo'),
 ]
 _reel_items = ''.join(f'<li data-src="video/{v}.mp4" data-poster="video/{v}.jpg" data-href="{h}" data-label="{t}"></li>' for h, t, v in REEL)
@@ -841,7 +841,7 @@ qh += '''
 ''' + hub_section('Áreas de trabajo', 'Seis áreas,', '<em>un propósito.</em>', 'Cada área tiene su propio equipo, sus proyectos y, en muchos casos, su propio portal.', 'areas-h',
     [(a['href'], a['img'], f'0{i + 1}', a['short'], a['card'], 'Ver el área') for i, a in enumerate(AREAS)], sid='areas') \
     + '\n' + next_link('proyectos.html', 'Siguiente', 'Ver <em>proyectos</em>')
-write('que-hacemos.html', 'Qué hacemos · fundación conecta+', 'Las áreas de trabajo de la fundación conecta+: formación TIC, observatorio, voluntariado, jóvenes, e-inclusión y transformación digital del tercer sector.', qh)
+write('que-hacemos.html', 'Qué hacemos · fundación conecta+', 'Las áreas de trabajo de la fundación conecta+: formación digital y empleo, observatorio, programa de voluntariado, jóvenes, inclusión digital y apoyo digital a entidades sociales.', qh)
 redirect('mision.html', 'que-hacemos.html')
 
 # ------------------------------------------------------------------ ÁREAS (todas menos transformación digital, que tiene página propia)
@@ -1085,7 +1085,7 @@ faq += '''
 ''' + head2('Preguntas frecuentes', 'Preguntas y', '<em>respuestas.</em>', None, 'faq-h') + '''      <div class="faq" data-reveal>
         <details><summary>¿Cómo puedo hacerme voluntario?</summary><p>Rellena el formulario de <a href="hazte-voluntario.html">Hazte voluntario/a</a>. Te escribiremos para conocerte y contarte los proyectos disponibles cerca de ti.</p></details>
         <details><summary>¿Las formaciones tienen coste?</summary><p>Muchas de nuestras formaciones son gratuitas para las personas participantes gracias a la financiación pública y privada. Consulta cada convocatoria.</p></details>
-        <details><summary>Soy una entidad social, ¿cómo podéis ayudarnos?</summary><p>A través del área de <a href="transformacion-digital.html">Transformación digital y Gestión del Tercer Sector</a>, incluido el servicio SAAD de asesoría digital gratuita. Escríbenos y valoramos juntos vuestras necesidades.</p></details>
+        <details><summary>Soy una entidad social, ¿cómo podéis ayudarnos?</summary><p>A través del área de <a href="transformacion-digital.html">Apoyo digital a entidades sociales</a>, incluido el servicio SAAD de asesoría digital gratuita. Escríbenos y valoramos juntos vuestras necesidades.</p></details>
         <details><summary>¿Cómo puedo hacer una donación?</summary><p>Desde la página <a href="dona.html">Dona</a> puedes elegir el importe y la periodicidad de tu aportación.</p></details>
         <details><summary>¿Cómo entro en el Campus Virtual?</summary><p>Desde la página <a href="campus.html">Campus Virtual</a>, con el usuario y la contraseña que recibiste al inscribirte en el curso.</p></details>
         <details><summary>¿Dónde estáis?</summary><p>Tenemos sedes en Andalucía, Madrid, Cataluña y Galicia. Consulta las direcciones en <a href="sedes.html">Sedes</a>.</p></details>
@@ -1106,7 +1106,7 @@ campus += '''
       <div class="prose">
         <span class="kicker">Campus Virtual</span>
         <h2 class="h2" id="cv-h" data-lines><span class="line"><span>Accede a</span></span><span class="line"><span><em>tus cursos.</em></span></span></h2>
-        <p data-reveal>Entra con el usuario y la contraseña que recibiste al inscribirte. Si aún no tienes cuenta, consulta los cursos abiertos en el área de <a href="formacion-tic.html">Formación TIC</a>.</p>
+        <p data-reveal>Entra con el usuario y la contraseña que recibiste al inscribirte. Si aún no tienes cuenta, consulta los cursos abiertos en el área de <a href="formacion-tic.html">Formación digital y empleo</a>.</p>
         ''' + ph_note('Falta la dirección del Campus Virtual: el acceso todavía no redirige a la plataforma.') + '''
       </div>
       <div class="contact-form" data-reveal>
@@ -1408,7 +1408,7 @@ legal += legal_sec('aviso-legal', 'Aviso legal', 'Condiciones', 'de uso.', 'Dato
 write('aviso-legal.html', 'Aviso legal y privacidad · fundación conecta+', 'Aviso legal, política de privacidad, cookies y accesibilidad de la fundación conecta+.', legal)
 
 
-# ================================================================== EQUIPO (subpágina de Nosotros)
+# ================================================================== EQUIPO (subpágina de La fundación)
 # DATOS DE EJEMPLO: nombres, fotos y textos son ficticios (fotos de relleno de i.pravatar.cc).
 # Sustituir por los reales antes de publicar la web definitiva.
 # Formato: (nombre, cargo, foto en img/equipo/, texto breve[, sede para el filtro])
@@ -1450,10 +1450,10 @@ def person(name, role, photo, bio, cat=None, d=0):
         </article>
 '''
 
-eq = page_hero(crumbs(('Nosotros', 'nosotros.html'), ('Equipo y patronato', None)),
+eq = page_hero(crumbs(('La fundación', 'nosotros.html'), ('Equipo y patronato', None)),
     'Las personas', 'detrás de <em>la red.</em>',
     'Un patronato comprometido y un equipo multidisciplinar que combina educación, tecnología y acción social en cuatro territorios.',
-    'news-voluntariado.jpg', [('patronato', 'Patronato'), ('equipo', 'Equipo'), ('trabaja', 'Trabaja con nosotros')], 'center 30%', back=('nosotros.html', 'Nosotros'))
+    'news-voluntariado.jpg', [('patronato', 'Patronato'), ('equipo', 'Equipo'), ('trabaja', 'Trabaja con nosotros')], 'center 30%', back=('nosotros.html', 'La fundación'))
 eq += '''
   <section class="pad" id="patronato" aria-labelledby="pat-h">
     <div class="wrap">
@@ -1488,7 +1488,7 @@ eq += '''
       </div>
     </div>
   </section>
-''' + siblings('Nosotros', SIB_NOS, 'equipo.html')
+''' + siblings('La fundación', SIB_NOS, 'equipo.html')
 write('equipo.html', 'Equipo y patronato · fundación conecta+', 'El patronato y el equipo de la fundación conecta+.', eq, parent='nosotros.html')
 
 
@@ -1552,9 +1552,9 @@ tx = f'''  <section class="page-hero tx-hero" aria-labelledby="page-h">
     <canvas class="tx-net" id="txNet" aria-hidden="true"></canvas>
     <div class="wrap">
       <a class="back-pill fade-up" href="que-hacemos.html"><span aria-hidden="true">←</span>Volver a Qué hacemos</a>
-      <nav class="crumbs fade-up" aria-label="Ruta"><a href="index.html">Inicio</a><span aria-hidden="true">/</span><a href="que-hacemos.html">Qué hacemos</a><span aria-hidden="true">/</span><span>Transformación digital y Tercer Sector</span></nav>
+      <nav class="crumbs fade-up" aria-label="Ruta"><a href="index.html">Inicio</a><span aria-hidden="true">/</span><a href="que-hacemos.html">Qué hacemos</a><span aria-hidden="true">/</span><span>Apoyo digital a entidades sociales</span></nav>
       <p class="tx-status fade-up"><i aria-hidden="true"></i>conecta+ // equipo de transformación digital y gestión del tercer sector · online</p>
-      <h1 id="page-h"><span class="line"><span>Transformación</span></span><span class="line"><span><em>digital.</em></span></span></h1>
+      <h1 id="page-h"><span class="line"><span>Apoyo digital</span></span><span class="line"><span><em>a entidades sociales.</em></span></span></h1>
       <p class="tx-prompt fade-up" aria-label="Desde el tercer sector, para el tercer sector"><span aria-hidden="true">&gt;</span> <span class="tx-typed" data-type="desde el tercer sector, para el tercer sector" aria-hidden="true"></span><b aria-hidden="true">_</b></p>
       <div class="page-hero-foot fade-up">
         <p>Somos el equipo de transformación digital y gestión del tercer sector de conecta+: técnicos, desarrolladores y profesionales del sector social que ayudan a las entidades a modernizarse e innovar.</p>
@@ -1654,7 +1654,7 @@ data-lines='["$ digitalizaong --diagnostico --entidad tu-entidad","› analizand
     </div>
   </section>
 ''' + siblings('Qué hacemos', SIB_AREAS, 'transformacion-digital.html')
-write('transformacion-digital.html', 'Transformación digital y Gestión del Tercer Sector · fundación conecta+',
+write('transformacion-digital.html', 'Apoyo digital a entidades sociales · fundación conecta+',
       'Asesoría, formación y consultoría digital para entidades del tercer sector: gestión, DigitalizaciONG, DigComp 2.0, software a medida y desarrollo web.',
       tx, parent='que-hacemos.html', extra_head=TX_HEAD)
 

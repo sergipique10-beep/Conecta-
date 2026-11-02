@@ -815,6 +815,10 @@
   if(orbit && getComputedStyle(orbit).display !== 'none'){
     var oc = orbit.querySelector('.orbit-canvas'), og = oc.getContext('2d');
     var oD = Math.min(window.devicePixelRatio||1,2), oW=0, oH=0;
+    // colores de la animación resueltos en la órbita (acentos de cada paleta)
+    var oC = {};
+    var oColors = function(){ oC.a = cpRGB('--orb-1', orbit); oC.b = cpRGB('--orb-2', orbit); oC.h = cpRGB('--orb-halo', orbit); };
+    oColors(); cpOnPal(oColors);
     var core = orbit.querySelector('.orbit-core');
     var cTitle = core.querySelector('.orbit-title'), cDesc = core.querySelector('.orbit-desc'), cK = core.querySelector('.orbit-k');
     var defTitle = cTitle.innerHTML, defDesc = cDesc.textContent, defK = cK.textContent;
@@ -874,7 +878,7 @@
 
       // halo del núcleo
       var gl = og.createRadialGradient(cx,cy,0,cx,cy,ry*1.1);
-      gl.addColorStop(0,'rgba('+cpC.n1+','+(.1*cpC.k)+')'); gl.addColorStop(1,'rgba('+cpC.n1+',0)');
+      gl.addColorStop(0,'rgba('+oC.h+','+(.1*cpC.k)+')'); gl.addColorStop(1,'rgba('+oC.h+',0)');
       og.fillStyle = gl; og.fillRect(0,0,oW,oH);
 
       // anillo de la órbita
@@ -901,13 +905,13 @@
         var isA = oActive === i, dim = oActive > -1 && !isA;
         var steps = 40, upto = Math.round(steps*n.conn);
         if(upto > 0){
-          og.strokeStyle = 'rgba('+cpC.n1+','+(isA ? .7 : dim ? .06 : (n.lit ? .22 : .35))+')';
+          og.strokeStyle = 'rgba('+oC.a+','+(isA ? .7 : dim ? .06 : (n.lit ? .22 : .35))+')';
           og.lineWidth = isA ? 1.8 : 1;
           og.beginPath(); og.moveTo(cx,cy);
           for(var s=1;s<=upto;s++){ var q = qp(s/steps,cx,cy,bx,by,n.x,n.y); og.lineTo(q[0],q[1]); }
           og.stroke();
           // cabeza de luz mientras se conecta
-          if(!n.lit){ var h = qp(n.conn,cx,cy,bx,by,n.x,n.y); og.fillStyle = 'rgba('+cpC.n1+',.95)'; og.beginPath(); og.arc(h[0],h[1],3.5,0,Math.PI*2); og.fill(); }
+          if(!n.lit){ var h = qp(n.conn,cx,cy,bx,by,n.x,n.y); og.fillStyle = 'rgba('+oC.a+',.95)'; og.beginPath(); og.arc(h[0],h[1],3.5,0,Math.PI*2); og.fill(); }
         }
         // partículas fluyendo hacia cada colectivo conectado
         if(n.lit && !reduce){
@@ -916,7 +920,7 @@
             n.parts[pI] = (n.parts[pI] + dt*(isA ? .55 : .3)) % 1;
             var pt = qp(n.parts[pI],cx,cy,bx,by,n.x,n.y);
             var al = Math.sin(n.parts[pI]*Math.PI);
-            og.fillStyle = (pI%3===2 ? 'rgba('+cpC.n2+',' : 'rgba('+cpC.n1+',')+(al*(dim ? .15 : .9))+')';
+            og.fillStyle = (pI%3===2 ? 'rgba('+oC.b+',' : 'rgba('+oC.a+',')+(al*(dim ? .15 : .9))+')';
             og.beginPath(); og.arc(pt[0],pt[1],isA ? 2.4 : 1.8,0,Math.PI*2); og.fill();
           }
         }
@@ -1181,6 +1185,10 @@
     var fDots = [], fReady = false, fOn = false, fStart = 0, fActive = -1, fHoverPin = -1;
     var fStep = window.innerWidth < 700 ? 2.25 : 1.5;                // rejilla más abierta en móvil
     var fTapAt = 0;                                                  // último toque en un punto del mapa
+    // colores resueltos dentro del mapa (en las paletas claras usa los de Verde)
+    var fmC = {};
+    var fmRefresh = function(){ fmC.n1 = cpRGB('--net-1', fm); fmC.n2 = cpRGB('--net-2', fm); fmC.ink = cpRGB('--ink', fm); fmC.bg = cpRGB('--bg', fm); };
+    fmRefresh(); cpOnPal(fmRefresh);
     var fxy = function(lat,lon){ return [ FOX + (lon-LON0)*FK, FOY + (LAT0-lat)*FK ]; };
     var fSize = function(){
       var r = fm.getBoundingClientRect(); FW = r.width; FH = r.height; fc.width = FW*FD; fc.height = FH*FD; fx.setTransform(FD,0,0,FD,0,0);
@@ -1270,7 +1278,7 @@
         var q = fxy(fDots[i][0],fDots[i][1]);
         if(q[0] > sweep){continue}
         var near = act ? Math.max(0, 1 - Math.hypot(fDots[i][0]-act.lat, (fDots[i][1]-act.lon)*.8)/14) : 0;
-        fx.fillStyle = near > 0 ? 'rgba('+(act.mag?cpC.n2:cpC.n1)+','+(.25+.6*near)+')' : 'rgba('+cpC.n1+',.24)';
+        fx.fillStyle = near > 0 ? 'rgba('+(act.mag?fmC.n2:fmC.n1)+','+(.25+.6*near)+')' : 'rgba('+fmC.n1+',.24)';
         fx.beginPath(); fx.arc(q[0],q[1],r*(1+near*.5),0,Math.PI*2); fx.fill();
       }
       if(!reduce && t < 1.6){return}
@@ -1279,7 +1287,7 @@
         var d = fxy(p.lat,p.lon), isA = fActive === k, dim = fActive > -1 && !isA;
         var mx = (es[0]+d[0])/2, my = Math.min(es[1],d[1]) - Math.abs(d[0]-es[0])*.28 - 20;
         var prog = reduce ? 1 : clamp((t - 1.6 - k*.2)/.9,0,1);
-        var col = p.mag ? cpC.n2 : cpC.n1;
+        var col = p.mag ? fmC.n2 : fmC.n1;
         fx.strokeStyle = 'rgba('+col+','+(isA ? .9 : dim ? .12 : .45)+')';
         fx.lineWidth = isA ? 2 : 1.2;
         fx.beginPath();
@@ -1288,7 +1296,7 @@
         if(prog < 1){return}
         if(!reduce){
           var u2 = (t*.4 + k*.25) % 1;
-          fx.fillStyle = dim ? 'rgba('+cpC.ink+',.25)' : 'rgb('+cpC.ink+')';
+          fx.fillStyle = dim ? 'rgba('+fmC.ink+',.25)' : 'rgb('+fmC.ink+')';
           fx.beginPath(); fx.arc(quad(u2,es[0],mx,d[0]),quad(u2,es[1],my,d[1]),isA?3:2,0,Math.PI*2); fx.fill();
         }
         var pulse = reduce ? 0 : (Math.sin(t*2.2+k)+1)/2;
@@ -1298,13 +1306,13 @@
         if(isA){
           fx.font = '600 '+Math.round(clamp(FW/70,12,15))+'px Archivo, sans-serif';
           var tw = fx.measureText(p.label).width, lx = Math.min(d[0]+14, FW-tw-24), ly = d[1]-14;
-          fx.fillStyle = 'rgba('+cpC.bg+',.85)'; fx.beginPath(); fx.roundRect ? fx.roundRect(lx,ly-14,tw+18,26,13) : fx.rect(lx,ly-14,tw+18,26); fx.fill();
-          fx.fillStyle = 'rgb('+cpC.ink+')'; fx.fillText(p.label,lx+9,ly+4);
+          fx.fillStyle = 'rgba('+fmC.bg+',.85)'; fx.beginPath(); fx.roundRect ? fx.roundRect(lx,ly-14,tw+18,26,13) : fx.rect(lx,ly-14,tw+18,26); fx.fill();
+          fx.fillStyle = 'rgb('+fmC.ink+')'; fx.fillText(p.label,lx+9,ly+4);
         }
       });
       var pe = reduce ? 0 : (Math.sin(t*2.6)+1)/2;
-      fx.fillStyle = 'rgba('+cpC.n1+','+(.2+.2*pe)+')'; fx.beginPath(); fx.arc(es[0],es[1],10+pe*6,0,Math.PI*2); fx.fill();
-      fx.fillStyle = 'rgb('+cpC.n1+')'; fx.beginPath(); fx.arc(es[0],es[1],5,0,Math.PI*2); fx.fill();
+      fx.fillStyle = 'rgba('+fmC.n1+','+(.2+.2*pe)+')'; fx.beginPath(); fx.arc(es[0],es[1],10+pe*6,0,Math.PI*2); fx.fill();
+      fx.fillStyle = 'rgb('+fmC.n1+')'; fx.beginPath(); fx.arc(es[0],es[1],5,0,Math.PI*2); fx.fill();
       fx.font = '700 '+Math.round(clamp(FW/64,12,16))+'px Archivo, sans-serif';
       fx.fillText('España · 4 sedes', es[0]-30, es[1]+28);
     };
