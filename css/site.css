@@ -1622,10 +1622,15 @@ html.mm-lock,html.mm-lock body{overflow:hidden}
 @media(max-width:899px) and (prefers-reduced-motion:reduce){.filters{transition:none}}
 
 /* ---------- proyectos: bloque de proyectos internacionales dentro del filtro ----------
-   título, mapa y las cuatro tarjetas caben en una pantalla en ordenador: el mapa
-   ocupa el alto que queda (menú + chips + título + tarjetas ≈ 440px) */
+   título, mapa y las cuatro tarjetas caben en una pantalla en ordenador: js/site.js ajusta
+   el alto del mapa al espacio libre real; este alto es solo el valor de partida */
 .proy-intl{display:flex;flex-direction:column;gap:16px;margin-top:clamp(40px,5vw,64px)}
 .pgrid[hidden]+.proy-intl,.pgrid:not(:has(> :not([hidden])))+.proy-intl{margin-top:0}
 .proy-intl .flatmap{aspect-ratio:auto;height:clamp(240px,calc(100svh - 440px),66vh);max-height:none;margin-top:0}
 .proy-intl .pin-cards{margin-top:0}
+/* el título «Proyectos internacionales» no se ve: con el filtro activo, el chip marcado ya indica
+   la sección (se oculta a la vista pero lo siguen leyendo los lectores de pantalla) */
+.proy-intl>.kicker{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+/* con «Todos» (hay proyectos nacionales visibles) solo aparecen las 4 tarjetas, sin el mapa */
+.pgrid:has(> :not([hidden]))+.proy-intl>.flatmap{display:none}
 @media(max-width:1099px){.proy-intl .flatmap{aspect-ratio:1.7;height:auto;max-height:66vh}}

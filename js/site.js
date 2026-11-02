@@ -1309,16 +1309,48 @@
       fx.fillText('España · 4 sedes', es[0]-30, es[1]+28);
     };
 
+    // En Proyectos (ordenador), con el filtro «Proyectos internacionales» la pantalla muestra,
+    // con el menú escondido: la fila de filtros, el título, el mapa y las tarjetas. El mapa se
+    // queda con el alto libre real (se mide lo que ocupa el resto), con 24px de margen abajo.
+    // Máximo: su proporción natural (ancho / 1,7). Mínimo 240px.
+    var fmBloque = fm.closest('.proy-intl');
+    var fmFiltros = fmBloque && document.querySelector('[data-filter-group="#proyLista"]');
+    var fmTop = 12;                                                   // aire sobre los filtros
+    var fmSoloIntl = function(){
+      var b = fmFiltros && fmFiltros.querySelector('[aria-pressed="true"]');
+      return !!(b && b.dataset.filter === 'internacional');
+    };
+    var fmFit = function(){
+      if(!fmBloque || !fm.offsetParent){return}
+      if(window.innerWidth < 1100){ fm.style.height = ''; return; }
+      var fmDesde = fmSoloIntl() ? fmFiltros.getBoundingClientRect().top : fmBloque.getBoundingClientRect().top;
+      var fmResto = fmBloque.getBoundingClientRect().bottom - fmDesde - fm.offsetHeight;
+      var fmH = window.innerHeight - fmTop - fmResto - 24;
+      fm.style.height = Math.round(Math.max(240, Math.min(fmH, fm.offsetWidth / 1.7))) + 'px';
+    };
+    fmFit();
     fSize();
-    rzOn(fSize);
+    rzOn(function(){ fmFit(); fSize(); });
+    if(document.fonts && document.fonts.ready){ document.fonts.ready.then(function(){ fmFit(); fSize(); }); }
     // en Proyectos el mapa está dentro de un filtro: al mostrarse hay que medirlo de nuevo
     // al elegir «Proyectos internacionales», la página baja hasta su título para que
     // título, mapa y tarjetas queden enteros en pantalla
     document.addEventListener('conecta:filtro', function(e){
-      if(fm.offsetParent){ fSize(); }
-      var fmBloque = fm.closest('.proy-intl');
-      if(fmBloque && e.detail.filtro === 'internacional' && e.detail.usuario){
-        requestAnimationFrame(function(){ scrollToTarget(fmBloque); });
+      if(fm.offsetParent){ fmFit(); fSize(); }
+      if(fmBloque && e.detail.filtro === 'internacional'){
+        // en ordenador los filtros quedan arriba del todo (el menú se esconde al bajar);
+        // en tablet y móvil, el título bajo la cabecera y la tira de filtros fija
+        var fmIr = function(suave){
+          fmFit(); fSize();
+          if(window.innerWidth < 1100){ scrollToTarget(fmBloque); return; }
+          var fmY = Math.max(0, docTop(fmFiltros) - fmTop);
+          if(lenis){ lenis.scrollTo(fmY, suave ? {duration:1.6} : {immediate:true}); }
+          else { window.scrollTo({top:fmY, behavior: suave && !reduce ? 'smooth' : 'auto'}); }
+        };
+        if(e.detail.usuario){ requestAnimationFrame(function(){ fmIr(true); }); }
+        // llegada con ?area=internacional: se coloca igual cuando la página ha terminado de cargar
+        else if(document.readyState === 'complete'){ setTimeout(function(){ fmIr(false); }, 100); }
+        else { window.addEventListener('load', function(){ setTimeout(function(){ fmIr(false); }, 100); }); }
       }
     });
     new IntersectionObserver(function(e){

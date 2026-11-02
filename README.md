@@ -53,7 +53,7 @@ La navegación sigue el wireframe: cada sección del menú es una página **hub*
 | Pie | `boletin`, `canal-denuncia`, `aviso-legal` (con `#privacidad`, `#cookies`, `#accesibilidad`) |
 
 - `mision.html` ya no existe como página: es una redirección a `que-hacemos.html` para no romper enlaces antiguos.
-- Las áreas enlazan a sus proyectos con `proyectos.html?area=<categoría>#proyectos`, que deja ese filtro activo. El filtro «Proyectos internacionales» (`?area=internacional#internacionales`) muestra el mapa y oculta los nacionales. Las antiguas `proyectos-nacionales.html` y `proyectos-internacionales.html` son solo redirecciones.
+- Las áreas enlazan a sus proyectos con `proyectos.html?area=<categoría>#proyectos`, que deja ese filtro activo. El filtro «Proyectos internacionales» (`?area=internacional`) muestra el mapa y oculta los nacionales. Las antiguas `proyectos-nacionales.html` y `proyectos-internacionales.html` son solo redirecciones.
 - Proyectos, noticias y publicaciones salen de las listas `PROJ_NAC`, `PROJ_INT`, `NEWS` y `PUBS` de `tools/build_pages.py`: añadir un elemento a la lista crea su página y la enlaza.
 - Los portales salen de la lista `ECO`: cada elemento es una tarjeta de `ecosistema.html` que enlaza directamente al portal externo (sin página propia).
 - El **buscador** de la cabecera es solo la interfaz (panel con campo y accesos rápidos); todavía no busca.

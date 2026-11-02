@@ -223,7 +223,7 @@ FOOTER = '''<!-- ============ FOOTER ============ -->
         </form>
         <p class="form-note" aria-live="polite"></p>
         <div class="foot-trust">
-          <a href="transparencia.html">ENS</a><a href="transparencia.html">ISO 9001</a><a href="transparencia.html">ISO 14001</a><a href="transparencia.html">ISO 27001</a><a href="proyectos.html?area=internacional#internacionales">ALL DIGITAL</a><a href="proyectos.html?area=internacional#internacionales">Erasmus+</a>
+          <a href="transparencia.html">ENS</a><a href="transparencia.html">ISO 9001</a><a href="transparencia.html">ISO 14001</a><a href="transparencia.html">ISO 27001</a><a href="proyectos.html?area=internacional">ALL DIGITAL</a><a href="proyectos.html?area=internacional">Erasmus+</a>
         </div>
       </div>
 
@@ -916,7 +916,7 @@ write('proyectos.html', 'Proyectos · fundación conecta+', 'Proyectos nacionale
 # Las antiguas páginas de proyectos nacionales e internacionales ya no existen:
 # sus direcciones llevan a Proyectos (la de internacionales, con su filtro activo).
 redirect('proyectos-nacionales.html', 'proyectos.html#proyectos')
-redirect('proyectos-internacionales.html', 'proyectos.html?area=internacional#internacionales')
+redirect('proyectos-internacionales.html', 'proyectos.html?area=internacional')
 
 # ------------------------------------------------------------------ PROYECTO CONCRETO
 def project_page(p, i, lst, list_href, list_name):
@@ -948,7 +948,7 @@ def project_page(p, i, lst, list_href, list_name):
 for i, p in enumerate(PROJ_NAC):
     project_page(p, i, PROJ_NAC, 'proyectos.html#proyectos', 'Proyectos')
 for i, p in enumerate(PROJ_INT):
-    project_page(p, i, PROJ_INT, 'proyectos.html?area=internacional#internacionales', 'Proyectos internacionales')
+    project_page(p, i, PROJ_INT, 'proyectos.html?area=internacional', 'Proyectos internacionales')
 
 # ================================================================== RECURSOS (hub)
 recursos = page_hero('Recursos', 'Aprende,', 'descarga, <em>consulta.</em>',
