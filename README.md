@@ -45,7 +45,7 @@ La navegación sigue el wireframe: cada sección del menú es una página **hub*
 | Hub | Subpáginas |
 |---|---|
 | `nosotros.html` | `quienes-somos`, `equipo`, `historia`, `ecosistema` (tarjetas que enlazan a los 9 portales externos) |
-| `que-hacemos.html` (cabecera con *showreel*) | `formacion-tic`, `observatorio`, `voluntariado`, `jovenes`, `inclusion-digital`, `transformacion-digital` |
+| `que-hacemos.html` (cabecera con *showreel*) | `formacion-digital-empleo`, `observatorio`, `voluntariado`, `jovenes`, `inclusion-digital`, `apoyo-digital-entidades` |
 | `proyectos.html` (cabecera con vídeo, filtro por área y bloque de internacionales con mapa) | → `proyecto-*.html` |
 | `recursos.html` | `blog` → `noticia-*.html`, `publicaciones` → `publicacion-*.html`, `transparencia`, `preguntas-frecuentes`, `campus` |
 | `contacto.html` | `escribenos`, `sedes` |

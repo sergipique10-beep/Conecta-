@@ -13,8 +13,8 @@ index.html es la excepción: se edita a mano salvo su NAV y su FOOTER.
 
 Estructura (según el wireframe de navegación):
     Nosotros      → quienes-somos, equipo, historia, ecosistema (enlaza a los portales externos)
-    Qué hacemos   → formacion-tic, observatorio, voluntariado, jovenes,
-                    inclusion-digital, transformacion-digital
+    Qué hacemos   → formacion-digital-empleo, observatorio, voluntariado, jovenes,
+                    inclusion-digital, apoyo-digital-entidades
     Proyectos     → filtro por área + bloque de proyectos internacionales (→ proyecto-*)
     Recursos      → blog (→ noticia-*), publicaciones (→ publicacion-*),
                     transparencia, preguntas-frecuentes, campus
@@ -82,12 +82,12 @@ NAV = '''<!-- ============ NAV ============ -->
       <li class="has-drop">
         <a href="que-hacemos.html" aria-haspopup="true">Qué hacemos</a>
         <div class="drop"><div class="drop-panel"><ul>
-          <li><a href="formacion-tic.html">Formación digital y empleo</a></li>
+          <li><a href="formacion-digital-empleo.html">Formación digital y empleo</a></li>
           <li><a href="observatorio.html">Observatorio (OBD)</a></li>
           <li><a href="voluntariado.html">Voluntariado</a></li>
           <li><a href="jovenes.html">Jóvenes</a></li>
           <li><a href="inclusion-digital.html">Inclusión digital</a></li>
-          <li><a href="transformacion-digital.html">Apoyo digital a entidades sociales</a></li>
+          <li><a href="apoyo-digital-entidades.html">Apoyo digital a entidades sociales</a></li>
         </ul></div></div>
       </li>
       <li><a href="proyectos.html">Proyectos</a></li>
@@ -128,7 +128,7 @@ NAV = '''<!-- ============ NAV ============ -->
     </div>
     <div class="mm-sec" style="--i:1">
       <div class="mm-row"><a class="big" href="que-hacemos.html"><em>Qué hacemos</em></a><button type="button" class="mm-tog" aria-expanded="false" aria-controls="mm-que-hacemos" aria-label="Páginas de Qué hacemos"><i aria-hidden="true"></i></button></div>
-      <div class="mm-subs" id="mm-que-hacemos"><ul><li><a href="formacion-tic.html">Formación digital y empleo</a></li><li><a href="observatorio.html">Observatorio (OBD)</a></li><li><a href="voluntariado.html">Voluntariado</a></li><li><a href="jovenes.html">Jóvenes</a></li><li><a href="inclusion-digital.html">Inclusión digital</a></li><li><a href="transformacion-digital.html">Apoyo digital a entidades sociales</a></li></ul></div>
+      <div class="mm-subs" id="mm-que-hacemos"><ul><li><a href="formacion-digital-empleo.html">Formación digital y empleo</a></li><li><a href="observatorio.html">Observatorio (OBD)</a></li><li><a href="voluntariado.html">Voluntariado</a></li><li><a href="jovenes.html">Jóvenes</a></li><li><a href="inclusion-digital.html">Inclusión digital</a></li><li><a href="apoyo-digital-entidades.html">Apoyo digital a entidades sociales</a></li></ul></div>
     </div>
     <div class="mm-sec" style="--i:2">
       <div class="mm-row"><a class="big" href="proyectos.html">Proyectos</a></div>
@@ -435,7 +435,7 @@ def redirect(name, to):
 
 # Áreas de «Qué hacemos». cat = categoría de los proyectos de esa área (filtro de Proyectos nacionales).
 AREAS = [
-    dict(href='formacion-tic.html', cat='formacion', name='Formación digital y empleo', short='Formación digital y empleo',
+    dict(href='formacion-digital-empleo.html', cat='formacion', name='Formación digital y empleo', short='Formación digital y empleo',
          img='news-formacion.jpg', alt='Grupo de personas aprendiendo con portátiles',
          h1=('Formación digital', 'y <em>empleo.</em>'),
          card='Capacitación digital orientada a la empleabilidad real.',
@@ -488,7 +488,7 @@ AREAS = [
          ticks=['Jóvenes que enseñan tecnología a personas mayores', 'Vocaciones STEAM para chicas jóvenes', 'Capacitación digital para mujeres en situación de vulnerabilidad', 'Formación en igualdad y competencias transversales'],
          tags=['Mayores', 'Mujeres', 'Jóvenes', 'Migrantes'],
          portal=None),
-    dict(href='transformacion-digital.html', cat='tercer', name='Apoyo digital a entidades sociales', short='Apoyo digital a entidades sociales',
+    dict(href='apoyo-digital-entidades.html', cat='tercer', name='Apoyo digital a entidades sociales', short='Apoyo digital a entidades sociales',
          img='tech.jpg', alt='Manos en un teclado con datos luminosos',
          card='Asesoría, formación y consultoría digital para entidades sociales.'),
 ]
@@ -800,9 +800,9 @@ write('ecosistema.html', 'Nuestro ecosistema · fundación conecta+', 'Los porta
 # Escenas del showreel de la cabecera: (página del área, rótulo, archivo en video/ sin extensión)
 REEL = [
     ('voluntariado.html', 'Voluntariado', 'mision-voluntariado'),
-    ('transformacion-digital.html', 'Apoyo digital a entidades sociales', 'mision-transformacion'),
+    ('apoyo-digital-entidades.html', 'Apoyo digital a entidades sociales', 'mision-transformacion'),
     ('inclusion-digital.html', 'Inclusión digital', 'mision-inclusion'),
-    ('formacion-tic.html', 'Formación digital y empleo', 'mision-formacion'),
+    ('formacion-digital-empleo.html', 'Formación digital y empleo', 'mision-formacion'),
     ('jovenes.html', 'Jóvenes', 'mision-liderazgo'),
 ]
 _reel_items = ''.join(f'<li data-src="video/{v}.mp4" data-poster="video/{v}.jpg" data-href="{h}" data-label="{t}"></li>' for h, t, v in REEL)
@@ -911,6 +911,9 @@ write('proyectos.html', 'Proyectos · fundación conecta+', 'Proyectos nacionale
 redirect('proyectos-nacionales.html', 'proyectos.html#proyectos')
 redirect('proyectos-internacionales.html', 'proyectos.html?area=internacional')
 redirect('proyecto-movilidad-juvenil.html', 'proyectos.html?area=internacional')
+# nombres antiguos de las áreas (las direcciones se cambiaron para que coincidan con el nombre)
+redirect('formacion-tic.html', 'formacion-digital-empleo.html')
+redirect('transformacion-digital.html', 'apoyo-digital-entidades.html')
 
 # ------------------------------------------------------------------ PROYECTO CONCRETO
 def project_page(p, i, lst, list_href, list_name):
@@ -1061,7 +1064,7 @@ faq += '''
 ''' + head2('Preguntas frecuentes', 'Preguntas y', '<em>respuestas.</em>', None, 'faq-h') + '''      <div class="faq" data-reveal>
         <details><summary>¿Cómo puedo hacerme voluntario?</summary><p>Rellena el formulario de <a href="hazte-voluntario.html">Hazte voluntario/a</a>. Te escribiremos para conocerte y contarte los proyectos disponibles cerca de ti.</p></details>
         <details><summary>¿Las formaciones tienen coste?</summary><p>Muchas de nuestras formaciones son gratuitas para las personas participantes gracias a la financiación pública y privada. Consulta cada convocatoria.</p></details>
-        <details><summary>Soy una entidad social, ¿cómo podéis ayudarnos?</summary><p>A través del área de <a href="transformacion-digital.html">Apoyo digital a entidades sociales</a>, incluido el servicio SAAD de asesoría digital gratuita. Escríbenos y valoramos juntos vuestras necesidades.</p></details>
+        <details><summary>Soy una entidad social, ¿cómo podéis ayudarnos?</summary><p>A través del área de <a href="apoyo-digital-entidades.html">Apoyo digital a entidades sociales</a>, incluido el servicio SAAD de asesoría digital gratuita. Escríbenos y valoramos juntos vuestras necesidades.</p></details>
         <details><summary>¿Cómo puedo hacer una donación?</summary><p>Desde la página <a href="dona.html">Dona</a> puedes elegir el importe y la periodicidad de tu aportación.</p></details>
         <details><summary>¿Cómo entro en el Campus Virtual?</summary><p>Desde la página <a href="campus.html">Campus Virtual</a>, con el usuario y la contraseña que recibiste al inscribirte en el curso.</p></details>
         <details><summary>¿Dónde estáis?</summary><p>Tenemos sedes en Andalucía, Madrid, Cataluña y Galicia. Consulta las direcciones en <a href="sedes.html">Sedes</a>.</p></details>
@@ -1082,7 +1085,7 @@ campus += '''
       <div class="prose">
         <span class="kicker">Campus Virtual</span>
         <h2 class="h2" id="cv-h" data-lines><span class="line"><span>Accede a</span></span><span class="line"><span><em>tus cursos.</em></span></span></h2>
-        <p data-reveal>Entra con el usuario y la contraseña que recibiste al inscribirte. Si aún no tienes cuenta, consulta los cursos abiertos en el área de <a href="formacion-tic.html">Formación digital y empleo</a>.</p>
+        <p data-reveal>Entra con el usuario y la contraseña que recibiste al inscribirte. Si aún no tienes cuenta, consulta los cursos abiertos en el área de <a href="formacion-digital-empleo.html">Formación digital y empleo</a>.</p>
         ''' + ph_note('Falta la dirección del Campus Virtual: el acceso todavía no redirige a la plataforma.') + '''
       </div>
       <div class="contact-form" data-reveal>
@@ -1629,8 +1632,8 @@ data-lines='["$ digitalizaong --diagnostico --entidad tu-entidad","› analizand
       </div>
     </div>
   </section>
-''' + siblings('Qué hacemos', SIB_AREAS, 'transformacion-digital.html')
-write('transformacion-digital.html', 'Apoyo digital a entidades sociales · fundación conecta+',
+''' + siblings('Qué hacemos', SIB_AREAS, 'apoyo-digital-entidades.html')
+write('apoyo-digital-entidades.html', 'Apoyo digital a entidades sociales · fundación conecta+',
       'Asesoría, formación y consultoría digital para entidades del tercer sector: gestión, DigitalizaciONG, DigComp 2.0, software a medida y desarrollo web.',
       tx, parent='que-hacemos.html', extra_head=TX_HEAD)
 
