@@ -82,12 +82,12 @@ NAV = '''<!-- ============ NAV ============ -->
       <li class="has-drop">
         <a href="que-hacemos.html" aria-haspopup="true">Qué hacemos</a>
         <div class="drop"><div class="drop-panel"><ul>
-          <li><a href="formacion-tic.html">Formación TIC e inserción laboral</a></li>
-          <li><a href="observatorio.html">Observatorio de Brechas Digitales</a></li>
+          <li><a href="formacion-tic.html">Formación digital y empleo</a></li>
+          <li><a href="observatorio.html">Observatorio (OBD)</a></li>
           <li><a href="voluntariado.html">Voluntariado</a></li>
           <li><a href="jovenes.html">Jóvenes</a></li>
-          <li><a href="inclusion-digital.html">e-Inclusión digital</a></li>
-          <li><a href="transformacion-digital.html">Transformación digital y Tercer Sector</a></li>
+          <li><a href="inclusion-digital.html">Inclusión digital</a></li>
+          <li><a href="transformacion-digital.html">Apoyo digital a entidades sociales</a></li>
         </ul></div></div>
       </li>
       <li><a href="proyectos.html">Proyectos</a></li>
@@ -128,7 +128,7 @@ NAV = '''<!-- ============ NAV ============ -->
     </div>
     <div class="mm-sec" style="--i:1">
       <div class="mm-row"><a class="big" href="que-hacemos.html"><em>Qué hacemos</em></a><button type="button" class="mm-tog" aria-expanded="false" aria-controls="mm-que-hacemos" aria-label="Páginas de Qué hacemos"><i aria-hidden="true"></i></button></div>
-      <div class="mm-subs" id="mm-que-hacemos"><ul><li><a href="formacion-tic.html">Formación TIC e inserción laboral</a></li><li><a href="observatorio.html">Observatorio de Brechas Digitales</a></li><li><a href="voluntariado.html">Voluntariado</a></li><li><a href="jovenes.html">Jóvenes</a></li><li><a href="inclusion-digital.html">e-Inclusión digital</a></li><li><a href="transformacion-digital.html">Transformación digital y Tercer Sector</a></li></ul></div>
+      <div class="mm-subs" id="mm-que-hacemos"><ul><li><a href="formacion-tic.html">Formación digital y empleo</a></li><li><a href="observatorio.html">Observatorio (OBD)</a></li><li><a href="voluntariado.html">Voluntariado</a></li><li><a href="jovenes.html">Jóvenes</a></li><li><a href="inclusion-digital.html">Inclusión digital</a></li><li><a href="transformacion-digital.html">Apoyo digital a entidades sociales</a></li></ul></div>
     </div>
     <div class="mm-sec" style="--i:2">
       <div class="mm-row"><a class="big" href="proyectos.html">Proyectos</a></div>
@@ -435,9 +435,9 @@ def redirect(name, to):
 
 # Áreas de «Qué hacemos». cat = categoría de los proyectos de esa área (filtro de Proyectos nacionales).
 AREAS = [
-    dict(href='formacion-tic.html', cat='formacion', name='Formación TIC e inserción laboral', short='Formación TIC',
+    dict(href='formacion-tic.html', cat='formacion', name='Formación digital y empleo', short='Formación digital y empleo',
          img='news-formacion.jpg', alt='Grupo de personas aprendiendo con portátiles',
-         h1=('Formación TIC', 'e <em>inserción laboral.</em>'),
+         h1=('Formación digital', 'y <em>empleo.</em>'),
          card='Capacitación digital orientada a la empleabilidad real.',
          lede='La formación tecnológica como vía de inclusión social, ciudadana y laboral, sobre todo para los colectivos más vulnerables.',
          lead='Itinerarios formativos conectados con lo que pide el mercado de trabajo.',
@@ -446,7 +446,7 @@ AREAS = [
          tags=['Jóvenes', 'Personas desempleadas', 'Profesionales'],
          portal=('Conecta IA', 'conecta-ia.fundacionesplai.org', 'https://conecta-ia.fundacionesplai.org/',
                  'Cursos online de competencias digitales e inteligencia artificial para profesionales, entidades y dinamizadores sociodigitales.')),
-    dict(href='observatorio.html', cat='observatorio', name='Observatorio de Brechas Digitales', short='Observatorio (OBD)',
+    dict(href='observatorio.html', cat='observatorio', name='Observatorio (OBD)', short='Observatorio (OBD)',
          img='contenido.jpg', alt='Pantallas con datos y gráficos',
          h1=('Observatorio de', '<em>brechas digitales.</em>'),
          card='Datos para entender —y reducir— las desigualdades digitales.',
@@ -478,9 +478,9 @@ AREAS = [
          ticks=['Propuestas educativas sobre participación y ciudadanía global', 'Aprendizaje y Servicio y acción comunitaria', 'Foro anual liderado por jóvenes', 'Recursos sobre hábitos digitales saludables'],
          tags=['Jóvenes', 'Adolescentes', 'Profesionales de juventud'],
          portal=None),
-    dict(href='inclusion-digital.html', cat='inclusion', name='e-Inclusión digital', short='e-Inclusión digital',
+    dict(href='inclusion-digital.html', cat='inclusion', name='Inclusión digital', short='Inclusión digital',
          img='vinculo-manos.avif', alt='Dos manos digitales a punto de tocarse',
-         h1=('e-Inclusión', '<em>digital.</em>'),
+         h1=('Inclusión', '<em>digital.</em>'),
          card='Que nadie quede atrás en lo digital.',
          lede='Competencias digitales para que cada persona pueda participar activamente en la sociedad.',
          lead='Acceso, competencias y acompañamiento para moverse en lo digital con autonomía.',
@@ -488,7 +488,7 @@ AREAS = [
          ticks=['Jóvenes que enseñan tecnología a personas mayores', 'Vocaciones STEAM para chicas jóvenes', 'Capacitación digital para mujeres en situación de vulnerabilidad', 'Formación en igualdad y competencias transversales'],
          tags=['Mayores', 'Mujeres', 'Jóvenes', 'Migrantes'],
          portal=None),
-    dict(href='transformacion-digital.html', cat='tercer', name='Transformación digital y Gestión del Tercer Sector', short='Transformación digital y Tercer Sector',
+    dict(href='transformacion-digital.html', cat='tercer', name='Apoyo digital a entidades sociales', short='Apoyo digital a entidades sociales',
          img='tech.jpg', alt='Manos en un teclado con datos luminosos',
          card='Asesoría, formación y consultoría digital para entidades sociales.'),
 ]
@@ -541,10 +541,10 @@ PROJ_NAC = [
     dict(slug='campamentos', img='news-campamentos.jpg', alt='Niñas y niños en un aula durante una actividad', tag='Jóvenes', cat='jovenes',
          title='Campamentos tecnológicos de verano', text='Programación, robótica y creatividad en Madrid y Galicia durante el verano.',
          body='Semanas de verano en las que niñas, niños y adolescentes aprenden programación, robótica y creación digital en grupo y jugando.'),
-    dict(slug='conecta-joven', img='conexion-personas.jpg', alt='Personas conectadas', tag='e-Inclusión', cat='inclusion jovenes',
+    dict(slug='conecta-joven', img='conexion-personas.jpg', alt='Personas conectadas', tag='Inclusión digital', cat='inclusion jovenes',
          title='Conecta Joven', text='Jóvenes que enseñan tecnología a personas mayores para reducir la brecha digital generacional.',
          body='Un proyecto de Aprendizaje y Servicio: los jóvenes se forman como dinamizadores y, a la vez, enseñan a personas mayores de su barrio a usar la tecnología.'),
-    dict(slug='chicas-in-tech', img='hero-personas.jpg', alt='Grupo de personas', tag='e-Inclusión', cat='inclusion jovenes',
+    dict(slug='chicas-in-tech', img='hero-personas.jpg', alt='Grupo de personas', tag='Inclusión digital', cat='inclusion jovenes',
          title='#ChicasInTech', text='Talleres, mentorías y divulgación para orientar a mujeres jóvenes hacia vocaciones STEAM.',
          body='Talleres prácticos, mentorías con profesionales y acciones de divulgación para que más chicas se imaginen en carreras científicas y tecnológicas.'),
 ]
@@ -800,9 +800,9 @@ write('ecosistema.html', 'Nuestro ecosistema · fundación conecta+', 'Los porta
 # Escenas del showreel de la cabecera: (página del área, rótulo, archivo en video/ sin extensión)
 REEL = [
     ('voluntariado.html', 'Voluntariado', 'mision-voluntariado'),
-    ('transformacion-digital.html', 'Transformación digital', 'mision-transformacion'),
-    ('inclusion-digital.html', 'e-Inclusión digital', 'mision-inclusion'),
-    ('formacion-tic.html', 'Formación TIC', 'mision-formacion'),
+    ('transformacion-digital.html', 'Apoyo digital a entidades sociales', 'mision-transformacion'),
+    ('inclusion-digital.html', 'Inclusión digital', 'mision-inclusion'),
+    ('formacion-tic.html', 'Formación digital y empleo', 'mision-formacion'),
     ('jovenes.html', 'Jóvenes', 'mision-liderazgo'),
 ]
 _reel_items = ''.join(f'<li data-src="video/{v}.mp4" data-poster="video/{v}.jpg" data-href="{h}" data-label="{t}"></li>' for h, t, v in REEL)
@@ -1061,7 +1061,7 @@ faq += '''
 ''' + head2('Preguntas frecuentes', 'Preguntas y', '<em>respuestas.</em>', None, 'faq-h') + '''      <div class="faq" data-reveal>
         <details><summary>¿Cómo puedo hacerme voluntario?</summary><p>Rellena el formulario de <a href="hazte-voluntario.html">Hazte voluntario/a</a>. Te escribiremos para conocerte y contarte los proyectos disponibles cerca de ti.</p></details>
         <details><summary>¿Las formaciones tienen coste?</summary><p>Muchas de nuestras formaciones son gratuitas para las personas participantes gracias a la financiación pública y privada. Consulta cada convocatoria.</p></details>
-        <details><summary>Soy una entidad social, ¿cómo podéis ayudarnos?</summary><p>A través del área de <a href="transformacion-digital.html">Transformación digital y Gestión del Tercer Sector</a>, incluido el servicio SAAD de asesoría digital gratuita. Escríbenos y valoramos juntos vuestras necesidades.</p></details>
+        <details><summary>Soy una entidad social, ¿cómo podéis ayudarnos?</summary><p>A través del área de <a href="transformacion-digital.html">Apoyo digital a entidades sociales</a>, incluido el servicio SAAD de asesoría digital gratuita. Escríbenos y valoramos juntos vuestras necesidades.</p></details>
         <details><summary>¿Cómo puedo hacer una donación?</summary><p>Desde la página <a href="dona.html">Dona</a> puedes elegir el importe y la periodicidad de tu aportación.</p></details>
         <details><summary>¿Cómo entro en el Campus Virtual?</summary><p>Desde la página <a href="campus.html">Campus Virtual</a>, con el usuario y la contraseña que recibiste al inscribirte en el curso.</p></details>
         <details><summary>¿Dónde estáis?</summary><p>Tenemos sedes en Andalucía, Madrid, Cataluña y Galicia. Consulta las direcciones en <a href="sedes.html">Sedes</a>.</p></details>
@@ -1082,7 +1082,7 @@ campus += '''
       <div class="prose">
         <span class="kicker">Campus Virtual</span>
         <h2 class="h2" id="cv-h" data-lines><span class="line"><span>Accede a</span></span><span class="line"><span><em>tus cursos.</em></span></span></h2>
-        <p data-reveal>Entra con el usuario y la contraseña que recibiste al inscribirte. Si aún no tienes cuenta, consulta los cursos abiertos en el área de <a href="formacion-tic.html">Formación TIC</a>.</p>
+        <p data-reveal>Entra con el usuario y la contraseña que recibiste al inscribirte. Si aún no tienes cuenta, consulta los cursos abiertos en el área de <a href="formacion-tic.html">Formación digital y empleo</a>.</p>
         ''' + ph_note('Falta la dirección del Campus Virtual: el acceso todavía no redirige a la plataforma.') + '''
       </div>
       <div class="contact-form" data-reveal>
@@ -1404,7 +1404,7 @@ equipo = [
     ('David Okafor Martín', 'Coordinación · Madrid', 'persona-15.jpg', 'Conecta la sede de Madrid con entidades, centros y administraciones.', 'madrid'),
     ('Lucía Moreno Cano', 'Coordinación · Andalucía', 'persona-07.jpg', 'Trabaja mano a mano con las comunidades andaluzas.', 'andalucia'),
     ('Xoán Castro Vilas', 'Coordinación · Galicia', 'persona-16.jpg', 'Lidera la sede gallega y los campamentos tecnológicos de verano.', 'galicia'),
-    ('Álex Romero Sanz', 'Formación TIC', 'persona-02.jpg', 'Formador en competencias digitales e itinerarios de empleo.', 'cataluna'),
+    ('Álex Romero Sanz', 'Formación digital y empleo', 'persona-02.jpg', 'Formador en competencias digitales e itinerarios de empleo.', 'cataluna'),
     ('Irene Navarro Gil', 'Proyectos europeos', 'persona-10.jpg', 'Gestiona los proyectos Erasmus+ y la relación con ALL DIGITAL.', 'madrid'),
     ('Sergio Gil Prieto', 'Voluntariado', 'persona-03.jpg', 'Acoge, forma y acompaña a la red de personas voluntarias.', 'andalucia'),
     ('Aitana Campos Rey', 'Comunicación', 'persona-14.jpg', 'Cuenta lo que hacemos y da voz a las personas que participan.', 'direccion'),
@@ -1528,9 +1528,9 @@ tx = f'''  <section class="page-hero tx-hero" aria-labelledby="page-h">
     <canvas class="tx-net" id="txNet" aria-hidden="true"></canvas>
     <div class="wrap">
       <a class="back-pill fade-up" href="que-hacemos.html"><span aria-hidden="true">←</span>Volver a Qué hacemos</a>
-      <nav class="crumbs fade-up" aria-label="Ruta"><a href="index.html">Inicio</a><span aria-hidden="true">/</span><a href="que-hacemos.html">Qué hacemos</a><span aria-hidden="true">/</span><span>Transformación digital y Tercer Sector</span></nav>
+      <nav class="crumbs fade-up" aria-label="Ruta"><a href="index.html">Inicio</a><span aria-hidden="true">/</span><a href="que-hacemos.html">Qué hacemos</a><span aria-hidden="true">/</span><span>Apoyo digital a entidades sociales</span></nav>
       <p class="tx-status fade-up"><i aria-hidden="true"></i>conecta+ // equipo de transformación digital y gestión del tercer sector · online</p>
-      <h1 id="page-h"><span class="line"><span>Transformación</span></span><span class="line"><span><em>digital.</em></span></span></h1>
+      <h1 id="page-h"><span class="line"><span>Apoyo digital a</span></span><span class="line"><span><em>entidades sociales.</em></span></span></h1>
       <p class="tx-prompt fade-up" aria-label="Desde el tercer sector, para el tercer sector"><span aria-hidden="true">&gt;</span> <span class="tx-typed" data-type="desde el tercer sector, para el tercer sector" aria-hidden="true"></span><b aria-hidden="true">_</b></p>
       <div class="page-hero-foot fade-up">
         <p>Somos el equipo de transformación digital y gestión del tercer sector de conecta+: técnicos, desarrolladores y profesionales del sector social que ayudan a las entidades a modernizarse e innovar.</p>
@@ -1630,7 +1630,7 @@ data-lines='["$ digitalizaong --diagnostico --entidad tu-entidad","› analizand
     </div>
   </section>
 ''' + siblings('Qué hacemos', SIB_AREAS, 'transformacion-digital.html')
-write('transformacion-digital.html', 'Transformación digital y Gestión del Tercer Sector · fundación conecta+',
+write('transformacion-digital.html', 'Apoyo digital a entidades sociales · fundación conecta+',
       'Asesoría, formación y consultoría digital para entidades del tercer sector: gestión, DigitalizaciONG, DigComp 2.0, software a medida y desarrollo web.',
       tx, parent='que-hacemos.html', extra_head=TX_HEAD)
 
