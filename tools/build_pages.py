@@ -12,12 +12,13 @@ aquí y vuelve a ejecutar el script; no edites esos .html a mano.
 index.html es la excepción: se edita a mano salvo su NAV y su FOOTER.
 
 Estructura (según el wireframe de navegación):
-    Nosotros      → quienes-somos, equipo, historia, ecosistema (enlaza a los portales externos)
+    Nosotros      → quienes-somos, equipo, historia, ecosistema (enlaza a los portales externos),
+                    transparencia
     Qué hacemos   → formacion-digital-empleo, observatorio, voluntariado, jovenes,
                     inclusion-digital, apoyo-digital-entidades
     Proyectos     → filtro por área + bloque de proyectos internacionales (→ proyecto-*)
     Recursos      → blog (→ noticia-*), publicaciones (→ publicacion-*),
-                    transparencia, preguntas-frecuentes, campus
+                    preguntas-frecuentes, campus
     Contacto      → escribenos, sedes
     Colabora      → hazte-voluntario, dona, unete
     Pie           → boletin, canal-denuncia, aviso-legal
@@ -77,6 +78,7 @@ NAV = '''<!-- ============ NAV ============ -->
           <li><a href="equipo.html">Equipo y patronato</a></li>
           <li><a href="historia.html">Historia</a></li>
           <li><a href="ecosistema.html">Nuestro ecosistema</a></li>
+          <li><a href="transparencia.html">Transparencia</a></li>
         </ul></div></div>
       </li>
       <li class="has-drop">
@@ -96,7 +98,6 @@ NAV = '''<!-- ============ NAV ============ -->
         <div class="drop"><div class="drop-panel"><ul>
           <li><a href="blog.html">Blog y noticias</a></li>
           <li><a href="publicaciones.html">Publicaciones y descargables</a></li>
-          <li><a href="transparencia.html">Transparencia</a></li>
           <li><a href="preguntas-frecuentes.html">Preguntas frecuentes</a></li>
           <li><a href="campus.html">Campus Virtual</a></li>
         </ul></div></div>
@@ -124,7 +125,7 @@ NAV = '''<!-- ============ NAV ============ -->
   <div class="mm-list">
     <div class="mm-sec" style="--i:0">
       <div class="mm-row"><a class="big" href="nosotros.html">Nosotros</a><button type="button" class="mm-tog" aria-expanded="false" aria-controls="mm-nosotros" aria-label="Páginas de Nosotros"><i aria-hidden="true"></i></button></div>
-      <div class="mm-subs" id="mm-nosotros"><ul><li><a href="quienes-somos.html">Quiénes somos</a></li><li><a href="equipo.html">Equipo y patronato</a></li><li><a href="historia.html">Historia</a></li><li><a href="ecosistema.html">Nuestro ecosistema</a></li></ul></div>
+      <div class="mm-subs" id="mm-nosotros"><ul><li><a href="quienes-somos.html">Quiénes somos</a></li><li><a href="equipo.html">Equipo y patronato</a></li><li><a href="historia.html">Historia</a></li><li><a href="ecosistema.html">Nuestro ecosistema</a></li><li><a href="transparencia.html">Transparencia</a></li></ul></div>
     </div>
     <div class="mm-sec" style="--i:1">
       <div class="mm-row"><a class="big" href="que-hacemos.html"><em>Qué hacemos</em></a><button type="button" class="mm-tog" aria-expanded="false" aria-controls="mm-que-hacemos" aria-label="Páginas de Qué hacemos"><i aria-hidden="true"></i></button></div>
@@ -135,7 +136,7 @@ NAV = '''<!-- ============ NAV ============ -->
     </div>
     <div class="mm-sec" style="--i:3">
       <div class="mm-row"><a class="big" href="recursos.html">Recursos</a><button type="button" class="mm-tog" aria-expanded="false" aria-controls="mm-recursos" aria-label="Páginas de Recursos"><i aria-hidden="true"></i></button></div>
-      <div class="mm-subs" id="mm-recursos"><ul><li><a href="blog.html">Blog y noticias</a></li><li><a href="publicaciones.html">Publicaciones y descargables</a></li><li><a href="transparencia.html">Transparencia</a></li><li><a href="preguntas-frecuentes.html">Preguntas frecuentes</a></li><li><a href="campus.html">Campus Virtual</a></li></ul></div>
+      <div class="mm-subs" id="mm-recursos"><ul><li><a href="blog.html">Blog y noticias</a></li><li><a href="publicaciones.html">Publicaciones y descargables</a></li><li><a href="preguntas-frecuentes.html">Preguntas frecuentes</a></li><li><a href="campus.html">Campus Virtual</a></li></ul></div>
     </div>
     <div class="mm-sec" style="--i:4">
       <div class="mm-row"><a class="big" href="contacto.html">Contacto</a><button type="button" class="mm-tog" aria-expanded="false" aria-controls="mm-contacto" aria-label="Páginas de Contacto"><i aria-hidden="true"></i></button></div>
@@ -500,11 +501,11 @@ SIB_NOS = [
     ('equipo.html', 'Equipo y patronato', 'Las personas que hacen posible la fundación.'),
     ('historia.html', 'Historia', 'Tres décadas conectando personas y tecnología.'),
     ('ecosistema.html', 'Nuestro ecosistema', 'Los portales y redes que impulsamos.'),
+    ('transparencia.html', 'Transparencia', 'Documentos de la fundación, a la vista.'),
 ]
 SIB_REC = [
     ('blog.html', 'Blog y noticias', 'Lo último de la red.'),
     ('publicaciones.html', 'Publicaciones', 'Memorias, guías y materiales descargables.'),
-    ('transparencia.html', 'Transparencia', 'Documentos de la fundación, a la vista.'),
     ('preguntas-frecuentes.html', 'Preguntas frecuentes', 'Respuestas a las dudas más habituales.'),
     ('campus.html', 'Campus Virtual', 'Formación online a tu ritmo.'),
 ]
@@ -669,13 +670,14 @@ nosotros = page_hero('Nosotros', 'Somos', '<em>conecta+.</em>',
     'Una fundación que lleva desde 1995 tendiendo puentes entre la tecnología y las personas que más lo necesitan.',
     'news-internacional.jpg', [('secciones', 'Conócenos')], 'center 40%')
 nosotros += STATS + hub_section('Conócenos', 'Todo sobre', '<em>la fundación.</em>',
-    'Quiénes somos, quién forma parte de la fundación, de dónde venimos y la red de portales que impulsamos.', 'nos-h', [
+    'Quiénes somos, quién forma parte de la fundación, de dónde venimos, la red de portales que impulsamos y nuestras cuentas.', 'nos-h', [
         ('quienes-somos.html', 'vinculo-manos.avif', '01', 'Quiénes somos', 'Tecnología con propósito social: misión, valores y colaboraciones.', 'Conócenos'),
         ('equipo.html', 'news-voluntariado.jpg', '02', 'Equipo y patronato', 'Las personas detrás de la red.', 'Conoce al equipo'),
         ('historia.html', 'bosque.jpg', '03', 'Historia', 'Tres décadas conectando personas y tecnología.', 'Ver la historia'),
         ('ecosistema.html', 'conecta.jpg', '04', 'Nuestro ecosistema', 'Portales y redes que multiplican nuestro impacto.', 'Explorar'),
-    ], ' four', sid='secciones') + '\n' + next_link('que-hacemos.html', 'Siguiente', 'Qué <em>hacemos</em>')
-write('nosotros.html', 'Nosotros · fundación conecta+', 'Quiénes somos, equipo y patronato, historia y ecosistema de la fundación conecta+.', nosotros)
+        ('transparencia.html', 'news-ens.jpg', '05', 'Transparencia', 'Cuentas claras y documentos de la fundación.', 'Consultar'),
+    ], sid='secciones') + '\n' + next_link('que-hacemos.html', 'Siguiente', 'Qué <em>hacemos</em>')
+write('nosotros.html', 'Nosotros · fundación conecta+', 'Quiénes somos, equipo y patronato, historia, ecosistema y transparencia de la fundación conecta+.', nosotros)
 
 # ------------------------------------------------------------------ QUIÉNES SOMOS
 qs = page_hero(crumbs(('Nosotros', 'nosotros.html'), ('Quiénes somos', None)), 'Tecnología con', '<em>propósito social.</em>',
@@ -949,16 +951,15 @@ for i, p in enumerate(PROJ_INT):
 
 # ================================================================== RECURSOS (hub)
 recursos = page_hero('Recursos', 'Aprende,', 'descarga, <em>consulta.</em>',
-    'Noticias, publicaciones, documentos de transparencia y formación online, reunidos en un solo lugar.',
+    'Noticias, publicaciones, preguntas frecuentes y formación online, reunidos en un solo lugar.',
     'news-formacion.jpg', [('secciones', 'Ver recursos')])
 recursos += hub_section('Recursos', 'Todo en', '<em>un lugar.</em>', None, 'rec-h', [
         ('blog.html', 'news-voluntariado.jpg', f'{len(NEWS):02d}', 'Blog y noticias', 'Lo último de la red.', 'Leer'),
         ('publicaciones.html', 'pub-memoria.jpg', f'{len(PUBS):02d}', 'Publicaciones', 'Memorias, guías y materiales descargables.', 'Descargar'),
-        ('transparencia.html', 'news-ens.jpg', 'PDF', 'Transparencia', 'Cuentas claras y documentos de la fundación.', 'Consultar'),
         ('preguntas-frecuentes.html', 'conexion-personas.jpg', 'FAQ', 'Preguntas frecuentes', 'Respuestas a las dudas más habituales.', 'Ver respuestas'),
         ('campus.html', 'tech.jpg', 'Online', 'Campus Virtual', 'Cursos online a tu ritmo.', 'Entrar'),
-    ], sid='secciones') + '\n' + next_link('contacto.html', 'Siguiente', 'Ir a <em>contacto</em>')
-write('recursos.html', 'Recursos · fundación conecta+', 'Blog, publicaciones, transparencia, preguntas frecuentes y Campus Virtual de la fundación conecta+.', recursos)
+    ], ' four', sid='secciones') + '\n' + next_link('contacto.html', 'Siguiente', 'Ir a <em>contacto</em>')
+write('recursos.html', 'Recursos · fundación conecta+', 'Blog, publicaciones, preguntas frecuentes y Campus Virtual de la fundación conecta+.', recursos)
 
 # ------------------------------------------------------------------ BLOG
 blog = page_hero(crumbs(('Recursos', 'recursos.html'), ('Blog y noticias', None)), 'Lo último', 'de <em>la red.</em>',
@@ -1035,9 +1036,9 @@ for i, p in enumerate(PUBS):
     write(p['href'], f"{p['title']} · Publicaciones · fundación conecta+", p['text'], pg, parent='recursos.html')
 
 # ------------------------------------------------------------------ TRANSPARENCIA
-tr = page_hero(crumbs(('Recursos', 'recursos.html'), ('Transparencia', None)), 'Cuentas', '<em>claras.</em>',
+tr = page_hero(crumbs(('Nosotros', 'nosotros.html'), ('Transparencia', None)), 'Cuentas', '<em>claras.</em>',
     'Rendir cuentas es parte de nuestro compromiso con las personas, las entidades y las instituciones que confían en nosotros.',
-    'news-ens.jpg', [('transparencia', 'Documentos')], back=('recursos.html', 'Recursos'))
+    'news-ens.jpg', [('transparencia', 'Documentos')], back=('nosotros.html', 'Nosotros'))
 tr += '''
   <section class="pad" id="transparencia" aria-labelledby="tr-h">
     <div class="wrap">
@@ -1051,8 +1052,8 @@ tr += '''
       <div style="margin-top:32px">''' + ph_note('Faltan los archivos PDF de los documentos de transparencia.') + '''</div>
     </div>
   </section>
-''' + siblings('Recursos', SIB_REC, 'transparencia.html')
-write('transparencia.html', 'Transparencia · fundación conecta+', 'Estatutos, cuentas, patronato y políticas de la fundación conecta+.', tr, parent='recursos.html')
+''' + siblings('Nosotros', SIB_NOS, 'transparencia.html')
+write('transparencia.html', 'Transparencia · fundación conecta+', 'Estatutos, cuentas, patronato y políticas de la fundación conecta+.', tr, parent='nosotros.html')
 
 # ------------------------------------------------------------------ PREGUNTAS FRECUENTES
 faq = page_hero(crumbs(('Recursos', 'recursos.html'), ('Preguntas frecuentes', None)), 'Resolvemos', 'tus <em>dudas.</em>',
