@@ -923,6 +923,29 @@ footer::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:no
 @media (hover:none){.wm-glow{display:none}}
 @media (prefers-reduced-motion:reduce){.js .wm-base>span{transform:none!important}}
 
+/* ---------- logos oficiales (por paleta) ----------
+   El menú y el pie usan los SVG oficiales en lugar del logo compuesto (símbolo + texto)
+   y del wordmark animado, que quedan ocultos. Variante por paleta:
+     --blanco          blanco/verde flúor   Bosque, Verde marca, Lima (y por defecto)
+     --magenta         verde flúor/magenta con lema, más alto   Papel
+     --blanco-magenta  blanco/magenta       Noche magenta, Magenta suave */
+.logo>svg,.logo>span,.fc-brand .wm-base,.fc-brand .wm-glow{display:none}
+.logo-img{width:auto;height:36px}
+.logo-img--magenta{height:46px}
+.fc-brand .wm-img{width:clamp(220px,22vw,320px);height:auto}
+.logo-img,.wm-img{display:none}
+.logo-img--blanco,.wm-img--blanco{display:block}
+:root[data-paleta="papel"] .logo-img--blanco,:root[data-paleta="papel"] .wm-img--blanco,
+:root[data-paleta="noche"] .logo-img--blanco,:root[data-paleta="noche"] .wm-img--blanco,
+:root[data-paleta="magenta"] .logo-img--blanco,:root[data-paleta="magenta"] .wm-img--blanco{display:none}
+:root[data-paleta="papel"] .logo-img--magenta,:root[data-paleta="papel"] .wm-img--magenta,
+:root[data-paleta="noche"] .logo-img--blanco-magenta,:root[data-paleta="noche"] .wm-img--blanco-magenta,
+:root[data-paleta="magenta"] .logo-img--blanco-magenta,:root[data-paleta="magenta"] .wm-img--blanco-magenta{display:block}
+.js .fc-brand .wm-img{opacity:0;transform:translateY(20px);transition:opacity 1s var(--ease),transform 1.3s var(--ease)}
+.js .fc-brand .wordmark.in .wm-img{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.js .fc-brand .wm-img{opacity:1;transform:none;transition:none}}
+@media(max-width:379px){.logo-img{height:30px}.logo-img--magenta{height:38px}}
+
 /* =========================================================
    footer: mejoras de UX (formularios, cookies, acceso rápido)
    ========================================================= */
