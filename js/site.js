@@ -1176,7 +1176,7 @@
     var LON0 = -122, LON1 = 48, LAT0 = 66, LAT1 = -42;      // recorte del mapa
     var FK = 1, FOX = 0, FOY = 0;                            // escala y margen para no deformar el mapa
     var ESP = [40.42,-3.70];
-    var pCards = Array.prototype.slice.call(document.querySelectorAll('.pin-card'));
+    var pCards = Array.prototype.slice.call(document.querySelectorAll('.pin-card, .proy-intl [data-pin]'));
     var pins = pCards.map(function(c){ return {card:c, key:c.dataset.pin, lat:+c.dataset.lat, lon:+c.dataset.lon, label:c.dataset.label, mag: c.dataset.pin==='latam'}; });
     var fDots = [], fReady = false, fOn = false, fStart = 0, fActive = -1, fHoverPin = -1;
     var fStep = window.innerWidth < 700 ? 2.25 : 1.5;                // rejilla más abierta en móvil
@@ -1319,24 +1319,27 @@
       fx.fillText('España · 4 sedes', es[0]-30, es[1]+28);
     };
 
-    // En Proyectos (ordenador), con el filtro «Proyectos internacionales» la pantalla muestra,
-    // con el menú escondido: la fila de filtros, el título, el mapa y las tarjetas. El mapa se
-    // queda con el alto libre real (se mide lo que ocupa el resto), con 24px de margen abajo.
-    // Máximo: su proporción natural (ancho / 1,7). Mínimo 240px.
+    // En Proyectos (ordenador), con el filtro «Proyectos internacionales» el mapa toma el mayor
+    // alto que cumpla dos encuadres:
+    //  1) al pulsar el filtro (menú escondido): fila de filtros + mapa + foto y título de las tarjetas;
+    //  2) con un poco de scroll: mapa + tarjetas completas (sin la fila de filtros).
+    // Se mide lo que ocupa cada parte en la pantalla real. Máximo: su proporción natural
+    // (ancho / 1,7). Mínimo 240px.
     var fmBloque = fm.closest('.proy-intl');
     var fmFiltros = fmBloque && document.querySelector('[data-filter-group="#proyLista"]');
     var fmTop = 12;                                                   // aire sobre los filtros
-    var fmSoloIntl = function(){
-      var b = fmFiltros && fmFiltros.querySelector('[aria-pressed="true"]');
-      return !!(b && b.dataset.filter === 'internacional');
-    };
     var fmFit = function(){
       if(!fmBloque || !fm.offsetParent){return}
       if(window.innerWidth < 1100){ fm.style.height = ''; return; }
-      var fmDesde = fmSoloIntl() ? fmFiltros.getBoundingClientRect().top : fmBloque.getBoundingClientRect().top;
-      var fmResto = fmBloque.getBoundingClientRect().bottom - fmDesde - fm.offsetHeight;
-      var fmH = window.innerHeight - fmTop - fmResto - 24;
-      fm.style.height = Math.round(Math.max(240, Math.min(fmH, fm.offsetWidth / 1.7))) + 'px';
+      var fmCards = fmBloque.querySelector('.intl-cards'), fmT = fmCards && fmCards.querySelector('.card h3');
+      if(!fmCards || !fmT){return}
+      var rF = fmFiltros.getBoundingClientRect(), rM = fm.getBoundingClientRect(), rC = fmCards.getBoundingClientRect();
+      var fmGap = rC.top - rM.bottom;                                 // separación mapa–tarjetas
+      var fmTit = 0;                                                  // de la parte alta de las tarjetas al final del título más bajo
+      fmCards.querySelectorAll('.card h3').forEach(function(h){ fmTit = Math.max(fmTit, h.getBoundingClientRect().bottom - rC.top); });
+      var fmH1 = window.innerHeight - fmTop - (rM.top - rF.top) - fmGap - fmTit - 16;
+      var fmH2 = window.innerHeight - 16 - fmGap - rC.height - 24;
+      fm.style.height = Math.round(Math.max(240, Math.min(fmH1, fmH2, fm.offsetWidth / 1.7))) + 'px';
     };
     fmFit();
     fSize();

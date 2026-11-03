@@ -553,18 +553,15 @@ for p in PROJ_NAC:
 
 # Proyectos internacionales (los datos de mapa se usan en el mapa de proyectos).
 PROJ_INT = [
-    dict(slug='all-digital', pin='eu', lat='50.85', lon='4.35', zone='01 — Europa', img='news-internacional.jpg', alt='Grupo de jóvenes abrazados mirando al mar',
+    dict(slug='all-digital', pin='eu', lat='50.85', lon='4.35', zone='01 — Europa', img='proyecto-all-digital.jpg', alt='Tres personas trabajando con portátiles en una sala con una vidriera de colores',
          title='ALL DIGITAL', text='Red europea que impulsa la inclusión y las competencias digitales para todas las personas.',
          body='Formamos parte de esta red europea de centros y entidades que trabajan para que toda la ciudadanía tenga las competencias digitales que necesita.'),
-    dict(slug='inclusion-europa', pin='eu2', lat='48.2', lon='16.4', zone='02 — Erasmus+', img='conecta.jpg', alt='Figuras de personas conectadas por hilos de colores',
+    dict(slug='inclusion-europa', pin='eu2', lat='48.2', lon='16.4', zone='02 — Erasmus+', img='proyecto-inclusion-europa.jpg', alt='Grupo de jóvenes en una sesión de trabajo con portátiles y una pantalla',
          title='Inclusión digital en Europa', text='Nuevo proyecto Erasmus+ para compartir metodologías de inclusión digital con entidades europeas.',
          body='Un proyecto Erasmus+ para intercambiar metodologías de inclusión digital con entidades de otros países europeos y llevarlas a nuestras sedes.'),
-    dict(slug='liga-iberoamericana', pin='latam', lat='4.7', lon='-74.1', zone='03 — Iberoamérica', img='bosque.jpg', alt='Bosque',
+    dict(slug='liga-iberoamericana', pin='latam', lat='4.7', lon='-74.1', zone='03 — Iberoamérica', img='proyecto-liga-iberoamericana.jpg', alt='Asistentes de pie escuchando durante un encuentro',
          title='La Liga Iberoamericana', text='Cooperación con entidades de América Latina en educación y acción social.',
          body='Cooperamos con organizaciones de la sociedad civil de Iberoamérica que trabajan con infancia, juventud y familias, y en la incidencia en políticas públicas.'),
-    dict(slug='movilidad-juvenil', pin='youth', lat='45.4', lon='9.2', zone='04 — Juventud', img='news-campamentos.jpg', alt='Niñas y niños en un aula durante una actividad',
-         title='Movilidad juvenil', text='Intercambios que permiten a jóvenes vivir experiencias de participación en otros países.',
-         body='Intercambios y encuentros que permiten a jóvenes de nuestras sedes conocer otras realidades y participar en proyectos europeos.'),
 ]
 for p in PROJ_INT:
     p['href'] = f"proyecto-{p['slug']}.html"
@@ -879,12 +876,8 @@ proyectos = page_hero('Proyectos', 'Proyectos que', 'dejan <em>huella.</em>',
 # Filtro por área. «Proyectos internacionales» es un filtro más: muestra el bloque del mapa
 # (data-cat="internacional") y oculta los nacionales; «Todos» muestra los dos.
 filters = ''.join(f'        <button type="button" data-filter="{a["cat"]}" aria-pressed="false">{a["short"]}</button>\n' for a in AREAS)
-pins = ''.join(f'''        <a class="pin-card" href="{p['href']}" data-pin="{p['pin']}" data-lat="{p['lat']}" data-lon="{p['lon']}" data-label="{p['title']}" data-reveal style="--d:{i * .07:.2f}s">
-          <span class="pin-card-top"><span class="pin-dot" aria-hidden="true"></span>{p['zone']}</span>
-          <h3>{p['title']}</h3>
-          <p>{p['text']}</p>
-          <span class="pin-more">Ver proyecto →</span>
-        </a>
+# tarjetas internacionales: mismo formato que las nacionales; data-pin/lat/lon enlazan cada una con su punto del mapa
+pins = ''.join(f'''        <a class="card" href="{p['href']}" data-pin="{p['pin']}" data-lat="{p['lat']}" data-lon="{p['lon']}" data-label="{p['title']}" data-reveal style="--d:{(i % 3) * .08:.2f}s"><div class="card-img"><img src="img/{p['img']}" alt="{p['alt']}" loading="lazy"><span class="card-tag">{p['zone'].split('— ')[-1]}</span></div><h3>{p['title']}</h3><p>{p['text']}</p><span class="meta">Ver proyecto</span></a>
 ''' for i, p in enumerate(PROJ_INT))
 proyectos += '''
   <section class="pad" id="proyectos" aria-labelledby="proy-h">
@@ -901,7 +894,7 @@ proyectos += '''
           <div class="flatmap" id="flatmap">
             <canvas class="flatmap-canvas" role="img" aria-label="Mapa de proyectos internacionales: España conectada con Europa e Iberoamérica"></canvas>
           </div>
-          <div class="pin-cards">
+          <div class="pgrid intl-cards">
 {pins}          </div>
         </div>
       </div>
@@ -917,6 +910,7 @@ write('proyectos.html', 'Proyectos · fundación conecta+', 'Proyectos nacionale
 # sus direcciones llevan a Proyectos (la de internacionales, con su filtro activo).
 redirect('proyectos-nacionales.html', 'proyectos.html#proyectos')
 redirect('proyectos-internacionales.html', 'proyectos.html?area=internacional')
+redirect('proyecto-movilidad-juvenil.html', 'proyectos.html?area=internacional')
 
 # ------------------------------------------------------------------ PROYECTO CONCRETO
 def project_page(p, i, lst, list_href, list_name):

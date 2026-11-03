@@ -1627,7 +1627,13 @@ html.mm-lock,html.mm-lock body{overflow:hidden}
 .proy-intl{display:flex;flex-direction:column;gap:16px;margin-top:clamp(40px,5vw,64px)}
 .pgrid[hidden]+.proy-intl,.pgrid:not(:has(> :not([hidden])))+.proy-intl{margin-top:0}
 .proy-intl .flatmap{aspect-ratio:auto;height:clamp(240px,calc(100svh - 440px),66vh);max-height:none;margin-top:0}
-.proy-intl .pin-cards{margin-top:0}
+.proy-intl .intl-cards{margin-top:0}
+/* con el filtro «Proyectos internacionales» (ningún nacional visible) la foto es apaisada y más
+   baja, para que mapa y tarjetas quepan en pantalla; con «Todos» sigue igual que las nacionales */
+.pgrid:not(:has(> :not([hidden])))+.proy-intl .card-img{aspect-ratio:16/9}
+/* la tarjeta cuyo punto del mapa está activo se resalta como al pasar el ratón */
+.proy-intl .card.on .card-img img{transform:scale(1.06);filter:saturate(1.05)}
+.proy-intl .card.on h3{color:var(--tec-text)}
 /* el título «Proyectos internacionales» no se ve: con el filtro activo, el chip marcado ya indica
    la sección (se oculta a la vista pero lo siguen leyendo los lectores de pantalla) */
 .proy-intl>.kicker{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
