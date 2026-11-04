@@ -511,14 +511,13 @@
     var sampleSymbol = function(size,step){
       var c = document.createElement('canvas'); c.width = c.height = Math.ceil(size);
       var g = c.getContext('2d'), k = size/64;
-      var fig = function(color){
-        g.fillStyle = color;
-        g.beginPath(); g.arc(21*k,15*k,8*k,0,Math.PI*2); g.fill();
-        var x=8*k,y=26*k,w=26*k,h=30*k,r=13*k;
-        g.beginPath(); g.moveTo(x+r,y); g.arcTo(x+w,y,x+w,y+h,r); g.arcTo(x+w,y+h,x,y+h,r); g.arcTo(x,y+h,x,y,r); g.arcTo(x,y,x+w,y,r); g.fill();
-      };
-      fig('#f00');
-      g.save(); g.translate(32*k,32*k); g.rotate(Math.PI); g.translate(-32*k,-32*k); fig('#00f'); g.restore();
+      // el logo: dos trazos encajados (∩ y ∪), cada uno con su cabeza
+      var head = function(x,color){ g.fillStyle = color; g.beginPath(); g.arc(x*k,7.7*k,6.3*k,0,Math.PI*2); g.fill(); };
+      g.lineWidth = 9.9*k; g.lineCap = 'round';
+      g.strokeStyle = '#f00'; head(23.8,'#f00');
+      g.beginPath(); g.moveTo(9*k,58*k); g.arc(23.8*k,38*k,14.8*k,Math.PI,0); g.lineTo(38.6*k,43*k); g.stroke();
+      g.strokeStyle = '#00f'; head(53.4,'#00f');
+      g.beginPath(); g.moveTo(23.8*k,38*k); g.arc(38.6*k,43*k,14.8*k,Math.PI,0,true); g.lineTo(53.4*k,23*k); g.stroke();
       var d = g.getImageData(0,0,c.width,c.height).data, out = [];
       for(var y=0;y<c.height;y+=step){
         for(var x=0;x<c.width;x+=step){
@@ -535,10 +534,10 @@
       var r = heroEl.getBoundingClientRect();
       HW = r.width; HH = r.height; mob = HW < 900;
       hc.width = HW*HD; hc.height = HH*HD; hx.setTransform(HD,0,0,HD,0,0);
-      S = mob ? Math.min(HW*.78, HH*.42) : Math.min(HH*.54, HW*.32);
+      S = mob ? Math.min(HW*.78, HH*.26) : Math.min(HH*.54, HW*.32);
       CX = mob ? HW*.5 : HW*.755;
-      CY = mob ? HH*.36 : HH*.46;
-      var targets = sampleSymbol(S, Math.max(5, S/(mob?34:46)));
+      CY = mob ? HH*.31 : HH*.46;
+      var targets = sampleSymbol(S, Math.max(4, S/(mob?44:56)));
       // reutiliza las partículas existentes al redimensionar
       var old = pts; pts = [];
       targets.forEach(function(t,i){
@@ -551,7 +550,7 @@
         var n = mob ? 18 : 30;
         for(var i=0;i<n;i++){
           var a = Math.random()*Math.PI*2, rad = .62 + Math.random()*.55;
-          outs.push({a:a, rad:rad, ph: Math.random()*6.28, on:false, k:0, x:0, y:0, tgt: Math.floor(Math.random()*targets.length)});
+          outs.push({a:a, rad:rad, ph: Math.random()*6.28, on:false, k:0, x:0, y:0});
         }
         hTotal.textContent = n;
       }
@@ -559,9 +558,16 @@
       if(reduce){ pts.forEach(function(p){p.x = CX+p.tx; p.y = CY+p.ty}); }
     };
 
-    var connect = function(o){
+    var connect = function(o,el){
       if(o.on){return}
       o.on = true; connected++;
+      // se queda en su sitio y enlaza con el punto más cercano, para no cruzar el logo
+      o.a += el*.05; o.fix = true;
+      var best = 1e12;
+      for(var i=0;i<pts.length;i++){
+        var dx = pts[i].x - o.x, dy = pts[i].y - o.y, dd = dx*dx+dy*dy;
+        if(dd < best){ best = dd; o.tgt = i; }
+      }
       hCount.textContent = connected;
       if(connected === outs.length && !allDone){
         allDone = true;
@@ -587,7 +593,8 @@
       // partículas del símbolo
       for(var i=0;i<pts.length;i++){
         var p = pts[i];
-        var px = CX + p.tx - hsmx*40*p.z, py = CY + p.ty - hsmy*30*p.z;
+        var pz = .7 + p.z*.3;                                 // poca diferencia entre capas: el logo no se deshace
+        var px = CX + p.tx - hsmx*40*pz, py = CY + p.ty - hsmy*30*pz;
         // dispersión al hacer scroll: se abren hacia fuera según su profundidad
         px += p.tx*sp*1.8*p.z; py += p.ty*sp*1.8*p.z - sp*HH*.15*p.z;
         if(reduce){ p.x = px; p.y = py; }
@@ -610,7 +617,8 @@
       if(outA > 0){
         for(var j=0;j<outs.length;j++){
           var o = outs[j];
-          var bx = CX + Math.cos(o.a + el*.05)*S*o.rad*(mob?.62:.95), by = clamp(CY + Math.sin(o.a + el*.05)*S*o.rad*(mob?.62:.78) + Math.sin(el*.8+o.ph)*6, 110, HH-120);
+          var oa = o.a + (o.fix ? 0 : el*.05);
+          var bx = CX + Math.cos(oa)*S*o.rad*(mob?.9:.95), by = clamp(CY + Math.sin(oa)*S*o.rad*(mob?.9:.78) + Math.sin(el*.8+o.ph)*6, 110, HH-120);
           bx = clamp(bx, 16, HW-16);
           var tp = pts[o.tgt];
           if(o.on){ o.k = Math.min(1, o.k + .03); }
@@ -621,7 +629,7 @@
           if(!o.on && md < 170){
             hx.strokeStyle = 'rgba('+LIME+','+(.55*(1-md/170)*outA)+')'; hx.lineWidth = 1;
             hx.beginPath(); hx.moveTo(hmx,hmy); hx.lineTo(ex,ey); hx.stroke();
-            if(md < 60){ connect(o); }
+            if(md < 60){ connect(o,el); }
           }
           if(o.on && tp){
             hx.strokeStyle = 'rgba('+LIME+','+(.28*o.k*outA*alphaAll)+')'; hx.lineWidth = 1;
